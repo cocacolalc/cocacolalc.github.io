@@ -63,7 +63,7 @@
       
 
       
-        <h1 id="这是es6"><a href="#这是es6" class="headerlink" title="这是es6"></a>这是es6</h1><p>…</p>
+        <p>…</p>
 <h4 id="let："><a href="#let：" class="headerlink" title="let："></a>let：</h4><p>块级作用域；</p>
 <p>用{}来表示块级作用域；</p>
 <p>暂时性死区：在同一个作用域内，let声明变量x，那么在这一行代码之前就是x的暂时性死区‘’暂时性死区‘’也意味着typeof不再是一个百分之白安全的操作；</p>
@@ -148,32 +148,11 @@
 
 <h3 id="Class："><a href="#Class：" class="headerlink" title="Class："></a>Class：</h3><p>静态方法和属性由class调用，非静态方法和属性由实例调用；</p>
 <h4 id="class继承："><a href="#class继承：" class="headerlink" title="class继承："></a>class继承：</h4><p>Class 可以通过extends关键字实现继承，super关键字表示父类的构造函数，用来新建父类的this对象。子类必须在constructor方法中调用super方法，否则新建实例时会报错。这是因为子类自己的this对象，必须先通过父类的构造函数完成塑造，得到与父类同样的实例属性和方法，然后再对其进行加工，加上子类自己的实例属性和方法。如果不调用super方法，子类就得不到this对象。</p>
-<pre><code class="js">class Point&#123;
-
-&#125;
-class ColorPoint extends Point &#123;//继承
-  constructor(x, y, color) &#123;
-    super(x, y); // 调用父类的constructor(x, y)，super方法要在this之前调用
-    this.color = color;
-  &#125;
-
-  toString() &#123;
-    return this.color + &#39; &#39; + super.toString(); // 调用父类的toString()
-  &#125;
-&#125;
-
-
-//构造函数
-var p=new Person();
-//new：
-//1.创建一个空object
-//2.把this指针指向这个空object
-//3.把this指向的这个空对象当作函数的返回值;  return this;</code></pre>
-
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Point</span></span>&#123;</span><br><span class="line">  </span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ColorPoint</span> <span class="keyword">extends</span> <span class="title">Point</span> </span>&#123;<span class="comment">//继承</span></span><br><span class="line">  <span class="keyword">constructor</span>(x, y, color) &#123;</span><br><span class="line">    <span class="built_in">super</span>(x, y); <span class="comment">// 调用父类的constructor(x, y)，super方法要在this之前调用</span></span><br><span class="line">    <span class="built_in">this</span>.color = color;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  toString() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">this</span>.color + <span class="string">&#x27; &#x27;</span> + <span class="built_in">super</span>.toString(); <span class="comment">// 调用父类的toString()</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//构造函数</span></span><br><span class="line"><span class="keyword">var</span> p=<span class="keyword">new</span> Person();</span><br><span class="line"><span class="comment">//new：</span></span><br><span class="line"><span class="comment">//1.创建一个空object</span></span><br><span class="line"><span class="comment">//2.把this指针指向这个空object</span></span><br><span class="line"><span class="comment">//3.把this指向的这个空对象当作函数的返回值;  return this;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2020/09/18/es6/" data-id="ckfdto5d10000nowu6j7hb9zk"
+      <a data-url="http://example.com/2020/09/18/es6/" data-id="ckfdtvv7q0000vgwufh8ld212"
          class="article-share-link">分享</a>
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/es6/" rel="tag">es6</a></li></ul>
