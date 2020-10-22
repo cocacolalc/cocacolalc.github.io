@@ -94,7 +94,7 @@
       </tags>
   </entry>
   <entry>
-    <title>nodejs1</title>
+    <title>nodejs-1</title>
     <url>/2020/09/18/nodejs%E7%AC%94%E8%AE%B0/</url>
     <content><![CDATA[<h1 id="node-js"><a href="#node-js" class="headerlink" title="node js"></a>node js</h1><p>nodejs是基于google v8引擎，在服务器端支持javascript的一种运行环境。</p>
 <p>特点：单线程、非阻塞I/O、事件驱动</p>
@@ -171,12 +171,9 @@
 
 <p>###　</p>
 ]]></content>
-      <tags>
-        <tag>nodejs</tag>
-      </tags>
   </entry>
   <entry>
-    <title>nodejs2</title>
+    <title>nodejs-2</title>
     <url>/2020/09/18/nodejs%E7%AC%94%E8%AE%B02/</url>
     <content><![CDATA[<h1 id="nodejs笔记2"><a href="#nodejs笔记2" class="headerlink" title="nodejs笔记2"></a>nodejs笔记2</h1><h2 id="web应用架构"><a href="#web应用架构" class="headerlink" title="web应用架构"></a>web应用架构</h2><p>client-客户端，一般指浏览器，浏览器可以通过http协议向服务器请求数据。</p>
 <p>server-服务端，一般指web服务器，可以接收客户请求，并向客户端发送响应数据。</p>
@@ -470,9 +467,6 @@
 
 <p>###　删除数据：</p>
 ]]></content>
-      <tags>
-        <tag>nodejs</tag>
-      </tags>
   </entry>
   <entry>
     <title>javascript 1</title>
