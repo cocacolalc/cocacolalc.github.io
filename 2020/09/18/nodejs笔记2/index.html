@@ -1,71 +1,179 @@
+
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
+
 <head>
-  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>nodejs2 - cocacola</title>
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="google" content="notranslate" />
+
   
   
+  <meta name="description" content="nodejs笔记2web应用架构client-客户端，..."> 
   
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <title>
-    nodejs2 |
-    
-    cocacola</title>
+  <meta name="author" content="John Doe"> 
+
   
-    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="icon" href="/images/icons/favicon-16x16.png" type="image/png" sizes="16x16">
   
+  
+    <link rel="icon" href="/images/icons/favicon-32x32.png" type="image/png" sizes="32x32">
+  
+  
+    <link rel="apple-touch-icon" href="/images/icons/apple-touch-icon.png" sizes="180x180">
+  
+  
+    <meta rel="mask-icon" href="/images/icons/stun-logo.svg" color="#333333">
+  
+  
+    <meta rel="msapplication-TileImage" content="/images/icons/favicon-144x144.png">
+    <meta rel="msapplication-TileColor" content="#000000">
+  
+
   
 <link rel="stylesheet" href="/css/style.css">
 
-  
-<link rel="stylesheet" href="/css/technology.css">
-
-  
-    
-<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
 
   
   
-<script src="/js/pace.min.js"></script>
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1445822_h1619vhl1nr.css">
 
+  
+
+  
+  
+  
+<link rel="stylesheet" href="https://cdn.bootcss.com/fancybox/3.5.7/jquery.fancybox.min.css">
+
+  
+
+  
+  
+  
+<link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.18.1/styles/xcode.min.css">
+
+  
+
+  <script>
+    var CONFIG = window.CONFIG || {};
+    var ZHAOO = window.ZHAOO || {};
+    CONFIG = {
+      isHome: false,
+      fancybox: true,
+      pjax: false,
+      lazyload: {
+        enable: true,
+        loadingImage: '',
+      },
+      donate: {
+        enable: true,
+        alipay: 'https://pic.izhaoo.com/alipay.jpg',
+        wechat: 'https://pic.izhaoo.com/wechat.jpg'
+      },
+      motto: {
+        api: '',
+        default: '将喜欢的一切留在身边，这便是努力的意义。'
+      },
+      galleries: {
+        enable: true
+      },
+      fab: {
+        enable: true,
+        alwaysShow: false
+      },
+      carrier: {
+        enable: true
+      },
+      daovoice: {
+        enable: true
+      }
+    }
+  </script>
+
+  
+
+  
 <meta name="generator" content="Hexo 5.1.1"></head>
-
-<body>
-  <div id="container">
-    <div id="wrap">
-      <section class="outer">
-  <article id="post-nodejs笔记2" class="article article-type-post" itemscope itemprop="blogPost" data-scroll-reveal>
-
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 class="article-title" itemprop="name">
-      nodejs2
-    </h1>
+<body class="lock-screen">
+  <div class="loading"></div>
   
 
-      </header>
-    
 
-    
-      <div class="article-meta">
-        <a href="/2020/09/18/nodejs%E7%AC%94%E8%AE%B02/" class="article-date">
-  <time datetime="2020-09-18T11:19:35.000Z" itemprop="datePublished">2020-09-18</time>
-</a>
-        
-      </div>
-    
+<nav class="navbar">
+  <div class="left"></div>
+  <div class="center">nodejs2</div>
+  <div class="right">
+    <i class="iconfont iconmenu j-navbar-menu"></i>
+  </div>
+</nav>
 
-    <div class="article-entry" itemprop="articleBody">
+  <nav class="menu">
+  <div class="menu-wrap">
+    <div class="menu-close">
+      <i class="iconfont iconbaseline-close-px"></i>
+    </div>
+    <ul class="menu-content">
       
-
       
-
       
+      
+      <li class="menu-item"><a href="/ " class="underline"> 首页</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/galleries " class="underline"> 摄影</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/archives " class="underline"> 归档</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/tags " class="underline"> 标签</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/categories " class="underline"> 分类</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/about " class="underline"> 关于</a></li>
+      
+    </ul>
+    <div class="menu-copyright"><p>Powered by <a target="_blank" href="https://hexo.io">Hexo</a>  |  Theme - <a target="_blank" href="https://github.com/izhaoo/hexo-theme-zhaoo">zhaoo</a></p></div>
+  </div>
+</nav>
+  <main id="main">
+  <div class="container" id="container">
+    <article class="article">
+  <div class="wrap">
+    <section class="head">
+  <img   class="lazyload" data-original="https://pic.izhaoo.com/2014031601.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
+  <div class="head-mask">
+    <h1 class="head-title">nodejs2</h1>
+    <div class="head-info">
+      <span class="post-info-item"><i class="iconfont iconcalendar"></i>September 18, 2020</span
+        class="post-info-item">
+      
+      <span class="post-info-item"><i class="iconfont iconfont-size"></i>4978</span>
+    </div>
+  </div>
+</section>
+    <section class="main">
+      <section class="content">
         <h1 id="nodejs笔记2"><a href="#nodejs笔记2" class="headerlink" title="nodejs笔记2"></a>nodejs笔记2</h1><h2 id="web应用架构"><a href="#web应用架构" class="headerlink" title="web应用架构"></a>web应用架构</h2><p>client-客户端，一般指浏览器，浏览器可以通过http协议向服务器请求数据。</p>
 <p>server-服务端，一般指web服务器，可以接收客户请求，并向客户端发送响应数据。</p>
-<h5 id="http-server"><a href="#http-server" class="headerlink" title="http server"></a>http server</h5><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//支持web服务的http</span></span><br><span class="line"></span><br><span class="line">*<span class="keyword">const</span>* http=<span class="built_in">require</span>(<span class="string">&#x27;http&#x27;</span>)</span><br><span class="line"></span><br><span class="line">*<span class="keyword">let</span>* count=<span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//创建一个服务,如果有url访问到了这个服务，回调函数执行</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 回调函数中，第一个形参request代表的是请求对象，里面存放了请求信息</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 第二个参数response：响应对象</span></span><br><span class="line"></span><br><span class="line">*<span class="keyword">var</span>* serve=http.createServer((*request*,*response*)*=&gt;*&#123;</span><br><span class="line"></span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">&#x27;有人访问&#x27;</span>+(++count))</span><br><span class="line"></span><br><span class="line">  <span class="comment">//设置响应头；200是成功 编码 类型</span></span><br><span class="line"></span><br><span class="line">  *response*.writeHead(<span class="number">200</span>,&#123;<span class="string">&#x27;Content-Type&#x27;</span>:<span class="string">&#x27;text/html;charset=utf-8&#x27;</span>&#125;)</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 响应对象中添加数据</span></span><br><span class="line"></span><br><span class="line">  *response*.write(<span class="string">&#x27;我是相应内容&#x27;</span>,<span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 结束</span></span><br><span class="line"></span><br><span class="line">  *response*.end()</span><br><span class="line"></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 把服务监听3000端口</span></span><br><span class="line"></span><br><span class="line">serve.listen(<span class="string">&#x27;3000&#x27;</span>,(*err*)*=&gt;*&#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span>(*err*) <span class="keyword">return</span> <span class="built_in">console</span>.log(*err*)</span><br><span class="line"></span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">&#x27;serve listen at 3000&#x27;</span>)</span><br><span class="line"></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// url ：http：协议</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 域名：或者 ip DFS服务器</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 端口：80默认</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h5 id="http-server"><a href="#http-server" class="headerlink" title="http server"></a>http server</h5><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-comment">//支持web服务的http</span><br><br>*<span class="hljs-keyword">const</span>* http=<span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;http&#x27;</span>)<br><br>*<span class="hljs-keyword">let</span>* count=<span class="hljs-number">0</span><br><br><span class="hljs-comment">//创建一个服务,如果有url访问到了这个服务，回调函数执行</span><br><br><span class="hljs-comment">// 回调函数中，第一个形参request代表的是请求对象，里面存放了请求信息</span><br><br><span class="hljs-comment">// 第二个参数response：响应对象</span><br><br>*<span class="hljs-keyword">var</span>* serve=http.createServer((*request*,*response*)*=&gt;*&#123;<br><br>  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&#x27;有人访问&#x27;</span>+(++count))<br><br>  <span class="hljs-comment">//设置响应头；200是成功 编码 类型</span><br><br>  *response*.writeHead(<span class="hljs-number">200</span>,&#123;<span class="hljs-string">&#x27;Content-Type&#x27;</span>:<span class="hljs-string">&#x27;text/html;charset=utf-8&#x27;</span>&#125;)<br><br>  <span class="hljs-comment">// 响应对象中添加数据</span><br><br>  *response*.write(<span class="hljs-string">&#x27;我是相应内容&#x27;</span>,<span class="hljs-string">&#x27;utf-8&#x27;</span>)<br><br>  <span class="hljs-comment">// 结束</span><br><br>  *response*.end()<br><br>&#125;)<br><br><span class="hljs-comment">// 把服务监听3000端口</span><br><br>serve.listen(<span class="hljs-string">&#x27;3000&#x27;</span>,(*err*)*=&gt;*&#123;<br><br>  <span class="hljs-keyword">if</span>(*err*) <span class="hljs-keyword">return</span> <span class="hljs-built_in">console</span>.log(*err*)<br><br>  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&#x27;serve listen at 3000&#x27;</span>)<br><br>&#125;)<br><br><span class="hljs-comment">// url ：http：协议</span><br><br><span class="hljs-comment">// 域名：或者 ip DFS服务器</span><br><br><span class="hljs-comment">// 端口：80默认</span><br><br></code></pre></td></tr></table></figure>
 
 <h5 id="http"><a href="#http" class="headerlink" title="http"></a>http</h5><p>http域名或者IP</p>
 <p>端口号</p>
@@ -334,14 +442,14 @@
 <h3 id="表：table"><a href="#表：table" class="headerlink" title="表：table"></a>表：table</h3><ul>
 <li>创建表：</li>
 </ul>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="string">`xiaou`</span>.<span class="string">`user`</span> (</span><br><span class="line">  <span class="string">`cardid`</span> <span class="built_in">VARCHAR</span>(<span class="number">45</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="string">`name`</span> <span class="built_in">VARCHAR</span>(<span class="number">45</span>) <span class="literal">NULL</span>,</span><br><span class="line">  <span class="string">`age`</span> <span class="built_in">INT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="string">`address`</span> <span class="built_in">VARCHAR</span>(<span class="number">45</span>) <span class="literal">NULL</span>,</span><br><span class="line">  <span class="string">`height`</span> <span class="built_in">FLOAT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="string">`createby`</span> <span class="built_in">VARCHAR</span>(<span class="number">45</span>) <span class="literal">NULL</span>,</span><br><span class="line">  <span class="string">`createtime`</span> <span class="built_in">DATE</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="string">`updateby`</span> <span class="built_in">VARCHAR</span>(<span class="number">45</span>) <span class="literal">NULL</span>,</span><br><span class="line">  <span class="string">`updatetime`</span> <span class="built_in">DATE</span> <span class="literal">NULL</span>,</span><br><span class="line">  PRIMARY <span class="keyword">KEY</span> (<span class="string">`cardid`</span>));</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> <span class="hljs-string">`xiaou`</span>.<span class="hljs-string">`user`</span> (<br>  <span class="hljs-string">`cardid`</span> <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">45</span>) <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,<br>  <span class="hljs-string">`name`</span> <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">45</span>) <span class="hljs-literal">NULL</span>,<br>  <span class="hljs-string">`age`</span> <span class="hljs-built_in">INT</span> <span class="hljs-literal">NULL</span>,<br>  <span class="hljs-string">`address`</span> <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">45</span>) <span class="hljs-literal">NULL</span>,<br>  <span class="hljs-string">`height`</span> <span class="hljs-built_in">FLOAT</span> <span class="hljs-literal">NULL</span>,<br>  <span class="hljs-string">`createby`</span> <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">45</span>) <span class="hljs-literal">NULL</span>,<br>  <span class="hljs-string">`createtime`</span> <span class="hljs-built_in">DATE</span> <span class="hljs-literal">NULL</span>,<br>  <span class="hljs-string">`updateby`</span> <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">45</span>) <span class="hljs-literal">NULL</span>,<br>  <span class="hljs-string">`updatetime`</span> <span class="hljs-built_in">DATE</span> <span class="hljs-literal">NULL</span>,<br>  PRIMARY <span class="hljs-keyword">KEY</span> (<span class="hljs-string">`cardid`</span>));<br><br><br></code></pre></td></tr></table></figure>
 
 <ul>
 <li>修改表：</li>
 </ul>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> <span class="string">`xiaou`</span>.<span class="string">`user`</span> </span><br><span class="line"><span class="keyword">ADD</span> <span class="keyword">COLUMN</span> <span class="string">`disc`</span> <span class="built_in">VARCHAR</span>(<span class="number">45</span>) <span class="literal">NULL</span> <span class="keyword">AFTER</span> <span class="string">`tel`</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> <span class="string">`xiaou`</span>.<span class="string">`user`</span> </span><br><span class="line"><span class="keyword">DROP</span> <span class="keyword">COLUMN</span> <span class="string">`disc`</span>;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">TABLE</span> <span class="hljs-string">`xiaou`</span>.<span class="hljs-string">`user`</span> <br><span class="hljs-keyword">ADD</span> <span class="hljs-keyword">COLUMN</span> <span class="hljs-string">`disc`</span> <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">45</span>) <span class="hljs-literal">NULL</span> <span class="hljs-keyword">AFTER</span> <span class="hljs-string">`tel`</span>;<br><br><span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">TABLE</span> <span class="hljs-string">`xiaou`</span>.<span class="hljs-string">`user`</span> <br><span class="hljs-keyword">DROP</span> <span class="hljs-keyword">COLUMN</span> <span class="hljs-string">`disc`</span>;<br><br><br></code></pre></td></tr></table></figure>
 
-<h3 id="删除表、删除数据库"><a href="#删除表、删除数据库" class="headerlink" title="删除表、删除数据库"></a>删除表、删除数据库</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">drop</span> <span class="keyword">table</span> stud;</span><br><span class="line"><span class="keyword">drop</span> <span class="keyword">database</span> ujiuye;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="删除表、删除数据库"><a href="#删除表、删除数据库" class="headerlink" title="删除表、删除数据库"></a>删除表、删除数据库</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">drop</span> <span class="hljs-keyword">table</span> stud;<br><span class="hljs-keyword">drop</span> <span class="hljs-keyword">database</span> ujiuye;<br><br><br></code></pre></td></tr></table></figure>
 
 <h3 id="中文："><a href="#中文：" class="headerlink" title="中文："></a>中文：</h3><p>修改字段编码为urf8  ;utf8-general-ci;</p>
 <h3 id="插入数据："><a href="#插入数据：" class="headerlink" title="插入数据："></a>插入数据：</h3><ul>
@@ -351,78 +459,214 @@
 </li>
 </ul>
 <p><strong>部分列添加数据：</strong><br>insert into table_name (id,name) values(10,’zs’);</p>
-<h3 id="修改数据："><a href="#修改数据：" class="headerlink" title="修改数据："></a>修改数据：</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">update</span> xiaou.user <span class="keyword">set</span> <span class="keyword">name</span>=<span class="string">&#x27;zs2000&#x27;</span>,age=<span class="number">2000</span> <span class="keyword">where</span> address=<span class="string">&#x27;上海&#x27;</span>;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="修改数据："><a href="#修改数据：" class="headerlink" title="修改数据："></a>修改数据：</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">update</span> xiaou.user <span class="hljs-keyword">set</span> <span class="hljs-keyword">name</span>=<span class="hljs-string">&#x27;zs2000&#x27;</span>,age=<span class="hljs-number">2000</span> <span class="hljs-keyword">where</span> address=<span class="hljs-string">&#x27;上海&#x27;</span>;<br><br><br></code></pre></td></tr></table></figure>
 
 <p>###　删除数据：</p>
 
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2020/09/18/nodejs%E7%AC%94%E8%AE%B02/" data-id="ckfjgqjf00005zswu4gyc57u3"
-         class="article-share-link">分享</a>
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nodejs/" rel="tag">nodejs</a></li></ul>
-
-    </footer>
-
+      </section>
+      <section class="extra">
+        
+        <ul class="copyright">
+  
+  <li><strong>本文作者：</strong>John Doe</li>
+  <li><strong>本文链接：</strong><a href="http://example.com/2020/09/18/nodejs%E7%AC%94%E8%AE%B02/index.html">http://example.com/2020/09/18/nodejs%E7%AC%94%E8%AE%B02/index.html</a></li>
+  <li><strong>版权声明：</strong>本博客所有文章均采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh"
+      rel="external nofollow" target="_blank"> BY-NC-SA </a>许可协议，转载请注明出处！</li>
+  
+</ul>
+        
+        
+        <section class="donate">
+  <div class="qrcode">
+    <img   class="lazyload" data-original="https://pic.izhaoo.com/alipay.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" >
   </div>
-
-  
-    
-  <nav class="article-nav">
-    
-      <a href="/2020/09/18/vue/" class="article-nav-link">
-        <strong class="article-nav-caption">上一篇</strong>
-        <div class="article-nav-title">
-          
-            vue
-          
-        </div>
-      </a>
-    
-    
-      <a href="/2020/09/18/nodejs%E7%AC%94%E8%AE%B0/" class="article-nav-link">
-        <strong class="article-nav-caption">下一篇</strong>
-        <div class="article-nav-title">nodejs1</div>
-      </a>
-    
-  </nav>
-
-
-  
-
-  
-    
-  
-
-</article>
-
-
-
+  <div class="icon">
+    <a href="javascript:;" id="alipay"><i class="iconfont iconalipay"></i></a>
+    <a href="javascript:;" id="wechat"><i class="iconfont iconwechat-fill"></i></a>
+  </div>
 </section>
-    </div>
-    
-<script src="/js/jquery-2.0.3.min.js"></script>
+        
+        
+  <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/nodejs/" rel="tag">nodejs</a></li></ul>
 
-
-<script src="/js/lazyload.min.js"></script>
-
-
-<script src="/js/busuanzi-2.3.pure.min.js"></script>
-
-
-
+        
+<nav class="nav">
   
-<script src="/fancybox/jquery.fancybox.min.js"></script>
+    <a href="/2020/09/18/vue/"><i class="iconfont iconleft"></i>vue</a>
+  
+  
+    <a href="/2020/09/18/nodejs%E7%AC%94%E8%AE%B0/">nodejs1<i class="iconfont iconright"></i></a>
+  
+</nav>
 
-
-
-
-
-
-<script src="/js/technology.js"></script>
-
-
+      </section>
+      
+      <section class="comments">
+  
+  <div class="btn" id="comments-btn">查看评论</div>
+  
+  
+</section>
+      
+    </section>
   </div>
+</article>
+  </div>
+</main>
+  <footer class="footer">
+  <div class="footer-social">
+    
+    
+    
+    
+    
+    <a href="tencent://message/?Menu=yes&uin=2504971404 " target="_blank" onMouseOver="this.style.color= '#12B7F5'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconQQ "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="javascript:; " target="_blank" onMouseOver="this.style.color= '#09BB07'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconwechat-fill "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="https://www.instagram.com/izhaoo/ " target="_blank" onMouseOver="this.style.color= '#DA2E76'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconinstagram "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="https://github.com/izhaoo " target="_blank" onMouseOver="this.style.color= '#24292E'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  icongithub-fill "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="mailto:izhaoo@163.com " target="_blank" onMouseOver="this.style.color='#FFBE5B'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconmail"></i>
+    </a>
+    
+  </div>
+  <div class="footer-copyright"><p>Powered by <a target="_blank" href="https://hexo.io">Hexo</a>  |  Theme - <a target="_blank" href="https://github.com/izhaoo/hexo-theme-zhaoo">zhaoo</a></p></div>
+</footer>
+  
+      <div class="fab fab-plus">
+    <i class="iconfont iconplus"></i>
+  </div>
+  
+  <div class="fab fab-daovoice">
+    <i class="iconfont iconcomment"></i>
+  </div>
+  
+  <div class="fab fab-up">
+    <i class="iconfont iconcaret-up"></i>
+  </div>
+  
 </body>
+
+
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+
+
+
+
+
+
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+
+
+
+
+
+<script src="https://cdn.bootcss.com/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+
+
+
+
+
+
+<script src="/js/utils.js"></script>
+<script src="/js/modules.js"></script>
+<script src="/js/zui.js"></script>
+<script src="/js/script.js"></script>
+
+
+
+
+
+<script>
+  (function (i, s, o, g, r, a, m) {
+    i["DaoVoiceObject"] = r;
+    i[r] = i[r] || function () {
+      (i[r].q = i[r].q || []).push(arguments)
+    }, i[r].l = 1 * new Date();
+    a = s.createElement(o), m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    a.charset = "utf-8";
+    m.parentNode.insertBefore(a, m)
+  })(window, document, "script", ('https:' == document.location.protocol ? 'https:' : 'http:') +
+    "//widget.daovoice.io/widget/0f81ff2f.js", "daovoice")
+  daovoice('init', {
+    app_id: "abcdefg"
+  }, {
+    launcher: {
+      disableLauncherIcon: true,
+    },
+  });
+  daovoice('update');
+</script>
+
+
+
+<script>
+  (function () {
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    } else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+<script>
+  var _hmt = _hmt || [];
+  (function () {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?4c204d8bc027a0455b5fc642ac334ca8";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+
+
+
+
+
+
+
+
+
 </html>
