@@ -469,11 +469,16 @@
 ]]></content>
   </entry>
   <entry>
-    <title>vue源码理解</title>
+    <title>vue源码理解——变化侦测篇</title>
     <url>/2020/09/18/vue%E6%BA%90%E7%A0%81%E7%90%86%E8%A7%A3/</url>
-    <content><![CDATA[]]></content>
+    <content><![CDATA[<h3 id="1-变化侦测篇"><a href="#1-变化侦测篇" class="headerlink" title="1.变化侦测篇"></a>1.变化侦测篇</h3><p><code>Vue</code>中如何实现数据的响应式系统，从而达到数据驱动视图。</p>
+<h5 id="变化侦测"><a href="#变化侦测" class="headerlink" title="变化侦测"></a>变化侦测</h5><p>vue最大的特点之一就是数据驱动视图</p>
+<p>什么是数据驱动视图？我们可以把数据理解成状态，而视图就是用户可以直观看到的，页面不是一层不变的，它是动态变化的，它可能是用户操作引起变化，也可能因为后台数据引起变化的，不管它尤什么引起的，我们统称状态变了由前一个状态变到了后一个状态，页面也就应该随之而变化，所以我们就可以得到如下一个公式：<strong>UI = render(state)</strong></p>
+<p>公式中：状态<code>state</code>是输入，页面<code>UI</code>输出，状态输入一旦变化了，页面输出也随之而变化。我们把这种特性称之为数据驱动视图。</p>
+<p>OK，有了基本概念以后，我们再把上述公式拆成三部分：<code>state</code>、<code>render()</code>以及<code>UI</code>。我们知道<code>state</code>和<code>UI</code>都是用户定的，而不变的是这个<code>render()</code>。所以<code>Vue</code>就扮演了<code>render()</code>这个角色，当<code>Vue</code>发现<code>state</code>变化之后，经过一系列加工，最终将变化反应在<code>UI</code>上。</p>
+]]></content>
       <tags>
-        <tag>vue源码理解</tag>
+        <tag>vue源码理解——变化侦测篇</tag>
       </tags>
   </entry>
   <entry>
