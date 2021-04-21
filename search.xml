@@ -80,6 +80,46 @@
 ]]></content>
   </entry>
   <entry>
+    <title>vue源码理解——变化侦测篇</title>
+    <url>/2020/09/18/vue%E6%BA%90%E7%A0%81%E7%90%86%E8%A7%A3/</url>
+    <content><![CDATA[<h3 id="1-变化侦测篇"><a href="#1-变化侦测篇" class="headerlink" title="1.变化侦测篇"></a>1.变化侦测篇</h3><p><code>Vue</code>中如何实现数据的响应式系统，从而达到数据驱动视图。</p>
+<h5 id="变化侦测"><a href="#变化侦测" class="headerlink" title="变化侦测"></a>变化侦测</h5><p>vue最大的特点之一就是数据驱动视图</p>
+<p>什么是数据驱动视图？我们可以把数据理解成状态，而视图就是用户可以直观看到的，页面不是一层不变的，它是动态变化的，它可能是用户操作引起变化，也可能因为后台数据引起变化的，不管它尤什么引起的，我们统称状态变了由前一个状态变到了后一个状态，页面也就应该随之而变化，所以我们就可以得到如下一个公式：<strong>UI = render(state)</strong></p>
+<p>公式中：状态<code>state</code>是输入，页面<code>UI</code>输出，状态输入一旦变化了，页面输出也随之而变化。我们把这种特性称之为数据驱动视图。</p>
+<p>OK，有了基本概念以后，我们再把上述公式拆成三部分：<code>state</code>、<code>render()</code>以及<code>UI</code>。我们知道<code>state</code>和<code>UI</code>都是用户定的，而不变的是这个<code>render()</code>。所以<code>Vue</code>就扮演了<code>render()</code>这个角色，当<code>Vue</code>发现<code>state</code>变化之后，经过一系列加工，最终将变化反应在<code>UI</code>上。</p>
+]]></content>
+      <tags>
+        <tag>vue源码理解——变化侦测篇</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>小程序</title>
+    <url>/2020/09/18/%E5%B0%8F%E7%A8%8B%E5%BA%8F/</url>
+    <content><![CDATA[<h3 id="微信公众平台"><a href="#微信公众平台" class="headerlink" title="微信公众平台"></a>微信公众平台</h3><p>地址：<a href="https://mp.weixin.qq.com/">https://mp.weixin.qq.com/</a></p>
+<h5 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h5><p>微信公众平台，简称公众号。曾命名为’官号平台’、’媒体平台’、’微信公众号’，最终定位公众平台</p>
+<h3 id="微信小程序"><a href="#微信小程序" class="headerlink" title="微信小程序"></a>微信小程序</h3><h5 id="概念："><a href="#概念：" class="headerlink" title="概念："></a>概念：</h5><p>就是一个简化的app应用，2017年1月9日，微信之父张小龙发布第一款微信小程序</p>
+<h5 id="优点和缺点"><a href="#优点和缺点" class="headerlink" title="优点和缺点"></a>优点和缺点</h5><ul>
+<li>优点</li>
+</ul>
+<p>1对用户而言，节省了手机内存，即开即用，用户体验好</p>
+<p>2对开发者而言</p>
+<p>(1) 开发成本（时间   技术   资金）上，接近h5，要比原生app（android   ios）端低</p>
+<p>(2 )功能上，接近原生app，比h5强大，比如重力感应  定位等</p>
+<ul>
+<li>缺点</li>
+</ul>
+<p>1项目大小是2M限制（分包加载优化）</p>
+<p>2分享到朋友圈权限android，不支持ios</p>
+<p>3项目发布需要微信团队审核，审核周期1-7日</p>
+<p>4功能对于个人开发者有些限制，比如支付  表单提交 （社交分享类）</p>
+<h4 id="注册微信小程序开发者账号"><a href="#注册微信小程序开发者账号" class="headerlink" title="注册微信小程序开发者账号"></a>注册微信小程序开发者账号</h4><p>地址</p>
+<p><a href="https://mp.weixin.qq.com/">https://mp.weixin.qq.com/</a></p>
+<h4 id="微信开发者工具下载安装"><a href="#微信开发者工具下载安装" class="headerlink" title="微信开发者工具下载安装"></a>微信开发者工具下载安装</h4><h5 id="地址："><a href="#地址：" class="headerlink" title="地址："></a>地址：</h5><p><a href="https://developers.weixin.qq.com/miniprogram/dev/devtools/download.html">https://developers.weixin.qq.com/miniprogram/dev/devtools/download.html</a></p>
+<p>下载稳定版</p>
+<p>安装时无需注意，一直next就可以了</p>
+]]></content>
+  </entry>
+  <entry>
     <title>es6</title>
     <url>/2020/09/18/es6/</url>
     <content><![CDATA[<p>…</p>
@@ -171,46 +211,6 @@
       <tags>
         <tag>es6</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>vue源码理解——变化侦测篇</title>
-    <url>/2020/09/18/vue%E6%BA%90%E7%A0%81%E7%90%86%E8%A7%A3/</url>
-    <content><![CDATA[<h3 id="1-变化侦测篇"><a href="#1-变化侦测篇" class="headerlink" title="1.变化侦测篇"></a>1.变化侦测篇</h3><p><code>Vue</code>中如何实现数据的响应式系统，从而达到数据驱动视图。</p>
-<h5 id="变化侦测"><a href="#变化侦测" class="headerlink" title="变化侦测"></a>变化侦测</h5><p>vue最大的特点之一就是数据驱动视图</p>
-<p>什么是数据驱动视图？我们可以把数据理解成状态，而视图就是用户可以直观看到的，页面不是一层不变的，它是动态变化的，它可能是用户操作引起变化，也可能因为后台数据引起变化的，不管它尤什么引起的，我们统称状态变了由前一个状态变到了后一个状态，页面也就应该随之而变化，所以我们就可以得到如下一个公式：<strong>UI = render(state)</strong></p>
-<p>公式中：状态<code>state</code>是输入，页面<code>UI</code>输出，状态输入一旦变化了，页面输出也随之而变化。我们把这种特性称之为数据驱动视图。</p>
-<p>OK，有了基本概念以后，我们再把上述公式拆成三部分：<code>state</code>、<code>render()</code>以及<code>UI</code>。我们知道<code>state</code>和<code>UI</code>都是用户定的，而不变的是这个<code>render()</code>。所以<code>Vue</code>就扮演了<code>render()</code>这个角色，当<code>Vue</code>发现<code>state</code>变化之后，经过一系列加工，最终将变化反应在<code>UI</code>上。</p>
-]]></content>
-      <tags>
-        <tag>vue源码理解——变化侦测篇</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>小程序</title>
-    <url>/2020/09/18/%E5%B0%8F%E7%A8%8B%E5%BA%8F/</url>
-    <content><![CDATA[<h3 id="微信公众平台"><a href="#微信公众平台" class="headerlink" title="微信公众平台"></a>微信公众平台</h3><p>地址：<a href="https://mp.weixin.qq.com/">https://mp.weixin.qq.com/</a></p>
-<h5 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h5><p>微信公众平台，简称公众号。曾命名为’官号平台’、’媒体平台’、’微信公众号’，最终定位公众平台</p>
-<h3 id="微信小程序"><a href="#微信小程序" class="headerlink" title="微信小程序"></a>微信小程序</h3><h5 id="概念："><a href="#概念：" class="headerlink" title="概念："></a>概念：</h5><p>就是一个简化的app应用，2017年1月9日，微信之父张小龙发布第一款微信小程序</p>
-<h5 id="优点和缺点"><a href="#优点和缺点" class="headerlink" title="优点和缺点"></a>优点和缺点</h5><ul>
-<li>优点</li>
-</ul>
-<p>1对用户而言，节省了手机内存，即开即用，用户体验好</p>
-<p>2对开发者而言</p>
-<p>(1) 开发成本（时间   技术   资金）上，接近h5，要比原生app（android   ios）端低</p>
-<p>(2 )功能上，接近原生app，比h5强大，比如重力感应  定位等</p>
-<ul>
-<li>缺点</li>
-</ul>
-<p>1项目大小是2M限制（分包加载优化）</p>
-<p>2分享到朋友圈权限android，不支持ios</p>
-<p>3项目发布需要微信团队审核，审核周期1-7日</p>
-<p>4功能对于个人开发者有些限制，比如支付  表单提交 （社交分享类）</p>
-<h4 id="注册微信小程序开发者账号"><a href="#注册微信小程序开发者账号" class="headerlink" title="注册微信小程序开发者账号"></a>注册微信小程序开发者账号</h4><p>地址</p>
-<p><a href="https://mp.weixin.qq.com/">https://mp.weixin.qq.com/</a></p>
-<h4 id="微信开发者工具下载安装"><a href="#微信开发者工具下载安装" class="headerlink" title="微信开发者工具下载安装"></a>微信开发者工具下载安装</h4><h5 id="地址："><a href="#地址：" class="headerlink" title="地址："></a>地址：</h5><p><a href="https://developers.weixin.qq.com/miniprogram/dev/devtools/download.html">https://developers.weixin.qq.com/miniprogram/dev/devtools/download.html</a></p>
-<p>下载稳定版</p>
-<p>安装时无需注意，一直next就可以了</p>
-]]></content>
   </entry>
   <entry>
     <title>nodejs-2</title>
