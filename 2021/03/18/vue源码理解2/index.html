@@ -14,6 +14,7 @@
 
   
   
+  <meta name="description" content="虚拟DOM，这个名词作为当下的前端开发人员你一定不会陌..."> 
   
   <meta name="author" content="lc"> 
 
@@ -157,20 +158,37 @@
     <article class="article">
   <div class="wrap">
     <section class="head">
-  <img   class="lazyload" data-original="https://gitee.com/cocacolalc/imgs-hexo/raw/master/img/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_2020102317045618.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
+  <img   class="lazyload" data-original="https://gitee.com/cocacolalc/imgs-hexo/raw/master/img/bj_img2.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
   <div class="head-mask">
     <h1 class="head-title">vue源码理解——虚拟DOM篇</h1>
     <div class="head-info">
       <span class="post-info-item"><i class="iconfont iconcalendar"></i>March 18, 2021</span
         class="post-info-item">
       
-      <span class="post-info-item"><i class="iconfont iconfont-size"></i>0</span>
+      <span class="post-info-item"><i class="iconfont iconfont-size"></i>1333</span>
     </div>
   </div>
 </section>
     <section class="main">
       <section class="content">
-        
+        <p>虚拟DOM，这个名词作为当下的前端开发人员你一定不会陌生，至少会略有耳闻，但不会闻所未闻吧。这也是现在求职面试考察中非常高频的一个考点了。因为在当下的前端三大框架中关于虚拟DOM或多或少都有所涉及，那么接下来，我们就从源码角度出发，看看<code>Vue</code>中的虚拟DOM时怎样的。</p>
+<h4 id="虚拟DOM简介"><a href="#虚拟DOM简介" class="headerlink" title="虚拟DOM简介"></a>虚拟DOM简介</h4><p>由于本系列文章是针对<code>Vue</code>源码深入学习的，所以着重分析在<code>Vue</code>中对虚拟DOM是如何实现的，而对于虚拟DOM本身这个概念不做大篇幅的展开讨论，仅从以下几个问题简单介绍：</p>
+<p>1.什么是虚拟DOM？</p>
+<p>所谓虚拟DOM，就是用一个<code>JS</code>对象来描述一个<code>DOM</code>节点，像如下示例：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs js">&lt;div <span class="hljs-class"><span class="hljs-keyword">class</span></span>=<span class="hljs-string">&quot;a&quot;</span> id=<span class="hljs-string">&quot;b&quot;</span>&gt;我是内容&lt;/div&gt;<br><br>&#123;<br>  tag:<span class="hljs-string">&#x27;div&#x27;</span>,        <span class="hljs-comment">// 元素标签</span><br>  attrs:&#123;           <span class="hljs-comment">// 属性</span><br>    class:&#x27;a&#x27;,<br>    id:<span class="hljs-string">&#x27;b&#x27;</span><br>  &#125;,<br>  text:<span class="hljs-string">&#x27;我是内容&#x27;</span>,  <span class="hljs-comment">// 文本内容</span><br>  children:[]       <span class="hljs-comment">// 子元素</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>我们把组成一个<code>DOM</code>节点的必要东西通过一个<code>JS</code>对象表示出来，那么这个<code>JS</code>对象就可以用来描述这个<code>DOM</code>节点，我们把这个<code>JS</code>对象就称为是这个真实<code>DOM</code>节点的虚拟<code>DOM</code>节点</p>
+<p>2.为什么要有虚拟DOM？</p>
+<p>我们知道，<code>Vue</code>是数据驱动视图的，数据发生变化视图就要随之更新，在更新视图的时候难免要操作<code>DOM</code>,而操作真实<code>DOM</code>又是非常耗费性能的，这是因为浏览器的标准就把 <code>DOM</code> 设计的非常复杂，所以一个真正的 <code>DOM</code> 元素是非常庞大的，如下所示：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">let</span> div = <span class="hljs-built_in">document</span>.createElement(<span class="hljs-string">&#x27;div&#x27;</span>)<br><span class="hljs-keyword">let</span> str = <span class="hljs-string">&#x27;&#x27;</span><br><span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> key <span class="hljs-keyword">in</span> div) &#123;<br>  str += key + <span class="hljs-string">&#x27;&#x27;</span><br>&#125;<br><span class="hljs-built_in">console</span>.log(str)<br></code></pre></td></tr></table></figure>
+
+<p><img   class="lazyload" data-original="C:\Users\梁超\AppData\Roaming\Typora\typora-user-images\image-20210422112653087.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20210422112653087"></p>
+<p>上图中我们打印一个简单的空<code>div</code>标签，就打印出这么多东西，更不用说复杂的、深嵌套的<code>DOM</code>节点了。由此可见，直接操作真实<code>DOM</code>是非常消耗性能的。</p>
+<p>那么有没有什么解决方案呢？当然是有的。我们可以用<code>JS</code>的计算性能来换取操作<code>DOM</code>所消耗的性能。</p>
+<p>既然我们逃不掉操作<code>DOM</code>这道坎,但是我们可以尽可能少的操作<code>DOM</code>。那如何在更新视图的时候尽可能少的操作<code>DOM</code>呢？最直观的思路就是我们不要盲目的去更新视图，而是通过对比数据变化前后的状态，计算出视图中哪些地方需要更新，只更新需要更新的地方，而不需要更新的地方则不需关心，这样我们就可以尽可能少的操作<code>DOM</code>了。这也就是上面所说的用<code>JS</code>的计算性能来换取操作<code>DOM</code>的性能。</p>
+<p>我们可以用<code>JS</code>模拟出一个<code>DOM</code>节点，称之为虚拟<code>DOM</code>节点。当数据发生变化时，我们对比变化前后的虚拟<code>DOM</code>节点，通过<code>DOM-Diff</code>算法计算出需要更新的地方，然后去更新需要更新的视图。</p>
+<p>这就是虚拟<code>DOM</code>产生的原因以及最大的用途。</p>
+
       </section>
       <section class="extra">
         
