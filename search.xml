@@ -505,21 +505,21 @@
       </tags>
   </entry>
   <entry>
-    <title>vue源码理解——实例方法篇</title>
-    <url>/2021/03/18/vue%E6%BA%90%E7%A0%81%E7%90%86%E8%A7%A35/</url>
-    <content><![CDATA[<p>撸码一时爽，一直撸码一直爽！！！</p>
-]]></content>
-      <tags>
-        <tag>vue源码理解——实例方法篇</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>vue源码理解——全局API篇</title>
     <url>/2021/03/18/vue%E6%BA%90%E7%A0%81%E7%90%86%E8%A7%A36/</url>
     <content><![CDATA[<p>撸码一时爽，一直撸码一直爽！！！</p>
 ]]></content>
       <tags>
         <tag>vue源码理解——全局API篇</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>vue源码理解——实例方法篇</title>
+    <url>/2021/03/18/vue%E6%BA%90%E7%A0%81%E7%90%86%E8%A7%A35/</url>
+    <content><![CDATA[<p>撸码一时爽，一直撸码一直爽！！！</p>
+]]></content>
+      <tags>
+        <tag>vue源码理解——实例方法篇</tag>
       </tags>
   </entry>
   <entry>
@@ -914,7 +914,7 @@
       </tags>
   </entry>
   <entry>
-    <title>vue</title>
+    <title>vue2</title>
     <url>/2020/09/18/vue/</url>
     <content><![CDATA[<h4 id="vue-介绍"><a href="#vue-介绍" class="headerlink" title="vue 介绍"></a>vue 介绍</h4><ul>
 <li>渐进式javascript框架</li>
@@ -1174,7 +1174,7 @@
 <p>注意：ref必须在mounted之后</p>
 ]]></content>
       <tags>
-        <tag>vue</tag>
+        <tag>vue2</tag>
       </tags>
   </entry>
   <entry>
