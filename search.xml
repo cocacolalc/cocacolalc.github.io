@@ -489,7 +489,46 @@
   <entry>
     <title>vue源码理解——模板编译篇</title>
     <url>/2021/03/18/vue%E6%BA%90%E7%A0%81%E7%90%86%E8%A7%A33/</url>
-    <content><![CDATA[<p>撸码一时爽，一直撸码一直爽！！！</p>
+    <content><![CDATA[<h4 id="模板编译："><a href="#模板编译：" class="headerlink" title="模板编译："></a>模板编译：</h4><p>在前几篇文章中，我们介绍了<code>Vue</code>中的虚拟<code>DOM</code>以及虚拟<code>DOM</code>的<code>patch</code>(DOM-Diff)过程，而虚拟<code>DOM</code>存在的必要条件是得先有<code>VNode</code>，那么<code>VNode</code>又是从哪儿来的呢？这就是接下来几篇文章要说的模板编译。你可以这么理解：把用户写的模板进行编译，就会产生<code>VNode</code>。</p>
+<h5 id="什么是模板编译"><a href="#什么是模板编译" class="headerlink" title="什么是模板编译"></a>什么是模板编译</h5><p>我们知道，在日常开发中，我们把写在<code>&lt;template&gt;&lt;/template&gt;</code>标签中的类似于原生<code>HTML</code>的内容称之为模板。这时你可能会问了，为什么说是“类似于原生<code>HTML</code>的内容”而不是“就是<code>HTML</code>的内容”？因为我们在开发中，在<code>&lt;template&gt;&lt;/template&gt;</code>标签中除了写一些原生<code>HTML</code>的标签，我们还会写一些变量插值，如，或者写一些<code>Vue</code>指令，如<code>v-on</code>、<code>v-if</code>等。而这些东西都是在原生<code>HTML</code>语法中不存在的，不被接受的。但是事实上我们确实这么写了，也被正确识别了，页面也正常显示了，这又是为什么呢？</p>
+<p>这就归功于<code>Vue</code>的模板编译了，<code>Vue</code>会把用户在<code>&lt;template&gt;&lt;/template&gt;</code>标签中写的类似于原生<code>HTML</code>的内容进行编译，把原生<code>HTML</code>的内容找出来，再把非原生<code>HTML</code>找出来，经过一系列的逻辑处理生成渲染函数，也就是<code>render</code>函数，而<code>render</code>函数会将模板内容生成对应的<code>VNode</code>，而<code>VNode</code>再经过前几篇文章介绍的<code>patch</code>过程从而得到将要渲染的视图中的<code>VNode</code>，最后根据<code>VNode</code>创建真实的<code>DOM</code>节点并插入到视图中， 最终完成视图的渲染更新。</p>
+<p>而把用户在<code>&lt;template&gt;&lt;/template&gt;</code>标签中写的类似于原生<code>HTML</code>的内容进行编译，把原生<code>HTML</code>的内容找出来，再把非原生<code>HTML</code>找出来，经过一系列的逻辑处理生成渲染函数，也就是<code>render</code>函数的这一段过程称之为模板编译过程。</p>
+<h6 id="整体渲染流程"><a href="#整体渲染流程" class="headerlink" title="整体渲染流程"></a>整体渲染流程</h6><p>所谓渲染流程，就是把用户写的类似于原生<code>HTML</code>的模板经过一系列处理最终反应到视图中称之为整个渲染流程。这个流程在上文中其实已经说到了，下面我们以流程图的形式宏观的了解一下，流程图如下：</p>
+<p><img src="C:\Users\梁超\AppData\Roaming\Typora\typora-user-images\image-20210425144813349.png" alt="image-20210425144813349"></p>
+<p>从图中我们也可以看到，模板编译过程就是把用户写的模板经过一系列处理最终生成<code>render</code>函数的过程。</p>
+<h6 id="模板编译内部流程"><a href="#模板编译内部流程" class="headerlink" title="模板编译内部流程"></a>模板编译内部流程</h6><p>那么模板编译内部是怎么把用户写的模板经过处理最终生成<code>render</code>函数的呢？这内部的过程是怎样的呢？</p>
+<h6 id="抽象语法树AST"><a href="#抽象语法树AST" class="headerlink" title="抽象语法树AST"></a>抽象语法树AST</h6><p>我们知道，用户在<code>&lt;template&gt;&lt;/template&gt;</code>标签中写的模板对<code>Vue</code>来说就是一堆字符串，那么如何解析这一堆字符串并且从中提取出元素的标签、属性、变量插值等有效信息呢？这就需要借助一个叫做抽象语法树的东西。</p>
+<p>所谓抽象语法树，在计算机科学中，<strong>抽象语法树</strong>（<strong>A</strong>bstract<strong>S</strong>yntax<strong>T</strong>ree，AST），或简称<strong>语法树</strong>（Syntax tree），是源代码语法结构的一种抽象表示。它以树状的形式表现编程语言的语法结构，树上的每个节点都表示源代码中的一种结构。之所以说语法是“抽象”的，是因为这里的语法并不会表示出真实语法中出现的每个细节。比如，嵌套括号被隐含在树的结构中，并没有以节点的形式呈现；而类似于if-condition-then这样的条件跳转语句，可以使用带有两个分支的节点来表示。——来自百度百科</p>
+<p>我就知道，这段话贴出来也是白贴，因为看了也看不懂，哈哈。那么我们就以最直观的例子来理解什么是抽象语法树。请看下图：</p>
+<p><img src="C:\Users\梁超\AppData\Roaming\Typora\typora-user-images\image-20210425144910621.png" alt="image-20210425144910621"></p>
+<p>从图中我们可以看到，一个简单的<code>HTML</code>标签的代码被转换成了一个<code>JS</code>对象，而这个对象中的属性代表了这个标签中一些关键有效信息。如图中标识。 有兴趣的同学可以在这个网站在线转换试试：<a href="https://astexplorer.net/">https://astexplorer.net/</a></p>
+<h6 id="具体流程"><a href="#具体流程" class="headerlink" title="具体流程:"></a>具体流程:</h6><p>将一堆字符串模板解析成抽象语法树<code>AST</code>后，我们就可以对其进行各种操作处理了，处理完后用处理后的<code>AST</code>来生成<code>render</code>函数。其具体流程可大致分为三个阶段：</p>
+<ol>
+<li>模板解析阶段：将一堆模板字符串用正则等方式解析成抽象语法树<code>AST</code>；</li>
+<li>优化阶段：遍历<code>AST</code>，找出其中的静态节点，并打上标记；</li>
+<li>代码生成阶段：将<code>AST</code>转换成渲染函数；</li>
+</ol>
+<p>这三个阶段在源码中分别对应三个模块，下面给出三个模块的源代码在源码中的路径：</p>
+<ol>
+<li>模板解析阶段——解析器——源码路径：<code>src/compiler/parser/index.js</code>;</li>
+<li>优化阶段——优化器——源码路径：<code>src/compiler/optimizer.js</code>;</li>
+<li>代码生成阶段——代码生成器——源码路径：<code>src/compiler/codegen/index.js</code>; 其对应的源码如下：</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">// 源码位置: /src/complier/index.js</span><br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> createCompiler = createCompilerCreator(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">baseCompile</span> (<span class="hljs-params"></span></span><br><span class="hljs-function"><span class="hljs-params">  template: string,</span></span><br><span class="hljs-function"><span class="hljs-params">  options: CompilerOptions</span></span><br><span class="hljs-function"><span class="hljs-params"></span>): <span class="hljs-title">CompiledResult</span> </span>&#123;<br>  <span class="hljs-comment">// 模板解析阶段：用正则等方式解析 template 模板中的指令、class、style等数据，形成AST</span><br>  <span class="hljs-keyword">const</span> ast = parse(template.trim(), options)<br>  <span class="hljs-keyword">if</span> (options.optimize !== <span class="hljs-literal">false</span>) &#123;<br>    <span class="hljs-comment">// 优化阶段：遍历AST，找出其中的静态节点，并打上标记；</span><br>    optimize(ast, options)<br>  &#125;<br>  <span class="hljs-comment">// 代码生成阶段：将AST转换成渲染函数；</span><br>  <span class="hljs-keyword">const</span> code = generate(ast, options)<br>  <span class="hljs-keyword">return</span> &#123;<br>    ast,<br>    render: code.render,<br>    staticRenderFns: code.staticRenderFns<br>  &#125;<br>&#125;)<br></code></pre></td></tr></table></figure>
+
+<p>可以看到 <code>baseCompile</code> 的代码非常的简短主要核心代码。</p>
+<ul>
+<li><strong>const ast =parse(template.trim(), options)</strong>:<code>parse</code> 会用正则等方式解析 <code>template</code> 模板中的指令、<code>class</code>、<code>style</code>等数据，形成<code>AST</code>。</li>
+<li><strong>optimize(ast, options)</strong>: <code>optimize</code> 的主要作用是标记静态节点，这是 <code>Vue</code> 在编译过程中的一处优化，挡在进行<code>patch</code> 的过程中， <code>DOM-Diff</code> 算法会直接跳过静态节点，从而减少了比较的过程，优化了 <code>patch</code> 的性能。</li>
+<li><strong>const code =generate(ast, options)</strong>: 将 <code>AST</code> 转化成 <code>render</code>函数字符串的过程，得到结果是 <code>render</code>函数 的字符串以及 <code>staticRenderFns</code> 字符串。</li>
+</ul>
+<p>最终 <code>baseCompile</code> 的返回值</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js">&#123;<br> 	ast: ast,<br> 	render: code.render,<br> 	staticRenderFns: code.staticRenderFns<br> &#125;<br></code></pre></td></tr></table></figure>
+
+<p>最终返回了抽象语法树( ast )，渲染函数( render )，静态渲染函数( staticRenderFns )，且<code>render</code> 的值为<code>code.render</code>，<code>staticRenderFns</code> 的值为<code>code.staticRenderFns</code>，也就是说通过 <code>generate</code>处理 <code>ast</code>之后得到的返回值 <code>code</code> 是一个对象。</p>
+<p>下面再给出模板编译内部具体流程图，便于理解。流程图如下： <img src="https://vue-js.com/learn-vue/assets/img/3.15d9566b.png" alt="img"></p>
+<h5 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h5><p>本篇文章首先引出了为什么会有模板编译，因为有了模板编译，才有了虚拟<code>DOM</code>，才有了后续的视图更新。接着介绍了什么是模板编译，以及介绍了把用户所写的模板经过层层处理直到最终渲染的视图中这个整体的渲染流程；最后介绍了模板编译过程中所需要使用的抽象语法树的概念以及分析了模板编译的具体实施流程，其流程大致分为三个阶段，分别是模板解析阶段、优化阶段和代码生成阶段。那么接下来的几篇文章将会把这三个阶段逐一进行分析介绍。</p>
+<p>撸码一时爽，一直撸码一直爽！！！</p>
 ]]></content>
       <tags>
         <tag>vue源码理解——模板编译篇</tag>
@@ -498,7 +537,18 @@
   <entry>
     <title>vue源码理解——生命周期篇</title>
     <url>/2021/03/18/vue%E6%BA%90%E7%A0%81%E7%90%86%E8%A7%A34/</url>
-    <content><![CDATA[<p>撸码一时爽，一直撸码一直爽！！！</p>
+    <content><![CDATA[<h4 id="生命周期："><a href="#生命周期：" class="headerlink" title="生命周期："></a>生命周期：</h4><p>在<code>Vue</code>中，每个<code>Vue</code>实例从被创建出来到最终被销毁都会经历一个过程，就像人一样，从出生到死亡。在这一过程里会发生许许多多的事，例如设置数据监听，编译模板，组件挂载等。在<code>Vue</code>中，把<code>Vue</code>实例从被创建出来到最终被销毁的这一过程称为<code>Vue</code>实例的生命周期，同时，在<code>Vue</code>实例生命周期的不同阶段<code>Vue</code>还提供了不同的钩子函数，以方便用户在不同的生命周期阶段做一些额外的事情。那么，接下来的几篇文章我们就从源码角度深入剖析一下一个<code>Vue</code>实例在从生到死的生命周期里到底都经历了些什么，每个阶段都做了哪些事情。</p>
+<h5 id="生命周期流程图"><a href="#生命周期流程图" class="headerlink" title="生命周期流程图"></a>生命周期流程图</h5><p>下图是<code>Vue</code>官网给出的<code>Vue</code>实例的生命周期流程图，如下：</p>
+<p><img src="C:\Users\梁超\AppData\Roaming\Typora\typora-user-images\image-20210425145156115.png" alt="image-20210425145156115"></p>
+<p>从图中我们可以看到，<code>Vue</code>实例的生命周期大致可分为4个阶段：</p>
+<ul>
+<li>初始化阶段：为<code>Vue</code>实例上初始化一些属性，事件以及响应式数据；</li>
+<li>模板编译阶段：将模板编译成渲染函数；</li>
+<li>挂载阶段：将实例挂载到指定的<code>DOM</code>上，即将模板渲染到真实<code>DOM</code>中；</li>
+<li>销毁阶段：将实例自身从父组件中删除，并取消依赖追踪及事件监听器；</li>
+</ul>
+<h6 id="总结：："><a href="#总结：：" class="headerlink" title="总结：："></a>总结：：</h6><p>本篇文章是生命周期篇的开篇综述，借用<code>Vue</code>官网的生命周期流程图介绍了一个<code>Vue</code>实例的生命周期大致可分为四个阶段，分别是初始化阶段、模板编译阶段、挂载阶段、销毁阶段。接下来的几篇文章我们就从这个流程图为基础，自上到下，从每个阶段入手，深入分析在每个阶段里都干了些什么。</p>
+<p>撸码一时爽，一直撸码一直爽！！！</p>
 ]]></content>
       <tags>
         <tag>vue源码理解——生命周期篇</tag>
@@ -507,7 +557,46 @@
   <entry>
     <title>vue源码理解——实例方法篇</title>
     <url>/2021/03/18/vue%E6%BA%90%E7%A0%81%E7%90%86%E8%A7%A35/</url>
-    <content><![CDATA[<p>撸码一时爽，一直撸码一直爽！！！</p>
+    <content><![CDATA[<h4 id="实例方法："><a href="#实例方法：" class="headerlink" title="实例方法："></a>实例方法：</h4><p>与数据相关的实例方法有3个，分别是<code>vm.$set</code>、<code>vm.$delete</code>和<code>vm.$watch</code>。它们是在<code>stateMixin</code>函数中挂载到<code>Vue</code>原型上的，代码如下：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">import</span> &#123;set,del&#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;../observer/index&#x27;</span><br><br><span class="hljs-keyword">export</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">stateMixin</span> (<span class="hljs-params">Vue</span>) </span>&#123;<br>    Vue.prototype.$set = set<br>    Vue.prototype.$delete = del<br>    Vue.prototype.$watch = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">expOrFn,cb,options</span>) </span>&#123;&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>当执行<code>stateMixin</code>函数后，会向<code>Vue</code>原型上挂载上述3个实例方法。</p>
+<p>接下来，我们就来分析这3个与数据相关的实例方法其内部的原理都是怎样的</p>
+<h5 id="vm-watch"><a href="#vm-watch" class="headerlink" title="vm.$watch"></a>vm.$watch</h5><h5 id="用法回顾"><a href="#用法回顾" class="headerlink" title="用法回顾"></a>用法回顾</h5><p>在介绍方法的内部原理之前，我们先根据官方文档示例回顾一下它的用法。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript">vm.$watch( expOrFn, callback, [options] )<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><p><strong>参数</strong>：</p>
+<ul>
+<li><p><code>&#123;string | Function&#125; expOrFn</code></p>
+</li>
+<li><p><code>&#123;Function | Object&#125; callback</code></p>
+</li>
+<li><pre><code>&#123;Object&#125; [options]
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain"><br>    - &#96;&#123;boolean&#125; deep&#96;<br>    - &#96;&#123;boolean&#125; immediate&#96;<br><br>- **返回值**：&#96;&#123;Function&#125; unwatch&#96;<br><br>- **用法**：<br><br>  观察 &#96;Vue&#96; 实例变化的一个表达式或计算属性函数。回调函数得到的参数为新值和旧值。表达式只接受监督的键路径。对于更复杂的表达式，用一个函数取代。<br><br>  注意：在变异 (不是替换) 对象或数组时，旧值将与新值相同，因为它们的引用指向同一个对象&#x2F;数组。&#96;Vue&#96; 不会保留变异之前值的副本。<br><br>- **示例**：<br><br>  &#96;&#96;&#96;javascript<br>  &#x2F;&#x2F; 键路径<br>  vm.$watch(&#39;a.b.c&#39;, function (newVal, oldVal) &#123;<br>    &#x2F;&#x2F; 做点什么<br>  &#125;)<br>  <br>  &#x2F;&#x2F; 函数<br>  vm.$watch(<br>    function () &#123;<br>      &#x2F;&#x2F; 表达式 &#96;this.a + this.b&#96; 每次得出一个不同的结果时<br>      &#x2F;&#x2F; 处理函数都会被调用。<br>      &#x2F;&#x2F; 这就像监听一个未被定义的计算属性<br>      return this.a + this.b<br>    &#125;,<br>    function (newVal, oldVal) &#123;<br>      &#x2F;&#x2F; 做点什么<br>    &#125;<br>  )<br></code></pre></td></tr></table></figure>
+</code></pre>
+</li>
+</ul>
+<p><code>vm.$watch</code> 返回一个取消观察函数，用来停止触发回调：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> unwatch = vm.$watch(<span class="hljs-string">&#x27;a&#x27;</span>, cb)<br><span class="hljs-comment">// 之后取消观察</span><br>unwatch()<br></code></pre></td></tr></table></figure>
+</li>
+<li><p><strong>选项：deep</strong></p>
+<p>为了发现对象内部值的变化，可以在选项参数中指定 <code>deep: true</code> 。注意监听数组的变动不需要这么做。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript">vm.$watch(<span class="hljs-string">&#x27;someObject&#x27;</span>, callback, &#123;<br>  deep: <span class="hljs-literal">true</span><br>&#125;)<br>vm.someObject.nestedValue = <span class="hljs-number">123</span><br><span class="hljs-comment">// callback is fired</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p><strong>选项：immediate</strong></p>
+<p>在选项参数中指定 <code>immediate: true</code> 将立即以表达式的当前值触发回调：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript">vm.$watch(<span class="hljs-string">&#x27;a&#x27;</span>, callback, &#123;<br>  immediate: <span class="hljs-literal">true</span><br>&#125;)<br><span class="hljs-comment">// 立即以 `a` 的当前值触发回调</span><br></code></pre></td></tr></table></figure>
+
+<p>注意在带有 <code>immediate</code> 选项时，你不能在第一次回调时取消侦听给定的 property。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">// 这会导致报错</span><br><span class="hljs-keyword">var</span> unwatch = vm.$watch(<br>  <span class="hljs-string">&#x27;value&#x27;</span>,<br>  <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>&#123;<br>    doSomething()<br>    unwatch()<br>  &#125;,<br>  &#123; <span class="hljs-attr">immediate</span>: <span class="hljs-literal">true</span> &#125;<br>)<br></code></pre></td></tr></table></figure>
+
+<p>如果你仍然希望在回调内部调用一个取消侦听的函数，你应该先检查其函数的可用性：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> unwatch = vm.$watch(<br>  <span class="hljs-string">&#x27;value&#x27;</span>,<br>  <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>&#123;<br>    doSomething()<br>    <span class="hljs-keyword">if</span> (unwatch) &#123;<br>      unwatch()<br>    &#125;<br>  &#125;,<br>  &#123; <span class="hljs-attr">immediate</span>: <span class="hljs-literal">true</span> &#125;<br>)<br></code></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p>撸码一时爽，一直撸码一直爽！！！</p>
 ]]></content>
       <tags>
         <tag>vue源码理解——实例方法篇</tag>
@@ -516,7 +605,81 @@
   <entry>
     <title>vue源码理解——全局API篇</title>
     <url>/2021/03/18/vue%E6%BA%90%E7%A0%81%E7%90%86%E8%A7%A36/</url>
-    <content><![CDATA[<p>撸码一时爽，一直撸码一直爽！！！</p>
+    <content><![CDATA[<h4 id="全局API"><a href="#全局API" class="headerlink" title="全局API"></a>全局API</h4><p>与实例方法不同，实例方法是将方法挂载到<code>Vue</code>的原型上，而全局API是直接在<code>Vue</code>上挂载方法。在<code>Vue</code>中，全局API一共有12个，分别是<code>Vue.extend</code>、<code>Vue.nextTick</code>、<code>Vue.set</code>、<code>Vue.delete</code>、<code>Vue.directive</code>、<code>Vue.filter</code>、<code>Vue.component</code>、<code>Vue.use</code>、<code>Vue.mixin</code>、<code>Vue.observable</code>、<code>Vue.version</code>。这12个API中有的是我们在日常业务开发中经常会用到的，有的是对<code>Vue</code>内部或外部插件提供的，我们在日常业务开发中几乎用不到。接下来我们就对这12个API逐个进行分析，看看其内部原理都是怎样的。</p>
+<h5 id="Vue-extend"><a href="#Vue-extend" class="headerlink" title="Vue.extend"></a>Vue.extend</h5><h6 id="用法回顾"><a href="#用法回顾" class="headerlink" title="用法回顾"></a>用法回顾</h6><p>其用法如下：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript">Vue.extend( options )<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><p><strong>参数</strong>：</p>
+<ul>
+<li><code>&#123;Object&#125; options</code></li>
+</ul>
+</li>
+<li><p><strong>作用</strong>：</p>
+<p>使用基础 <code>Vue</code> 构造器，创建一个“子类”。参数是一个包含组件选项的对象。</p>
+<p><code>data</code> 选项是特例，需要注意 - 在 <code>Vue.extend()</code> 中它必须是函数</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;mount-point&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>1</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">// 创建构造器</span><br><span class="hljs-keyword">var</span> Profile = Vue.extend(&#123;<br>  template: <span class="hljs-string">&#x27;&lt;p&gt;&#123;&#123;firstName&#125;&#125; &#123;&#123;lastName&#125;&#125; aka &#123;&#123;alias&#125;&#125;&lt;/p&gt;&#x27;</span>,<br>  data: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>&#123;<br>    <span class="hljs-keyword">return</span> &#123;<br>      firstName: <span class="hljs-string">&#x27;Walter&#x27;</span>,<br>      lastName: <span class="hljs-string">&#x27;White&#x27;</span>,<br>      alias: <span class="hljs-string">&#x27;Heisenberg&#x27;</span><br>    &#125;<br>  &#125;<br>&#125;)<br><span class="hljs-comment">// 创建 Profile 实例，并挂载到一个元素上。</span><br><span class="hljs-keyword">new</span> Profile().$mount(<span class="hljs-string">&#x27;##mount-point&#x27;</span>)<br></code></pre></td></tr></table></figure>
+
+<p>结果如下：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>Walter White aka Heisenberg<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h5 id="原理分析"><a href="#原理分析" class="headerlink" title="原理分析"></a>原理分析</h5><p>通过用法回顾我们知道，<code>Vue.extend</code>的作用是创建一个继承自<code>Vue</code>类的子类，可接收的参数是一个包含组件选项的对象。</p>
+<p>既然是<code>Vue</code>类的子类，那么除了它本身独有的一些属性方法，还有一些是从<code>Vue</code>类中继承而来，所以创建子类的过程其实就是一边给子类上添加上独有的属性，一边将父类的公共属性复制到子类上。接下来，我们就来看看源码是如何实现这个过程的。</p>
+<p>该API的定义位于源码的<code>src/core/global-api/extend.js</code>中，如下：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript">Vue.extend = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">extendOptions: Object</span>): <span class="hljs-title">Function</span> </span>&#123;<br>    extendOptions = extendOptions || &#123;&#125;<br>    <span class="hljs-keyword">const</span> Super = <span class="hljs-built_in">this</span><br>    <span class="hljs-keyword">const</span> SuperId = Super.cid<br>    <span class="hljs-keyword">const</span> cachedCtors = extendOptions._Ctor || (extendOptions._Ctor = &#123;&#125;)<br>    <span class="hljs-keyword">if</span> (cachedCtors[SuperId]) &#123;<br>        <span class="hljs-keyword">return</span> cachedCtors[SuperId]<br>    &#125;<br><br>    <span class="hljs-keyword">const</span> name = extendOptions.name || Super.options.name<br>    <span class="hljs-keyword">if</span> (process.env.NODE_ENV !== <span class="hljs-string">&#x27;production&#x27;</span> &amp;&amp; name) &#123;<br>        validateComponentName(name)<br>    &#125;<br><br>    <span class="hljs-keyword">const</span> Sub = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">VueComponent</span> (<span class="hljs-params">options</span>) </span>&#123;<br>        <span class="hljs-built_in">this</span>._init(options)<br>    &#125;<br>    Sub.prototype = <span class="hljs-built_in">Object</span>.create(Super.prototype)<br>    Sub.prototype.constructor = Sub<br>    Sub.cid = cid++<br>    Sub.options = mergeOptions(<br>        Super.options,<br>        extendOptions<br>    )<br>    Sub[<span class="hljs-string">&#x27;super&#x27;</span>] = Super<br><br>    <span class="hljs-keyword">if</span> (Sub.options.props) &#123;<br>        initProps(Sub)<br>    &#125;<br>    <span class="hljs-keyword">if</span> (Sub.options.computed) &#123;<br>        initComputed(Sub)<br>    &#125;<br><br>    <span class="hljs-comment">// allow further extension/mixin/plugin usage</span><br>    Sub.extend = Super.extend<br>    Sub.mixin = Super.mixin<br>    Sub.use = Super.use<br><br>    <span class="hljs-comment">// create asset registers, so extended classes</span><br>    <span class="hljs-comment">// can have their private assets too.</span><br>    ASSET_TYPES.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">type</span>) </span>&#123;<br>        Sub[type] = Super[type]<br>    &#125;)<br>    <span class="hljs-comment">// enable recursive self-lookup</span><br>    <span class="hljs-keyword">if</span> (name) &#123;<br>        Sub.options.components[name] = Sub<br>    &#125;<br><br>    Sub.superOptions = Super.options<br>    Sub.extendOptions = extendOptions<br>    Sub.sealedOptions = extend(&#123;&#125;, Sub.options)<br><br>    <span class="hljs-comment">// cache constructor</span><br>    cachedCtors[SuperId] = Sub<br>    <span class="hljs-keyword">return</span> Sub<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>可以看到，虽然代码量稍微有点多，但是逻辑并不复杂，下面我们就来逐行分析一下。</p>
+<p>首先，该函数内部定义了几个变量，如下：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript">extendOptions = extendOptions || &#123;&#125;<br><span class="hljs-keyword">const</span> Super = <span class="hljs-built_in">this</span><br><span class="hljs-keyword">const</span> SuperId = Super.cid<br><span class="hljs-keyword">const</span> cachedCtors = extendOptions._Ctor || (extendOptions._Ctor = &#123;&#125;)<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>extendOptions：用户传入的一个包含组件选项的对象参数；</li>
+<li>Super：指向父类，即基础 <code>Vue</code>类；</li>
+<li>SuperId：父类的<code>cid</code>属性，无论是基础 <code>Vue</code>类还是从基础 <code>Vue</code>类继承而来的类，都有一个<code>cid</code>属性，作为该类的唯一标识；</li>
+<li>cachedCtors：缓存池，用于缓存创建出来的类；</li>
+</ul>
+<p>接着，在缓存池中先尝试获取是否之前已经创建过的该子类，如果之前创建过，则直接返回之前创建的。之所以有这一步，是因为<code>Vue</code>为了性能考虑，反复调用<code>Vue.extend</code>其实应该返回同一个结果，只要返回结果是固定的，就可以将结果缓存，再次调用时，只需从缓存中取出结果即可。在API方法定义的最后，当创建完子类后，会使用父类的<code>cid</code>作为<code>key</code>，创建好的子类作为<code>value</code>，存入缓存池<code>cachedCtors</code>中。如下：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">if</span> (cachedCtors[SuperId]) &#123;<br>    <span class="hljs-keyword">return</span> cachedCtors[SuperId]<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>接着，获取到传入的选项参数中的<code>name</code>字段，并且在开发环境下校验<code>name</code>字段是否合法，如下：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">const</span> name = extendOptions.name || Super.options.name<br><span class="hljs-keyword">if</span> (process.env.NODE_ENV !== <span class="hljs-string">&#x27;production&#x27;</span> &amp;&amp; name) &#123;<br>    validateComponentName(name)<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>接着，创建一个类<code>Sub</code>，这个类就是将要继承基础<code>Vue</code>类的子类，如下：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">const</span> Sub = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">VueComponent</span> (<span class="hljs-params">options</span>) </span>&#123;<br>    <span class="hljs-built_in">this</span>._init(options)<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>到这里，我们已经把类创建好了，接下来的工作就是让该类去继承基础<code>Vue</code>类，让其具备一些基础<code>Vue</code>类的能力。</p>
+<p>首先，将父类的原型继承到子类中，并且为子类添加唯一标识<code>cid</code>，如下：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript">Sub.prototype = <span class="hljs-built_in">Object</span>.create(Super.prototype)<br>Sub.prototype.constructor = Sub<br>Sub.cid = cid++<br></code></pre></td></tr></table></figure>
+
+<p>接着，将父类的<code>options</code>与子类的<code>options</code>进行合并，将合并结果赋给子类的<code>options</code>属性，如下：</p>
+<p>接着，将父类保存到子类的<code>super</code>属性中，以确保在子类中能够拿到父类，如下：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript">Sub[<span class="hljs-string">&#x27;super&#x27;</span>] = Super<br></code></pre></td></tr></table></figure>
+
+<p>接着，如果选项中存在<code>props</code>属性，则初始化它，如下：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">if</span> (Sub.options.props) &#123;<br>    initProps(Sub)<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">initProps</span> (<span class="hljs-params">Comp</span>) </span>&#123;<br>  <span class="hljs-keyword">const</span> props = Comp.options.props<br>  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> key <span class="hljs-keyword">in</span> props) &#123;<br>    proxy(Comp.prototype, <span class="hljs-string">`_props`</span>, key)<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>初始化<code>props</code>属性其实就是把参数中传入的<code>props</code>选项代理到原型的<code>_props</code>中。</p>
+<p>接着，如果选项中存在<code>computed</code>属性，则初始化它，如下：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">if</span> (Sub.options.computed) &#123;<br>    initComputed(Sub)<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">initComputed</span> (<span class="hljs-params">Comp</span>) </span>&#123;<br>  <span class="hljs-keyword">const</span> computed = Comp.options.computed<br>  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> key <span class="hljs-keyword">in</span> computed) &#123;<br>    defineComputed(Comp.prototype, key, computed[key])<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>初始化<code>props</code>属性就是遍历参数中传入的<code>computed</code>选项，将每一项都调用<code>defineComputed</code>函数定义到子类原型上。此处的<code>defineComputed</code>函数与我们之前在生命周期初始化阶段<code>initState</code>中所介绍的<code>defineComputed</code>函数是一样的。</p>
+<p>接着，将父类中的一些属性复制到子类中，如下：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript">Sub.extend = Super.extend<br>Sub.mixin = Super.mixin<br>Sub.use = Super.use<br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> ASSET_TYPES = [<br>  <span class="hljs-string">&#x27;component&#x27;</span>,<br>  <span class="hljs-string">&#x27;directive&#x27;</span>,<br>  <span class="hljs-string">&#x27;filter&#x27;</span><br>]<br><span class="hljs-comment">// create asset registers, so extended classes</span><br><span class="hljs-comment">// can have their private assets too.</span><br>ASSET_TYPES.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">type</span>) </span>&#123;<br>    Sub[type] = Super[type]<br>&#125;)<br><span class="hljs-comment">// enable recursive self-lookup</span><br><span class="hljs-keyword">if</span> (name) &#123;<br>    Sub.options.components[name] = Sub<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>接着，给子类新增三个独有的属性，如下：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript">Sub.superOptions = Super.options<br>Sub.extendOptions = extendOptions<br>Sub.sealedOptions = extend(&#123;&#125;, Sub.options)<br></code></pre></td></tr></table></figure>
+
+<p>最后，使用父类的<code>cid</code>作为<code>key</code>，创建好的子类<code>Sub</code>作为<code>value</code>，存入缓存池<code>cachedCtors</code>中。如下：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">// cache constructor</span><br>cachedCtors[SuperId] = Sub<br></code></pre></td></tr></table></figure>
+
+<p>最终将创建好的子类<code>Sub</code>返回。</p>
+<p>以上，就是<code>Vue.extend</code>的所有逻辑。其实总体来讲，整个过程就是先创建一个类<code>Sub</code>，接着通过原型继承的方式将该类继承基础<code>Vue</code>类，然后给<code>Sub</code>类添加一些属性以及将父类的某些属性复制到<code>Sub</code>类上，最后将<code>Sub</code>类返回。</p>
+<p>撸码一时爽，一直撸码一直爽！！！</p>
 ]]></content>
       <tags>
         <tag>vue源码理解——全局API篇</tag>
@@ -525,7 +688,8 @@
   <entry>
     <title>vue源码理解——过滤器篇</title>
     <url>/2021/03/18/vue%E6%BA%90%E7%A0%81%E7%90%86%E8%A7%A37/</url>
-    <content><![CDATA[<p>撸码一时爽，一直撸码一直爽！！！</p>
+    <content><![CDATA[<h4 id="过虑器"><a href="#过虑器" class="headerlink" title="过虑器"></a>过虑器</h4><p>过滤器在我们日常开发中应该算是一个非常常用的功能了，它经常会被用来格式化模板中的文本。过滤器可以单个使用，也可以多个串联一起使用，还可以传参数使用。那么在<code>Vue</code>中过滤器是如何工作的呢？其内部原理是怎样的？<code>Vue</code>又是如何识别出我们所写的过滤器的？接下来，我们将从源码角度出发，探究过滤器内部的工作原理，分析其工作流程，揭开它神秘的面纱。</p>
+<p>撸码一时爽，一直撸码一直爽！！！</p>
 ]]></content>
       <tags>
         <tag>vue源码理解——过滤器篇</tag>
@@ -534,10 +698,26 @@
   <entry>
     <title>vue源码理解——指令篇</title>
     <url>/2021/03/18/vue%E6%BA%90%E7%A0%81%E7%90%86%E8%A7%A38/</url>
-    <content><![CDATA[<p>撸码一时爽，一直撸码一直爽！！！</p>
+    <content><![CDATA[<h4 id="指令"><a href="#指令" class="headerlink" title="指令"></a>指令</h4><p>在<code>Vue</code>中，除了<code>Vue</code>本身为我们提供的一些内置指令之外，<code>Vue</code>还支持用户自定义指令。并且用户有两种定义指令的方式：一种是使用全局API——<code>Vue.directive</code>来定义全局指令，这种方式定义的指令会被存放在<code>Vue.options[&#39;directives&#39;]</code>中；另一种是在组件内的<code>directive</code>选项中定义专为该组件使用的局部指令，这种方式定义的指令会被存放在<code>vm.$options[&#39;directives&#39;]</code>中。</p>
+<p>可以看到，无论是使用哪一种方式定义的指令它都是将定义好的指令存放在指定的地方，而并不能让指令生效。那么定义的指令什么时候才会生效呢？或者说它是如何生效的呢？本篇文章就来带你探究自定义指令如何生效的内部原理。</p>
+<p>撸码一时爽，一直撸码一直爽！！！</p>
 ]]></content>
       <tags>
         <tag>vue源码理解——指令篇</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>vue源码理解——内置组件篇</title>
+    <url>/2021/03/18/vue%E6%BA%90%E7%A0%81%E7%90%86%E8%A7%A39/</url>
+    <content><![CDATA[<h4 id="内置组件"><a href="#内置组件" class="headerlink" title="内置组件"></a>内置组件</h4><p><code>&lt;keep-alive&gt;</code> 是 <code>Vue</code> 实现的一个内置组件，也就是说 <code>Vue</code> 源码不仅实现了一套组件化的机制，也实现了一些内置组件，关于<code>&lt;keep-alive&gt;</code>组件，官网如下介绍：</p>
+<blockquote>
+<p><code>&lt;keep-alive&gt;</code>是<code>Vue</code>中内置的一个抽象组件，它自身不会渲染一个 <code>DOM</code> 元素，也不会出现在父组件链中。当它包裹动态组件时，会缓存不活动的组件实例，而不是销毁它们。</p>
+</blockquote>
+<p>这句话的意思简单来说：就是我们可以把一些不常变动的组件或者需要缓存的组件用<code>&lt;keep-alive&gt;</code>包裹起来，这样<code>&lt;keep-alive&gt;</code>就会帮我们把组件保存在内存中，而不是直接的销毁，这样做可以保留组件的状态或避免多次重新渲染，以提高页面性能。</p>
+<p>撸码一时爽，一直撸码一直爽！！！</p>
+]]></content>
+      <tags>
+        <tag>vue源码理解——内置组件篇</tag>
       </tags>
   </entry>
   <entry>
@@ -566,15 +746,6 @@
 <p>下载稳定版</p>
 <p>安装时无需注意，一直next就可以了</p>
 ]]></content>
-  </entry>
-  <entry>
-    <title>vue源码理解——内置组件篇</title>
-    <url>/2021/03/18/vue%E6%BA%90%E7%A0%81%E7%90%86%E8%A7%A39/</url>
-    <content><![CDATA[<p>撸码一时爽，一直撸码一直爽！！！</p>
-]]></content>
-      <tags>
-        <tag>vue源码理解——内置组件篇</tag>
-      </tags>
   </entry>
   <entry>
     <title>javascript 1</title>
