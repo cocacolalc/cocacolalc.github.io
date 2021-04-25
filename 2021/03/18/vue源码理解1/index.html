@@ -158,14 +158,14 @@
     <article class="article">
   <div class="wrap">
     <section class="head">
-  <img   class="lazyload" data-original="https://gitee.com/cocacolalc/imgs-hexo/raw/master/img/bj_img2.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
+  <img   class="lazyload" data-original="https://gitee.com/cocacolalc/imgs-hexo/raw/master/img/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_2020102317045613.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
   <div class="head-mask">
     <h1 class="head-title">vue源码理解——变化侦测篇</h1>
     <div class="head-info">
       <span class="post-info-item"><i class="iconfont iconcalendar"></i>March 18, 2021</span
         class="post-info-item">
       
-      <span class="post-info-item"><i class="iconfont iconfont-size"></i>18439</span>
+      <span class="post-info-item"><i class="iconfont iconfont-size"></i>18456</span>
     </div>
   </div>
 </section>
@@ -298,6 +298,7 @@
 <p>而使用上述例子中的操作方式来修改数组是无法侦测到的。 同样，<code>Vue</code>也注意到了这个问题， 为了解决这一问题，<code>Vue</code>增加了两个全局API:<code>Vue.set</code>和<code>Vue.delete</code>，这两个API的实现原理将会在后面学习全局API的时候说到</p>
 <h5 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h5><p>在本篇文章中，首先我们分析了对于<code>Array</code>型数据也在<code>getter</code>中进行依赖收集；其次我们发现，当数组数据被访问时我们轻而易举可以知道，但是被修改时我们却很难知道，为了解决这一问题，我们创建了数组方法拦截器，从而成功的将数组数据变的可观测。接着我们对数组的依赖收集及数据变化如何通知依赖进行了深入分析；最后我们发现<code>Vue</code>不但对数组自身进行了变化侦测，还对数组中的每一个元素以及新增的元素都进行了变化侦测，我们也分析了其实现原理。</p>
 <p>以上就是对<code>Array</code>型数据的变化侦测分析。</p>
+<p>撸码一时爽，一直撸码一直爽！！！</p>
 
       </section>
       <section class="extra">
@@ -331,7 +332,7 @@
     <a href="/2021/03/18/vue%E6%BA%90%E7%A0%81%E7%90%86%E8%A7%A39/"><i class="iconfont iconleft"></i>vue源码理解——内置组件篇</a>
   
   
-    <a href="/2020/09/22/javascript/">javascript 1<i class="iconfont iconright"></i></a>
+    <a href="/2021/03/18/vue%E6%BA%90%E7%A0%81%E7%90%86%E8%A7%A32/">vue源码理解——虚拟DOM篇<i class="iconfont iconright"></i></a>
   
 </nav>
 
