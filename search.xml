@@ -112,6 +112,85 @@
       </tags>
   </entry>
   <entry>
+    <title>nodejs-1</title>
+    <url>/2020/09/18/nodejs%E7%AC%94%E8%AE%B0/</url>
+    <content><![CDATA[<h1 id="node-js"><a href="#node-js" class="headerlink" title="node js"></a>node js</h1><p>nodejs是基于google v8引擎，在服务器端支持javascript的一种运行环境。</p>
+<p>特点：单线程、非阻塞I/O、事件驱动</p>
+<h4 id="node运行js文件的路径："><a href="#node运行js文件的路径：" class="headerlink" title="node运行js文件的路径："></a>node运行js文件的路径：</h4><p>相对路径：node命令前面的路径（运行路径）</p>
+<p>绝对路径        </p>
+<h4 id="顶层对象"><a href="#顶层对象" class="headerlink" title="顶层对象"></a>顶层对象</h4><p>浏览器里是window，node里是global，ES6中提到同义顶层对象用globalThis，</p>
+<p>ES6中将顶层对象的属性与全局变量逐步脱钩。</p>
+<h4 id="默认的全局变量"><a href="#默认的全局变量" class="headerlink" title="默认的全局变量"></a>默认的全局变量</h4><p>__filename当前js文件带有完整绝对路径的文件名</p>
+<p>__dirname获得当前执行文件所在目录的完整目录名</p>
+<h4 id="Buffer"><a href="#Buffer" class="headerlink" title="Buffer"></a>Buffer</h4><p>Buffer 被引入用以帮助开发者处理二进制数据，在此生态系统中传统上只处理字符串而不是二进制数据。</p>
+<p>1、指定大小：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> buffer=Buffer.alloc(<span class="hljs-number">20</span>);<span class="hljs-comment">//length</span><br><span class="hljs-comment">//&lt;Buffer 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00&gt;</span><br><br></code></pre></td></tr></table></figure>
+
+<p>2、</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> buf2=Buffer.from(<span class="hljs-string">&quot;this is buffer&quot;</span>);<span class="hljs-comment">//string</span><br><span class="hljs-comment">//&lt;Buffer 74 68 69 73 20 69 73 20 62 75 66 66 65 72&gt;</span><br><span class="hljs-keyword">var</span> s=buf2.toString(<span class="hljs-string">&quot;utf-8&quot;</span>);<br><span class="hljs-comment">//this is buffer</span><br>buf2.write();<br><br></code></pre></td></tr></table></figure>
+
+<h4 id="模块化"><a href="#模块化" class="headerlink" title="模块化"></a>模块化</h4><p>多个js文件的引用方式。</p>
+<p>模块：按照特定的格式写出来的js文件。</p>
+<p>特定的格式：为了引用，模块化规范。</p>
+<p>nodejs里用的是commonjs规范。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">sum</span>(<span class="hljs-params"></span>)</span>&#123;&#125;<br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">sub</span>(<span class="hljs-params"></span>)</span>&#123;&#125;<br><span class="hljs-built_in">module</span>.exports=&#123;sum,sub&#125;;<span class="hljs-comment">//导出</span><br><span class="hljs-built_in">exports</span>.sum=sum;<span class="hljs-comment">//exports只能用这种方式</span><br><br><br><span class="hljs-comment">//引用</span><br><span class="hljs-keyword">let</span> &#123;sum,sub&#125;=<span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;路径&quot;</span>);<br><br></code></pre></td></tr></table></figure>
+
+<h5 id="事件模块"><a href="#事件模块" class="headerlink" title="事件模块"></a>事件模块</h5><figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-comment">//内置模块http、fs、events，核心模块</span><br><span class="hljs-keyword">let</span> http=<span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;http&quot;</span>);<br><span class="hljs-keyword">let</span> fs=<span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;fs&quot;</span>);<br><br><br><span class="hljs-comment">//events是内置的处理事件的模块 EventEmitter</span><br><span class="hljs-comment">//events 模块只提供了一个对象： events.EventEmitter。EventEmitter 的核心就是事件触发与事件监听器功能的封装。</span><br><span class="hljs-comment">//1、加载事件模块</span><br><span class="hljs-keyword">let</span> EventEmitter=<span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;events&quot;</span>).EventEmitter;<br><span class="hljs-number">2</span>、实例化一个事件对象<br><span class="hljs-keyword">let</span> event=<span class="hljs-keyword">new</span> EventEmitter();<br><span class="hljs-comment">//3、实例提供里两个方法：</span><br>event.on(<span class="hljs-string">&quot;event1&quot;</span>,<span class="hljs-function">(<span class="hljs-params">...args</span>)=&gt;</span>&#123;<span class="hljs-comment">//为指定事件注册一个监听器，接受一个字符串 event 和一个回调函数。</span><br>  <span class="hljs-built_in">console</span>.log(args)；<br>&#125;)<br><span class="hljs-built_in">setInterval</span>(<span class="hljs-function">() =&gt;</span> &#123;<br>    event.emit(<span class="hljs-string">&quot;event1&quot;</span>,<span class="hljs-string">&quot;a&quot;</span>,<span class="hljs-string">&quot;b&quot;</span>,<span class="hljs-string">&quot;c&quot;</span>)<span class="hljs-comment">//触发事件emit(event, [arg1], [arg2], [...])</span><br>&#125;, <span class="hljs-number">1000</span>)<br>event.addListener(<span class="hljs-string">&#x27;event1&#x27;</span>, <span class="hljs-function">() =&gt;</span> &#123;<br>    <span class="hljs-built_in">console</span>.log(<span class="hljs-number">1</span>)<br>&#125;)<br>event.on(<span class="hljs-string">&quot;e2&quot;</span>, <span class="hljs-function">() =&gt;</span> &#123;<br>    event.removeAllListeners(<span class="hljs-string">&#x27;event1&#x27;</span>)<span class="hljs-comment">//只清除一个event.removeListener(&#x27;event1&#x27;,fn)</span><br>&#125;)<br><span class="hljs-built_in">setTimeout</span>(<span class="hljs-function">() =&gt;</span> &#123;<br>    event.emit(<span class="hljs-string">&#x27;e2&#x27;</span>)<br>&#125;,<span class="hljs-number">4000</span>)<br><span class="hljs-comment">//实例event提供的方法：</span><br>on(event,函数名)<span class="hljs-comment">//绑定</span><br>addListener(event,函数名)<span class="hljs-comment">//添加</span><br>once(event,函数名)<span class="hljs-comment">//只一次</span><br>removeListener(event,函数名)<span class="hljs-comment">//移除</span><br><span class="hljs-comment">//移除某个监听函数，必须在添加监视的时候，是通过函数名添加，如果是一个匿名函数添加监听不能移除</span><br>removeAllListeners(event)<span class="hljs-comment">//移除所有</span><br>emit(event, [arg1], [arg2], [...])<span class="hljs-comment">//触发</span><br><br><br></code></pre></td></tr></table></figure>
+
+<h4 id="npm"><a href="#npm" class="headerlink" title="npm"></a>npm</h4><p>模块：按照CommonJS规范写的js文件；</p>
+<p>包：包含js文件和其他附带信息的整体；</p>
+<p>npm：包的管理工具：</p>
+<p>​    1、根据包的名字，下载并按照npmjs.com</p>
+<p>​    2、解决了包之间的依赖关系</p>
+<p>命令</p>
+<p>​    安装</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js">npm install 包<br><br><span class="hljs-keyword">let</span> x=<span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;包&#x27;</span>)<br><br></code></pre></td></tr></table></figure>
+
+<h4 id="Nodejs的文件系统"><a href="#Nodejs的文件系统" class="headerlink" title="Nodejs的文件系统"></a>Nodejs的文件系统</h4><p>读取文件信息</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">let</span> fs=<span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;fs&quot;</span>);<br>fs.stat(<span class="hljs-string">&quot;文件路径&quot;</span>,<span class="hljs-function">(<span class="hljs-params">err,stats</span>)=&gt;</span>&#123;<br>  <span class="hljs-keyword">if</span>(err)&#123;<br>    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;错误&quot;</span>);<br>    <span class="hljs-keyword">return</span>;<br>  &#125;<span class="hljs-keyword">else</span>&#123;<br>    <span class="hljs-keyword">if</span>(stats.isFile()) <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;这是文件&quot;</span>);<br>    <span class="hljs-keyword">if</span>(stats.isDirectory()) <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;这是文件夹&quot;</span>);<br>    <span class="hljs-built_in">console</span>.log(stats)<br>  &#125;<br>&#125;)<br><br></code></pre></td></tr></table></figure>
+
+<p>读取文件内容</p>
+<p>​    两个参数：文件路径、回调函数</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js">fs.readFile(<span class="hljs-string">&#x27;文件路径&#x27;</span>,<span class="hljs-function">(<span class="hljs-params">err,data</span>)=&gt;</span>&#123;&#125;)<span class="hljs-comment">//异步</span><br><span class="hljs-keyword">var</span> data=fs.readFileSync(<span class="hljs-string">&quot;文件路径&quot;</span>，<span class="hljs-string">&quot;编码方式&quot;</span>)；<span class="hljs-comment">//同步读取文件</span><br><br></code></pre></td></tr></table></figure>
+
+<p>读取文件的相对地址：参照物不是当前文件，而是node的启动路径。</p>
+<p>写入</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js">fs.writeFile(<span class="hljs-string">&quot;文件路径&quot;</span>,<span class="hljs-string">&quot;写入内容&quot;</span>,<span class="hljs-function">(<span class="hljs-params">err</span>)=&gt;</span>&#123;&#125;)<span class="hljs-comment">//覆盖之前内容</span><br>fs.writeFileSync()<br><br></code></pre></td></tr></table></figure>
+
+<p>追加</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js">fs.appendFile(<span class="hljs-string">&quot;文件路径&quot;</span>,<span class="hljs-string">&quot;写入内容&quot;</span>,<span class="hljs-function">(<span class="hljs-params">err</span>)=&gt;</span>&#123;&#125;)<br>fs.appendFileSync(path,data)<br><br></code></pre></td></tr></table></figure>
+
+<p>异步通过err形参接收错误信息</p>
+<p>同步如果发生错误直接报异常，程序可能中断</p>
+<p>写入文件的方法，当文件名不存在的时候，会自动创建文件，如果文件夹也不存在会报错</p>
+<p>修改文件方法</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js">fs.rename(<span class="hljs-string">&#x27;oldpath&#x27;</span>,<span class="hljs-string">&#x27;newpath&#x27;</span>,<span class="hljs-function">(<span class="hljs-params">err</span>)=&gt;</span>&#123;&#125;)<br>fs.renameSync(<span class="hljs-string">&quot;oldpath&quot;</span>,<span class="hljs-string">&quot;newpath&quot;</span>)<br><br></code></pre></td></tr></table></figure>
+
+<p>删除文件</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js">fs.unlink(path,<span class="hljs-function">(<span class="hljs-params">err</span>)=&gt;</span>&#123;&#125;)<br>fs.unlinkSync(<span class="hljs-string">&#x27;path&#x27;</span>)<br><br></code></pre></td></tr></table></figure>
+
+<p>创建文件夹</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js">fs.mkdir(path,<span class="hljs-function">(<span class="hljs-params">err</span>)=&gt;</span>&#123;&#125;)<br><br></code></pre></td></tr></table></figure>
+
+<p>读取目录</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js">fs.readdir(path,<span class="hljs-function">(<span class="hljs-params">err,files</span>)=&gt;</span>&#123;&#125;)<br><br></code></pre></td></tr></table></figure>
+
+<p>删除目录</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js">fs.rmdir(path,<span class="hljs-function">(<span class="hljs-params">err</span>)=&gt;</span>&#123;&#125;)<br><br></code></pre></td></tr></table></figure>
+
+<p>读取文件流</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;fs&quot;</span>);<br><span class="hljs-comment">//对于某个文件创建一个读取流</span><br><span class="hljs-keyword">var</span> readStream = fs.createReadStream(<span class="hljs-string">&quot;fs.js&quot;</span>);<br><span class="hljs-comment">//设置读取流的编码</span><br>readStream.setEncoding(<span class="hljs-string">&#x27;utf-8&#x27;</span>);<br><span class="hljs-comment">//绑定一个事件（data事件名）</span><br><span class="hljs-comment">//data这个事件，每次读取一个小块内容的时候，都会触发data事件；</span><br><span class="hljs-comment">//在回调函数中，能够设置一个形参chunk，接收每次读取那一小块内容；</span><br><span class="hljs-keyword">var</span> data = <span class="hljs-string">&quot;&quot;</span>;<br><span class="hljs-keyword">var</span> index = <span class="hljs-number">0</span>;<br>readStream.on(<span class="hljs-string">&quot;data&quot;</span>, <span class="hljs-function">(<span class="hljs-params">chunk</span>) =&gt;</span> &#123;<br>    data += chunk;<br>    <span class="hljs-built_in">console</span>.log(++index);<br>&#125;)<br><span class="hljs-comment">//end事件代表所有内容读取完成</span><br>readStream.on(<span class="hljs-string">&quot;end&quot;</span>, <span class="hljs-function">() =&gt;</span> &#123;<br>    <span class="hljs-comment">//这里代表data里面才是完整的数据</span><br>    <span class="hljs-built_in">console</span>.log(data);<br>&#125;)<br><br></code></pre></td></tr></table></figure>
+
+<p>写入文件流</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;fs&quot;</span>);<br><span class="hljs-keyword">var</span> writeStream = fs.createWriteStream(<span class="hljs-string">&quot;fs1.txt&quot;</span>);<br>writeStream.write(<span class="hljs-string">&quot;aaaaaaa&quot;</span>, <span class="hljs-string">&quot;utf-8&quot;</span>);<br>writeStream.write(<span class="hljs-string">&quot;bbbbbbb&quot;</span>, <span class="hljs-string">&quot;utf-8&quot;</span>);<br>writeStream.end();<br>writeStream.on(<span class="hljs-string">&quot;finish&quot;</span>, <span class="hljs-function">() =&gt;</span> &#123;<br>    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;finish&quot;</span>);<br>&#125;)<br><br></code></pre></td></tr></table></figure>
+
+<p>管道流</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;fs&quot;</span>);<br><span class="hljs-keyword">var</span> readS = fs.createReadStream(<span class="hljs-string">&quot;fs.txt&quot;</span>);<br><span class="hljs-keyword">var</span> ws = fs.createWriteStream(<span class="hljs-string">&quot;fs1.txt&quot;</span>);<br>readS.pipe(ws);<span class="hljs-comment">//把读取流和写入流连接起来，把读取的内容直接写入fs1.txt</span><br><br></code></pre></td></tr></table></figure>
+
+<p>###　</p>
+]]></content>
+  </entry>
+  <entry>
     <title>nodejs-2</title>
     <url>/2020/09/18/nodejs%E7%AC%94%E8%AE%B02/</url>
     <content><![CDATA[<h1 id="nodejs笔记2"><a href="#nodejs笔记2" class="headerlink" title="nodejs笔记2"></a>nodejs笔记2</h1><h2 id="web应用架构"><a href="#web应用架构" class="headerlink" title="web应用架构"></a>web应用架构</h2><p>client-客户端，一般指浏览器，浏览器可以通过http协议向服务器请求数据。</p>
@@ -408,85 +487,6 @@
 ]]></content>
   </entry>
   <entry>
-    <title>nodejs-1</title>
-    <url>/2020/09/18/nodejs%E7%AC%94%E8%AE%B0/</url>
-    <content><![CDATA[<h1 id="node-js"><a href="#node-js" class="headerlink" title="node js"></a>node js</h1><p>nodejs是基于google v8引擎，在服务器端支持javascript的一种运行环境。</p>
-<p>特点：单线程、非阻塞I/O、事件驱动</p>
-<h4 id="node运行js文件的路径："><a href="#node运行js文件的路径：" class="headerlink" title="node运行js文件的路径："></a>node运行js文件的路径：</h4><p>相对路径：node命令前面的路径（运行路径）</p>
-<p>绝对路径        </p>
-<h4 id="顶层对象"><a href="#顶层对象" class="headerlink" title="顶层对象"></a>顶层对象</h4><p>浏览器里是window，node里是global，ES6中提到同义顶层对象用globalThis，</p>
-<p>ES6中将顶层对象的属性与全局变量逐步脱钩。</p>
-<h4 id="默认的全局变量"><a href="#默认的全局变量" class="headerlink" title="默认的全局变量"></a>默认的全局变量</h4><p>__filename当前js文件带有完整绝对路径的文件名</p>
-<p>__dirname获得当前执行文件所在目录的完整目录名</p>
-<h4 id="Buffer"><a href="#Buffer" class="headerlink" title="Buffer"></a>Buffer</h4><p>Buffer 被引入用以帮助开发者处理二进制数据，在此生态系统中传统上只处理字符串而不是二进制数据。</p>
-<p>1、指定大小：</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> buffer=Buffer.alloc(<span class="hljs-number">20</span>);<span class="hljs-comment">//length</span><br><span class="hljs-comment">//&lt;Buffer 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00&gt;</span><br><br></code></pre></td></tr></table></figure>
-
-<p>2、</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> buf2=Buffer.from(<span class="hljs-string">&quot;this is buffer&quot;</span>);<span class="hljs-comment">//string</span><br><span class="hljs-comment">//&lt;Buffer 74 68 69 73 20 69 73 20 62 75 66 66 65 72&gt;</span><br><span class="hljs-keyword">var</span> s=buf2.toString(<span class="hljs-string">&quot;utf-8&quot;</span>);<br><span class="hljs-comment">//this is buffer</span><br>buf2.write();<br><br></code></pre></td></tr></table></figure>
-
-<h4 id="模块化"><a href="#模块化" class="headerlink" title="模块化"></a>模块化</h4><p>多个js文件的引用方式。</p>
-<p>模块：按照特定的格式写出来的js文件。</p>
-<p>特定的格式：为了引用，模块化规范。</p>
-<p>nodejs里用的是commonjs规范。</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">sum</span>(<span class="hljs-params"></span>)</span>&#123;&#125;<br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">sub</span>(<span class="hljs-params"></span>)</span>&#123;&#125;<br><span class="hljs-built_in">module</span>.exports=&#123;sum,sub&#125;;<span class="hljs-comment">//导出</span><br><span class="hljs-built_in">exports</span>.sum=sum;<span class="hljs-comment">//exports只能用这种方式</span><br><br><br><span class="hljs-comment">//引用</span><br><span class="hljs-keyword">let</span> &#123;sum,sub&#125;=<span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;路径&quot;</span>);<br><br></code></pre></td></tr></table></figure>
-
-<h5 id="事件模块"><a href="#事件模块" class="headerlink" title="事件模块"></a>事件模块</h5><figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-comment">//内置模块http、fs、events，核心模块</span><br><span class="hljs-keyword">let</span> http=<span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;http&quot;</span>);<br><span class="hljs-keyword">let</span> fs=<span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;fs&quot;</span>);<br><br><br><span class="hljs-comment">//events是内置的处理事件的模块 EventEmitter</span><br><span class="hljs-comment">//events 模块只提供了一个对象： events.EventEmitter。EventEmitter 的核心就是事件触发与事件监听器功能的封装。</span><br><span class="hljs-comment">//1、加载事件模块</span><br><span class="hljs-keyword">let</span> EventEmitter=<span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;events&quot;</span>).EventEmitter;<br><span class="hljs-number">2</span>、实例化一个事件对象<br><span class="hljs-keyword">let</span> event=<span class="hljs-keyword">new</span> EventEmitter();<br><span class="hljs-comment">//3、实例提供里两个方法：</span><br>event.on(<span class="hljs-string">&quot;event1&quot;</span>,<span class="hljs-function">(<span class="hljs-params">...args</span>)=&gt;</span>&#123;<span class="hljs-comment">//为指定事件注册一个监听器，接受一个字符串 event 和一个回调函数。</span><br>  <span class="hljs-built_in">console</span>.log(args)；<br>&#125;)<br><span class="hljs-built_in">setInterval</span>(<span class="hljs-function">() =&gt;</span> &#123;<br>    event.emit(<span class="hljs-string">&quot;event1&quot;</span>,<span class="hljs-string">&quot;a&quot;</span>,<span class="hljs-string">&quot;b&quot;</span>,<span class="hljs-string">&quot;c&quot;</span>)<span class="hljs-comment">//触发事件emit(event, [arg1], [arg2], [...])</span><br>&#125;, <span class="hljs-number">1000</span>)<br>event.addListener(<span class="hljs-string">&#x27;event1&#x27;</span>, <span class="hljs-function">() =&gt;</span> &#123;<br>    <span class="hljs-built_in">console</span>.log(<span class="hljs-number">1</span>)<br>&#125;)<br>event.on(<span class="hljs-string">&quot;e2&quot;</span>, <span class="hljs-function">() =&gt;</span> &#123;<br>    event.removeAllListeners(<span class="hljs-string">&#x27;event1&#x27;</span>)<span class="hljs-comment">//只清除一个event.removeListener(&#x27;event1&#x27;,fn)</span><br>&#125;)<br><span class="hljs-built_in">setTimeout</span>(<span class="hljs-function">() =&gt;</span> &#123;<br>    event.emit(<span class="hljs-string">&#x27;e2&#x27;</span>)<br>&#125;,<span class="hljs-number">4000</span>)<br><span class="hljs-comment">//实例event提供的方法：</span><br>on(event,函数名)<span class="hljs-comment">//绑定</span><br>addListener(event,函数名)<span class="hljs-comment">//添加</span><br>once(event,函数名)<span class="hljs-comment">//只一次</span><br>removeListener(event,函数名)<span class="hljs-comment">//移除</span><br><span class="hljs-comment">//移除某个监听函数，必须在添加监视的时候，是通过函数名添加，如果是一个匿名函数添加监听不能移除</span><br>removeAllListeners(event)<span class="hljs-comment">//移除所有</span><br>emit(event, [arg1], [arg2], [...])<span class="hljs-comment">//触发</span><br><br><br></code></pre></td></tr></table></figure>
-
-<h4 id="npm"><a href="#npm" class="headerlink" title="npm"></a>npm</h4><p>模块：按照CommonJS规范写的js文件；</p>
-<p>包：包含js文件和其他附带信息的整体；</p>
-<p>npm：包的管理工具：</p>
-<p>​    1、根据包的名字，下载并按照npmjs.com</p>
-<p>​    2、解决了包之间的依赖关系</p>
-<p>命令</p>
-<p>​    安装</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js">npm install 包<br><br><span class="hljs-keyword">let</span> x=<span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;包&#x27;</span>)<br><br></code></pre></td></tr></table></figure>
-
-<h4 id="Nodejs的文件系统"><a href="#Nodejs的文件系统" class="headerlink" title="Nodejs的文件系统"></a>Nodejs的文件系统</h4><p>读取文件信息</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">let</span> fs=<span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;fs&quot;</span>);<br>fs.stat(<span class="hljs-string">&quot;文件路径&quot;</span>,<span class="hljs-function">(<span class="hljs-params">err,stats</span>)=&gt;</span>&#123;<br>  <span class="hljs-keyword">if</span>(err)&#123;<br>    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;错误&quot;</span>);<br>    <span class="hljs-keyword">return</span>;<br>  &#125;<span class="hljs-keyword">else</span>&#123;<br>    <span class="hljs-keyword">if</span>(stats.isFile()) <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;这是文件&quot;</span>);<br>    <span class="hljs-keyword">if</span>(stats.isDirectory()) <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;这是文件夹&quot;</span>);<br>    <span class="hljs-built_in">console</span>.log(stats)<br>  &#125;<br>&#125;)<br><br></code></pre></td></tr></table></figure>
-
-<p>读取文件内容</p>
-<p>​    两个参数：文件路径、回调函数</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js">fs.readFile(<span class="hljs-string">&#x27;文件路径&#x27;</span>,<span class="hljs-function">(<span class="hljs-params">err,data</span>)=&gt;</span>&#123;&#125;)<span class="hljs-comment">//异步</span><br><span class="hljs-keyword">var</span> data=fs.readFileSync(<span class="hljs-string">&quot;文件路径&quot;</span>，<span class="hljs-string">&quot;编码方式&quot;</span>)；<span class="hljs-comment">//同步读取文件</span><br><br></code></pre></td></tr></table></figure>
-
-<p>读取文件的相对地址：参照物不是当前文件，而是node的启动路径。</p>
-<p>写入</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js">fs.writeFile(<span class="hljs-string">&quot;文件路径&quot;</span>,<span class="hljs-string">&quot;写入内容&quot;</span>,<span class="hljs-function">(<span class="hljs-params">err</span>)=&gt;</span>&#123;&#125;)<span class="hljs-comment">//覆盖之前内容</span><br>fs.writeFileSync()<br><br></code></pre></td></tr></table></figure>
-
-<p>追加</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js">fs.appendFile(<span class="hljs-string">&quot;文件路径&quot;</span>,<span class="hljs-string">&quot;写入内容&quot;</span>,<span class="hljs-function">(<span class="hljs-params">err</span>)=&gt;</span>&#123;&#125;)<br>fs.appendFileSync(path,data)<br><br></code></pre></td></tr></table></figure>
-
-<p>异步通过err形参接收错误信息</p>
-<p>同步如果发生错误直接报异常，程序可能中断</p>
-<p>写入文件的方法，当文件名不存在的时候，会自动创建文件，如果文件夹也不存在会报错</p>
-<p>修改文件方法</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js">fs.rename(<span class="hljs-string">&#x27;oldpath&#x27;</span>,<span class="hljs-string">&#x27;newpath&#x27;</span>,<span class="hljs-function">(<span class="hljs-params">err</span>)=&gt;</span>&#123;&#125;)<br>fs.renameSync(<span class="hljs-string">&quot;oldpath&quot;</span>,<span class="hljs-string">&quot;newpath&quot;</span>)<br><br></code></pre></td></tr></table></figure>
-
-<p>删除文件</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js">fs.unlink(path,<span class="hljs-function">(<span class="hljs-params">err</span>)=&gt;</span>&#123;&#125;)<br>fs.unlinkSync(<span class="hljs-string">&#x27;path&#x27;</span>)<br><br></code></pre></td></tr></table></figure>
-
-<p>创建文件夹</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js">fs.mkdir(path,<span class="hljs-function">(<span class="hljs-params">err</span>)=&gt;</span>&#123;&#125;)<br><br></code></pre></td></tr></table></figure>
-
-<p>读取目录</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js">fs.readdir(path,<span class="hljs-function">(<span class="hljs-params">err,files</span>)=&gt;</span>&#123;&#125;)<br><br></code></pre></td></tr></table></figure>
-
-<p>删除目录</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js">fs.rmdir(path,<span class="hljs-function">(<span class="hljs-params">err</span>)=&gt;</span>&#123;&#125;)<br><br></code></pre></td></tr></table></figure>
-
-<p>读取文件流</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;fs&quot;</span>);<br><span class="hljs-comment">//对于某个文件创建一个读取流</span><br><span class="hljs-keyword">var</span> readStream = fs.createReadStream(<span class="hljs-string">&quot;fs.js&quot;</span>);<br><span class="hljs-comment">//设置读取流的编码</span><br>readStream.setEncoding(<span class="hljs-string">&#x27;utf-8&#x27;</span>);<br><span class="hljs-comment">//绑定一个事件（data事件名）</span><br><span class="hljs-comment">//data这个事件，每次读取一个小块内容的时候，都会触发data事件；</span><br><span class="hljs-comment">//在回调函数中，能够设置一个形参chunk，接收每次读取那一小块内容；</span><br><span class="hljs-keyword">var</span> data = <span class="hljs-string">&quot;&quot;</span>;<br><span class="hljs-keyword">var</span> index = <span class="hljs-number">0</span>;<br>readStream.on(<span class="hljs-string">&quot;data&quot;</span>, <span class="hljs-function">(<span class="hljs-params">chunk</span>) =&gt;</span> &#123;<br>    data += chunk;<br>    <span class="hljs-built_in">console</span>.log(++index);<br>&#125;)<br><span class="hljs-comment">//end事件代表所有内容读取完成</span><br>readStream.on(<span class="hljs-string">&quot;end&quot;</span>, <span class="hljs-function">() =&gt;</span> &#123;<br>    <span class="hljs-comment">//这里代表data里面才是完整的数据</span><br>    <span class="hljs-built_in">console</span>.log(data);<br>&#125;)<br><br></code></pre></td></tr></table></figure>
-
-<p>写入文件流</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;fs&quot;</span>);<br><span class="hljs-keyword">var</span> writeStream = fs.createWriteStream(<span class="hljs-string">&quot;fs1.txt&quot;</span>);<br>writeStream.write(<span class="hljs-string">&quot;aaaaaaa&quot;</span>, <span class="hljs-string">&quot;utf-8&quot;</span>);<br>writeStream.write(<span class="hljs-string">&quot;bbbbbbb&quot;</span>, <span class="hljs-string">&quot;utf-8&quot;</span>);<br>writeStream.end();<br>writeStream.on(<span class="hljs-string">&quot;finish&quot;</span>, <span class="hljs-function">() =&gt;</span> &#123;<br>    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;finish&quot;</span>);<br>&#125;)<br><br></code></pre></td></tr></table></figure>
-
-<p>管道流</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;fs&quot;</span>);<br><span class="hljs-keyword">var</span> readS = fs.createReadStream(<span class="hljs-string">&quot;fs.txt&quot;</span>);<br><span class="hljs-keyword">var</span> ws = fs.createWriteStream(<span class="hljs-string">&quot;fs1.txt&quot;</span>);<br>readS.pipe(ws);<span class="hljs-comment">//把读取流和写入流连接起来，把读取的内容直接写入fs1.txt</span><br><br></code></pre></td></tr></table></figure>
-
-<p>###　</p>
-]]></content>
-  </entry>
-  <entry>
     <title>vue源码理解——模板编译篇</title>
     <url>/2021/03/18/vue%E6%BA%90%E7%A0%81%E7%90%86%E8%A7%A33/</url>
     <content><![CDATA[<p>撸码一时爽，一直撸码一直爽！！！</p>
@@ -541,15 +541,6 @@
       </tags>
   </entry>
   <entry>
-    <title>vue源码理解——内置组件篇</title>
-    <url>/2021/03/18/vue%E6%BA%90%E7%A0%81%E7%90%86%E8%A7%A39/</url>
-    <content><![CDATA[<p>撸码一时爽，一直撸码一直爽！！！</p>
-]]></content>
-      <tags>
-        <tag>vue源码理解——内置组件篇</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>小程序</title>
     <url>/2020/09/18/%E5%B0%8F%E7%A8%8B%E5%BA%8F/</url>
     <content><![CDATA[<h3 id="微信公众平台"><a href="#微信公众平台" class="headerlink" title="微信公众平台"></a>微信公众平台</h3><p>地址：<a href="https://mp.weixin.qq.com/">https://mp.weixin.qq.com/</a></p>
@@ -575,6 +566,15 @@
 <p>下载稳定版</p>
 <p>安装时无需注意，一直next就可以了</p>
 ]]></content>
+  </entry>
+  <entry>
+    <title>vue源码理解——内置组件篇</title>
+    <url>/2021/03/18/vue%E6%BA%90%E7%A0%81%E7%90%86%E8%A7%A39/</url>
+    <content><![CDATA[<p>撸码一时爽，一直撸码一直爽！！！</p>
+]]></content>
+      <tags>
+        <tag>vue源码理解——内置组件篇</tag>
+      </tags>
   </entry>
   <entry>
     <title>javascript 1</title>
