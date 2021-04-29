@@ -1438,7 +1438,7 @@
   </entry>
   <entry>
     <title>Ts</title>
-    <url>/2020/09/18/typeScript/</url>
+    <url>/2021/03/18/typeScript/</url>
     <content><![CDATA[<h3 id="TypeScript开发"><a href="#TypeScript开发" class="headerlink" title="TypeScript开发"></a>TypeScript开发</h3><p>全局安装typescript，使用安装命令可以使用<code>npm</code>也可以使用<code>yarn</code>： </p>
 <p>命令：</p>
 <p>npm install typescript -g</p>
