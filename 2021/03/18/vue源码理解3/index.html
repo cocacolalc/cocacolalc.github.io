@@ -158,14 +158,14 @@
     <article class="article">
   <div class="wrap">
     <section class="head">
-  <img   class="lazyload" data-original="https://gitee.com/cocacolalc/imgs-hexo/raw/master/img/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_2020102317045617.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
+  <img   class="lazyload" data-original="https://pic.izhaoo.com/20200718151427.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
   <div class="head-mask">
     <h1 class="head-title">vue源码理解——模板编译篇</h1>
     <div class="head-info">
       <span class="post-info-item"><i class="iconfont iconcalendar"></i>March 18, 2021</span
         class="post-info-item">
       
-      <span class="post-info-item"><i class="iconfont iconfont-size"></i>25044</span>
+      <span class="post-info-item"><i class="iconfont iconfont-size"></i>25758</span>
     </div>
   </div>
 </section>
@@ -394,6 +394,10 @@
 <p>接着介绍了<code>HTML</code>解析器是如何解析用户所写的模板字符串中各种类型的内容的，把各种类型的解析方式都分别进行了介绍。</p>
 <p>其次，介绍了在解析器内维护了一个栈，用来保证构建的<code>AST</code>节点层级与真正<code>DOM</code>层级一致。</p>
 <p>了解了思想之后，最后回归源码，学习了源码中一些处理细节的地方。</p>
+<h5 id="文本解析器"><a href="#文本解析器" class="headerlink" title="文本解析器"></a>文本解析器</h5><p>在上篇文章中我们说了，当<code>HTML</code>解析器解析到文本内容时会调用4个钩子函数中的<code>chars</code>函数来创建文本型的<code>AST</code>节点，并且也说了在<code>chars</code>函数中会根据文本内容是否包含变量再细分为创建含有变量的<code>AST</code>节点和不包含变量的<code>AST</code>节点，如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">// 当解析到标签的文本时，触发chars</span><br>chars (text) &#123;<br>  <span class="hljs-keyword">if</span>(res = parseText(text))&#123;<br>       <span class="hljs-keyword">let</span> element = &#123;<br>           type: <span class="hljs-number">2</span>,<br>           expression: res.expression,<br>           tokens: res.tokens,<br>           text<br>       &#125;<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>       <span class="hljs-keyword">let</span> element = &#123;<br>           type: <span class="hljs-number">3</span>,<br>           text<br>       &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>从上面代码中可以看到，创建含有变量的<code>AST</code>节点时节点的<code>type</code>属性为2，并且相较于不包含变量的<code>AST</code>节点多了两个属性：<code>expression</code>和<code>tokens</code>。那么如何来判断文本里面是否包含变量以及多的那两个属性是什么呢？这就涉及到文本解析器了，当<code>Vue</code>用<code>HTML</code>解析器解析出文本时，再将解析出来的文本内容传给文本解析器，最后由文本解析器解析该段文本里面是否包含变量以及如果包含变量时再解析<code>expression</code>和<code>tokens</code>。那么接下来，本篇文章就来分析一下文本解析器都干了些什么。</p>
 <p>撸码一时爽，一直撸码一直爽！！！</p>
 
       </section>
