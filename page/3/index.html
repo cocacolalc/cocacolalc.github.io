@@ -7,7 +7,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>about - cocacola</title>
+  <title>cocacola</title>
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="google" content="notranslate" />
@@ -62,7 +62,7 @@
     var CONFIG = window.CONFIG || {};
     var ZHAOO = window.ZHAOO || {};
     CONFIG = {
-      isHome: false,
+      isHome: true,
       fancybox: true,
       pjax: false,
       lazyload: {
@@ -102,14 +102,6 @@
   <div class="loading"></div>
   
 
-
-<nav class="navbar">
-  <div class="left"></div>
-  <div class="center">about</div>
-  <div class="right">
-    <i class="iconfont iconmenu j-navbar-menu"></i>
-  </div>
-</nav>
 
   <nav class="menu">
   <div class="menu-wrap">
@@ -153,61 +145,71 @@
   </div>
 </nav>
   <main id="main">
+  
+    <div class="preview">
+  <nav class="navbar j-navbar-menu">
+    <i class="iconfont iconmenu"></i>
+  </nav>
+  <div class="preview-image">
+    <h2 class="preview-motto" id="motto"></h2>
+    <!-- <span class="preview-cursor">|</span> -->
+    
+    <div class="preview-overlay">
+      <svg class="preview-waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+        viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+        <defs>
+          <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+        </defs>
+        <g class="preview-parallax">
+          <use xlink:href="#gentle-wave" x="48" y="0" fill="rgba(255,255,255,0.7" />
+          <use xlink:href="#gentle-wave" x="48" y="3" fill="rgba(255,255,255,0.5)" />
+          <use xlink:href="#gentle-wave" x="48" y="5" fill="rgba(255,255,255,0.3)" />
+          <use xlink:href="#gentle-wave" x="48" y="7" fill="#fff" />
+        </g>
+      </svg>
+    </div>
+    
+  </div>
+  <div class="preview-scroll">
+    <a href="#container" class="smooth-scroll"><i class="iconfont iconMouse"></i></a>
+  </div>
+</div>
+  
   <div class="container" id="container">
-    <article class="article">
-  <div class="wrap">
-    <section class="head">
-  <img   class="lazyload" data-original="https://gitee.com/cocacolalc/imgs-hexo/raw/master/img/photo-1624234595056-84d46b56ccc4.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
-  <div class="head-mask">
-    <h1 class="head-title">about</h1>
-    <div class="head-info">
-      <span class="post-info-item"><i class="iconfont iconcalendar"></i>September 23, 2020</span
-        class="post-info-item">
+    <section class="row post">
+  
+  <div class="col-lg-4 col-md-6 col-sm-12 post-item">
+  <div class="post-wrap">
+    
+    <a href="/2020/09/18/%E5%B0%8F%E7%A8%8B%E5%BA%8F/" class="post-image">
+      <img   class="lazyload" data-original="https://gitee.com/cocacolalc/imgs-hexo/raw/master/img/photo-1593642532842-98d0fd5ebc1a.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
+    </a>
+    <div class="post-content">
+      <h3 class="post-title"><a href="/2020/09/18/%E5%B0%8F%E7%A8%8B%E5%BA%8F/">小程序</a></h3>
       
-      <span class="post-info-item"><i class="iconfont iconfont-size"></i>0</span>
+      
+      
+      <div class="post-excerpt">
+        <p class="substr-3">微信公众平台地址：https://mp.weixin.qq.com/
+概念微信公众平台，简称公众号。曾命名为’官号平台’、’媒体平台’、’微信公众号’，最终定位公众平台
+微信小程序概念：就是一个...</p>
+      </div>
+      <div class="post-info">
+        <span class="post-info-item"><i class="iconfont iconcalendar"></i>September 18, 2020</span
+          class="post-info-item">
+        
+        <span class="post-info-item"><i class="iconfont iconfont-size"></i>523</span>
+      </div>
     </div>
   </div>
-</section>
-    <section class="main">
-      <section class="content">
-        
-      </section>
-      <section class="extra">
-        
-        <ul class="copyright">
-  
-  <li><strong>本文作者：</strong>lc</li>
-  <li><strong>本文链接：</strong><a href="http://example.com/about/index.html">http://example.com/about/index.html</a></li>
-  <li><strong>版权声明：</strong>本博客所有文章均采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh"
-      rel="external nofollow" target="_blank"> BY-NC-SA </a>许可协议，转载请注明出处！</li>
-  
-</ul>
-        
-        
-        <section class="donate">
-  <div class="qrcode">
-    <img   class="lazyload" data-original="https://pic.izhaoo.com/alipay.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" >
-  </div>
-  <div class="icon">
-    <a href="javascript:;" id="alipay"><i class="iconfont iconalipay"></i></a>
-    <a href="javascript:;" id="wechat"><i class="iconfont iconwechat-fill"></i></a>
-  </div>
-</section>
-        
-        
-        
-      </section>
-      
-      <section class="comments">
-  
-  <div class="btn" id="comments-btn">查看评论</div>
-  
+</div>
   
 </section>
-      
-    </section>
-  </div>
-</article>
+    <section class="paginator">
+  
+  <a class="extend prev" rel="prev" href="/page/2/">&lt;</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span>
+  
+</section>
   </div>
 </main>
   <footer class="footer">
