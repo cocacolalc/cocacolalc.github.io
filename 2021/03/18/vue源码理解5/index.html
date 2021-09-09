@@ -1,0 +1,421 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>vue源码理解——实例方法篇 - cocacola</title>
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="google" content="notranslate" />
+
+  
+  
+  <meta name="description" content="实例方法：与数据相关的实例方法有3个，分别是vm.$s..."> 
+  
+  <meta name="author" content="lc"> 
+
+  
+    <link rel="icon" href="/images/icons/favicon-16x16.png" type="image/png" sizes="16x16">
+  
+  
+    <link rel="icon" href="/images/icons/favicon-32x32.png" type="image/png" sizes="32x32">
+  
+  
+    <link rel="apple-touch-icon" href="/images/icons/apple-touch-icon.png" sizes="180x180">
+  
+  
+    <meta rel="mask-icon" href="/images/icons/stun-logo.svg" color="#333333">
+  
+  
+    <meta rel="msapplication-TileImage" content="/images/icons/favicon-144x144.png">
+    <meta rel="msapplication-TileColor" content="#000000">
+  
+
+  
+<link rel="stylesheet" href="/css/style.css">
+
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1445822_h1619vhl1nr.css">
+
+  
+
+  
+  
+  
+<link rel="stylesheet" href="https://cdn.bootcss.com/fancybox/3.5.7/jquery.fancybox.min.css">
+
+  
+
+  
+  
+  
+<link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.18.1/styles/xcode.min.css">
+
+  
+
+  <script>
+    var CONFIG = window.CONFIG || {};
+    var ZHAOO = window.ZHAOO || {};
+    CONFIG = {
+      isHome: false,
+      fancybox: true,
+      pjax: false,
+      lazyload: {
+        enable: true,
+        loadingImage: '',
+      },
+      donate: {
+        enable: true,
+        alipay: 'https://pic.izhaoo.com/alipay.jpg',
+        wechat: 'https://pic.izhaoo.com/wechat.jpg'
+      },
+      motto: {
+        api: '',
+        default: '将喜欢的一切留在身边，这便是努力的意义。'
+      },
+      galleries: {
+        enable: true
+      },
+      fab: {
+        enable: true,
+        alwaysShow: false
+      },
+      carrier: {
+        enable: true
+      },
+      daovoice: {
+        enable: true
+      }
+    }
+  </script>
+
+  
+
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body class="lock-screen">
+  <div class="loading"></div>
+  
+
+
+<nav class="navbar">
+  <div class="left"></div>
+  <div class="center">vue源码理解——实例方法篇</div>
+  <div class="right">
+    <i class="iconfont iconmenu j-navbar-menu"></i>
+  </div>
+</nav>
+
+  <nav class="menu">
+  <div class="menu-wrap">
+    <div class="menu-close">
+      <i class="iconfont iconbaseline-close-px"></i>
+    </div>
+    <ul class="menu-content">
+      
+      
+      
+      
+      <li class="menu-item"><a href="/ " class="underline"> 首页</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/galleries " class="underline"> 摄影</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/archives " class="underline"> 归档</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/tags " class="underline"> 标签</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/categories " class="underline"> 分类</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/about " class="underline"> 关于</a></li>
+      
+    </ul>
+    <div class="menu-copyright"><p>Powered by <a target="_blank" href="https://hexo.io">Hexo</a>  |  Theme - <a target="_blank" href="https://github.com/izhaoo/hexo-theme-zhaoo">zhaoo</a></p></div>
+  </div>
+</nav>
+  <main id="main">
+  <div class="container" id="container">
+    <article class="article">
+  <div class="wrap">
+    <section class="head">
+  <img   class="lazyload" data-original="https://gitee.com/cocacolalc/imgs-hexo/raw/master/img/photo-1625053376622-e462848c453f.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
+  <div class="head-mask">
+    <h1 class="head-title">vue源码理解——实例方法篇</h1>
+    <div class="head-info">
+      <span class="post-info-item"><i class="iconfont iconcalendar"></i>March 18, 2021</span
+        class="post-info-item">
+      
+      <span class="post-info-item"><i class="iconfont iconfont-size"></i>2279</span>
+    </div>
+  </div>
+</section>
+    <section class="main">
+      <section class="content">
+        <h4 id="实例方法："><a href="#实例方法：" class="headerlink" title="实例方法："></a>实例方法：</h4><p>与数据相关的实例方法有3个，分别是<code>vm.$set</code>、<code>vm.$delete</code>和<code>vm.$watch</code>。它们是在<code>stateMixin</code>函数中挂载到<code>Vue</code>原型上的，代码如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">import</span> &#123;set,del&#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;../observer/index&#x27;</span><br><br><span class="hljs-keyword">export</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">stateMixin</span> (<span class="hljs-params">Vue</span>) </span>&#123;<br>    Vue.prototype.$set = set<br>    Vue.prototype.$delete = del<br>    Vue.prototype.$watch = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">expOrFn,cb,options</span>) </span>&#123;&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>当执行<code>stateMixin</code>函数后，会向<code>Vue</code>原型上挂载上述3个实例方法。</p>
+<p>接下来，我们就来分析这3个与数据相关的实例方法其内部的原理都是怎样的</p>
+<h5 id="vm-watch"><a href="#vm-watch" class="headerlink" title="vm.$watch"></a>vm.$watch</h5><h5 id="用法回顾"><a href="#用法回顾" class="headerlink" title="用法回顾"></a>用法回顾</h5><p>在介绍方法的内部原理之前，我们先根据官方文档示例回顾一下它的用法。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs javascript">vm.$watch( expOrFn, callback, [options] )<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><p><strong>参数</strong>：</p>
+<ul>
+<li><p><code>&#123;string | Function&#125; expOrFn</code></p>
+</li>
+<li><p><code>&#123;Function | Object&#125; callback</code></p>
+</li>
+<li><pre><code>&#123;Object&#125; [options]
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs plain"><br>    - &#96;&#123;boolean&#125; deep&#96;<br>    - &#96;&#123;boolean&#125; immediate&#96;<br><br>- **返回值**：&#96;&#123;Function&#125; unwatch&#96;<br><br>- **用法**：<br><br>  观察 &#96;Vue&#96; 实例变化的一个表达式或计算属性函数。回调函数得到的参数为新值和旧值。表达式只接受监督的键路径。对于更复杂的表达式，用一个函数取代。<br><br>  注意：在变异 (不是替换) 对象或数组时，旧值将与新值相同，因为它们的引用指向同一个对象&#x2F;数组。&#96;Vue&#96; 不会保留变异之前值的副本。<br><br>- **示例**：<br><br>  &#96;&#96;&#96;javascript<br>  &#x2F;&#x2F; 键路径<br>  vm.$watch(&#39;a.b.c&#39;, function (newVal, oldVal) &#123;<br>    &#x2F;&#x2F; 做点什么<br>  &#125;)<br>  <br>  &#x2F;&#x2F; 函数<br>  vm.$watch(<br>    function () &#123;<br>      &#x2F;&#x2F; 表达式 &#96;this.a + this.b&#96; 每次得出一个不同的结果时<br>      &#x2F;&#x2F; 处理函数都会被调用。<br>      &#x2F;&#x2F; 这就像监听一个未被定义的计算属性<br>      return this.a + this.b<br>    &#125;,<br>    function (newVal, oldVal) &#123;<br>      &#x2F;&#x2F; 做点什么<br>    &#125;<br>  )<br></code></pre></td></tr></table></figure>
+</code></pre>
+</li>
+</ul>
+<p><code>vm.$watch</code> 返回一个取消观察函数，用来停止触发回调：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> unwatch = vm.$watch(<span class="hljs-string">&#x27;a&#x27;</span>, cb)<br><span class="hljs-comment">// 之后取消观察</span><br>unwatch()<br></code></pre></td></tr></table></figure>
+</li>
+<li><p><strong>选项：deep</strong></p>
+<p>为了发现对象内部值的变化，可以在选项参数中指定 <code>deep: true</code> 。注意监听数组的变动不需要这么做。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs javascript">vm.$watch(<span class="hljs-string">&#x27;someObject&#x27;</span>, callback, &#123;<br>  deep: <span class="hljs-literal">true</span><br>&#125;)<br>vm.someObject.nestedValue = <span class="hljs-number">123</span><br><span class="hljs-comment">// callback is fired</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p><strong>选项：immediate</strong></p>
+<p>在选项参数中指定 <code>immediate: true</code> 将立即以表达式的当前值触发回调：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs javascript">vm.$watch(<span class="hljs-string">&#x27;a&#x27;</span>, callback, &#123;<br>  immediate: <span class="hljs-literal">true</span><br>&#125;)<br><span class="hljs-comment">// 立即以 `a` 的当前值触发回调</span><br></code></pre></td></tr></table></figure>
+
+<p>注意在带有 <code>immediate</code> 选项时，你不能在第一次回调时取消侦听给定的 property。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">// 这会导致报错</span><br><span class="hljs-keyword">var</span> unwatch = vm.$watch(<br>  <span class="hljs-string">&#x27;value&#x27;</span>,<br>  <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>&#123;<br>    doSomething()<br>    unwatch()<br>  &#125;,<br>  &#123; <span class="hljs-attr">immediate</span>: <span class="hljs-literal">true</span> &#125;<br>)<br></code></pre></td></tr></table></figure>
+
+<p>如果你仍然希望在回调内部调用一个取消侦听的函数，你应该先检查其函数的可用性：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> unwatch = vm.$watch(<br>  <span class="hljs-string">&#x27;value&#x27;</span>,<br>  <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>&#123;<br>    doSomething()<br>    <span class="hljs-keyword">if</span> (unwatch) &#123;<br>      unwatch()<br>    &#125;<br>  &#125;,<br>  &#123; <span class="hljs-attr">immediate</span>: <span class="hljs-literal">true</span> &#125;<br>)<br></code></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p>撸码一时爽，一直撸码一直爽！！！</p>
+
+      </section>
+      <section class="extra">
+        
+        <ul class="copyright">
+  
+  <li><strong>本文作者：</strong>lc</li>
+  <li><strong>本文链接：</strong><a href="http://example.com/2021/03/18/vue%E6%BA%90%E7%A0%81%E7%90%86%E8%A7%A35/index.html">http://example.com/2021/03/18/vue%E6%BA%90%E7%A0%81%E7%90%86%E8%A7%A35/index.html</a></li>
+  <li><strong>版权声明：</strong>本博客所有文章均采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh"
+      rel="external nofollow" target="_blank"> BY-NC-SA </a>许可协议，转载请注明出处！</li>
+  
+</ul>
+        
+        
+        <section class="donate">
+  <div class="qrcode">
+    <img   class="lazyload" data-original="https://pic.izhaoo.com/alipay.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" >
+  </div>
+  <div class="icon">
+    <a href="javascript:;" id="alipay"><i class="iconfont iconalipay"></i></a>
+    <a href="javascript:;" id="wechat"><i class="iconfont iconwechat-fill"></i></a>
+  </div>
+</section>
+        
+        
+  <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/vue%E6%BA%90%E7%A0%81%E7%90%86%E8%A7%A3%E2%80%94%E2%80%94%E5%AE%9E%E4%BE%8B%E6%96%B9%E6%B3%95%E7%AF%87/" rel="tag">vue源码理解——实例方法篇</a></li></ul>
+
+        
+<nav class="nav">
+  
+    <a href="/2021/03/18/vue%E6%BA%90%E7%A0%81%E7%90%86%E8%A7%A34/"><i class="iconfont iconleft"></i>vue源码理解——生命周期篇</a>
+  
+  
+    <a href="/2021/03/18/vue%E6%BA%90%E7%A0%81%E7%90%86%E8%A7%A37/">vue源码理解——过滤器篇<i class="iconfont iconright"></i></a>
+  
+</nav>
+
+      </section>
+      
+      <section class="comments">
+  
+  <div class="btn" id="comments-btn">查看评论</div>
+  
+  
+</section>
+      
+    </section>
+  </div>
+</article>
+  </div>
+</main>
+  <footer class="footer">
+  <div class="footer-social">
+    
+    
+    
+    
+    
+    <a href="tencent://message/?Menu=yes&uin=2504971404 " target="_blank" onMouseOver="this.style.color= '#12B7F5'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconQQ "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="javascript:; " target="_blank" onMouseOver="this.style.color= '#09BB07'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconwechat-fill "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="https://www.instagram.com/izhaoo/ " target="_blank" onMouseOver="this.style.color= '#DA2E76'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconinstagram "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="https://github.com/izhaoo " target="_blank" onMouseOver="this.style.color= '#24292E'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  icongithub-fill "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="mailto:izhaoo@163.com " target="_blank" onMouseOver="this.style.color='#FFBE5B'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconmail"></i>
+    </a>
+    
+  </div>
+  <div class="footer-copyright"><p>Powered by <a target="_blank" href="https://hexo.io">Hexo</a>  |  Theme - <a target="_blank" href="https://github.com/izhaoo/hexo-theme-zhaoo">zhaoo</a></p></div>
+</footer>
+  
+      <div class="fab fab-plus">
+    <i class="iconfont iconplus"></i>
+  </div>
+  
+  <div class="fab fab-daovoice">
+    <i class="iconfont iconcomment"></i>
+  </div>
+  
+  <div class="fab fab-up">
+    <i class="iconfont iconcaret-up"></i>
+  </div>
+  
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+
+
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+
+
+
+
+
+
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+
+
+
+
+
+<script src="https://cdn.bootcss.com/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+
+
+
+
+
+
+<script src="/js/utils.js"></script>
+<script src="/js/modules.js"></script>
+<script src="/js/zui.js"></script>
+<script src="/js/script.js"></script>
+
+
+
+
+
+<script>
+  (function (i, s, o, g, r, a, m) {
+    i["DaoVoiceObject"] = r;
+    i[r] = i[r] || function () {
+      (i[r].q = i[r].q || []).push(arguments)
+    }, i[r].l = 1 * new Date();
+    a = s.createElement(o), m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    a.charset = "utf-8";
+    m.parentNode.insertBefore(a, m)
+  })(window, document, "script", ('https:' == document.location.protocol ? 'https:' : 'http:') +
+    "//widget.daovoice.io/widget/0f81ff2f.js", "daovoice")
+  daovoice('init', {
+    app_id: "abcdefg"
+  }, {
+    launcher: {
+      disableLauncherIcon: true,
+    },
+  });
+  daovoice('update');
+</script>
+
+
+
+<script>
+  (function () {
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    } else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+<script>
+  var _hmt = _hmt || [];
+  (function () {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?4c204d8bc027a0455b5fc642ac334ca8";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+
+
+
+
+
+
+
+
+
+</html>

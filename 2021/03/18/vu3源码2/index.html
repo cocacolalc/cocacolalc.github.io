@@ -1,0 +1,518 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Vue3源码-Set、Map、WeakSet、WeakMap - cocacola</title>
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="google" content="notranslate" />
+
+  
+  
+  <meta name="description" content="Set、Map、WeakSet、WeakMap如果要用..."> 
+  
+  <meta name="author" content="lc"> 
+
+  
+    <link rel="icon" href="/images/icons/favicon-16x16.png" type="image/png" sizes="16x16">
+  
+  
+    <link rel="icon" href="/images/icons/favicon-32x32.png" type="image/png" sizes="32x32">
+  
+  
+    <link rel="apple-touch-icon" href="/images/icons/apple-touch-icon.png" sizes="180x180">
+  
+  
+    <meta rel="mask-icon" href="/images/icons/stun-logo.svg" color="#333333">
+  
+  
+    <meta rel="msapplication-TileImage" content="/images/icons/favicon-144x144.png">
+    <meta rel="msapplication-TileColor" content="#000000">
+  
+
+  
+<link rel="stylesheet" href="/css/style.css">
+
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1445822_h1619vhl1nr.css">
+
+  
+
+  
+  
+  
+<link rel="stylesheet" href="https://cdn.bootcss.com/fancybox/3.5.7/jquery.fancybox.min.css">
+
+  
+
+  
+  
+  
+<link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.18.1/styles/xcode.min.css">
+
+  
+
+  <script>
+    var CONFIG = window.CONFIG || {};
+    var ZHAOO = window.ZHAOO || {};
+    CONFIG = {
+      isHome: false,
+      fancybox: true,
+      pjax: false,
+      lazyload: {
+        enable: true,
+        loadingImage: '',
+      },
+      donate: {
+        enable: true,
+        alipay: 'https://pic.izhaoo.com/alipay.jpg',
+        wechat: 'https://pic.izhaoo.com/wechat.jpg'
+      },
+      motto: {
+        api: '',
+        default: '将喜欢的一切留在身边，这便是努力的意义。'
+      },
+      galleries: {
+        enable: true
+      },
+      fab: {
+        enable: true,
+        alwaysShow: false
+      },
+      carrier: {
+        enable: true
+      },
+      daovoice: {
+        enable: true
+      }
+    }
+  </script>
+
+  
+
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body class="lock-screen">
+  <div class="loading"></div>
+  
+
+
+<nav class="navbar">
+  <div class="left"></div>
+  <div class="center">Vue3源码-Set、Map、WeakSet、WeakMap</div>
+  <div class="right">
+    <i class="iconfont iconmenu j-navbar-menu"></i>
+  </div>
+</nav>
+
+  <nav class="menu">
+  <div class="menu-wrap">
+    <div class="menu-close">
+      <i class="iconfont iconbaseline-close-px"></i>
+    </div>
+    <ul class="menu-content">
+      
+      
+      
+      
+      <li class="menu-item"><a href="/ " class="underline"> 首页</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/galleries " class="underline"> 摄影</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/archives " class="underline"> 归档</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/tags " class="underline"> 标签</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/categories " class="underline"> 分类</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/about " class="underline"> 关于</a></li>
+      
+    </ul>
+    <div class="menu-copyright"><p>Powered by <a target="_blank" href="https://hexo.io">Hexo</a>  |  Theme - <a target="_blank" href="https://github.com/izhaoo/hexo-theme-zhaoo">zhaoo</a></p></div>
+  </div>
+</nav>
+  <main id="main">
+  <div class="container" id="container">
+    <article class="article">
+  <div class="wrap">
+    <section class="head">
+  <img   class="lazyload" data-original="https://gitee.com/cocacolalc/imgs-hexo/raw/master/img/photo-1624941806657-981cf1ea3154.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
+  <div class="head-mask">
+    <h1 class="head-title">Vue3源码-Set、Map、WeakSet、WeakMap</h1>
+    <div class="head-info">
+      <span class="post-info-item"><i class="iconfont iconcalendar"></i>March 18, 2021</span
+        class="post-info-item">
+      
+      <span class="post-info-item"><i class="iconfont iconfont-size"></i>5396</span>
+    </div>
+  </div>
+</section>
+    <section class="main">
+      <section class="content">
+        <h3 id="Set、Map、WeakSet、WeakMap"><a href="#Set、Map、WeakSet、WeakMap" class="headerlink" title="Set、Map、WeakSet、WeakMap"></a>Set、Map、WeakSet、WeakMap</h3><p>如果要用一句来描述，我们可以说 <strong>Set是一种叫做集合的数据结构，Map是一种叫做字典的数据结构</strong></p>
+<p>那什么是集合？什么又是字典呢？</p>
+<ul>
+<li>集合</li>
+</ul>
+<blockquote>
+<p>集合，是由一堆无序的、相关联的，且不重复的内存结构【数学中称为元素】组成的组合</p>
+</blockquote>
+<ul>
+<li>字典</li>
+</ul>
+<blockquote>
+<p>字典（dictionary）是一些元素的集合。每个元素有一个称作key 的域，不同元素的key 各不相同</p>
+</blockquote>
+<p>那么集合和字典又有什么区别呢？</p>
+<ul>
+<li>共同点：集合、字典都可以存储不重复的值</li>
+<li>不同点：集合是以[值，值]的形式存储元素，字典是以[键，值]的形式存储</li>
+</ul>
+<h5 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h5><p>大多数主流编程语言都有多种内置的数据集合。例如<code>Python</code>拥有列表（<code>list</code>）、元组（<code>tuple</code>）和字典（<code>dictionary</code>）,Java有列表（<code>list</code>）、集合（<code>set</code>)、队列（<code>queue</code>）</p>
+<p>然而 <code>JavaScript</code> 直到<code>ES6</code>的发布之前，只拥有数组（<code>array</code>）和对象（<code>object</code>）这两个内建的数据集合</p>
+<p>在 <code>ES6</code> 之前,我们通常使用内置的 <code>Object</code> 模拟Map</p>
+<p>但是这样模拟出来的<code>map</code>会有一些缺陷，如下:</p>
+<ol>
+<li><code>Object</code>的属性键是<code>String</code>或<code>Symbol</code>，这限制了它们作为不同数据类型的键/值对集合的能力</li>
+<li><code>Object</code>不是设计来作为一种数据集合，因此没有直接有效的方法来确定对象具有多少属性</li>
+</ol>
+<h5 id="set"><a href="#set" class="headerlink" title="set"></a>set</h5><blockquote>
+<p><code>Set</code> 对象允许你存储任何类型的唯一值，无论是原始值或者是对象引用，<code>Set</code>对象是值的集合，你可以按照插入的顺序迭代它的元素。 <code>Set</code>中的元素只会出现一次，即 <code>Set</code> 中的元素是唯一的</p>
+</blockquote>
+<p><code>Set</code>本身是一个构造函数，用来生成 <code>Set</code> 数据结构</p>
+<h5 id="基本使用："><a href="#基本使用：" class="headerlink" title="基本使用："></a>基本使用：</h5><ul>
+<li>语法<br><code>new Set([iterable])</code> 接收一个数组（或者具有 iterable 接口的其他数据结构）, 返回一个新的<code>Set</code>对象</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> set=<span class="hljs-keyword">new</span> <span class="hljs-built_in">Set</span>([<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">1</span>,<span class="hljs-number">2</span>])<br><span class="hljs-built_in">console</span>.log(set)<span class="hljs-comment">//&#123;1,2&#125;</span><br></code></pre></td></tr></table></figure>
+
+<p>所以说Set可以做到数组去重</p>
+<h5 id="属性和方法："><a href="#属性和方法：" class="headerlink" title="属性和方法："></a>属性和方法：</h5><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-built_in">console</span>.log(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Set</span>([<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">1</span>,<span class="hljs-number">2</span>]).size) <span class="hljs-comment">// 2</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>操作方法</strong></p>
+<ul>
+<li>add(value): 向集合中添加一个新的项</li>
+<li>delete(value): 从集合中删除一个值</li>
+<li>has(value): 如果值在集合中存在，返回ture, 否则返回false</li>
+<li>clear(): 移除集合中的所有项</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">let</span> set = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Set</span>()<br>set.add(<span class="hljs-number">1</span>)<br>set.add(<span class="hljs-number">2</span>)<br>set.add(<span class="hljs-number">2</span>)<br>set.add(<span class="hljs-number">3</span>)<br><span class="hljs-built_in">console</span>.log(set) <span class="hljs-comment">// &#123;1,2,3&#125;</span><br>set.has(<span class="hljs-number">2</span>) <span class="hljs-comment">// true</span><br>set.delete(<span class="hljs-number">2</span>)  <br>set.has(<span class="hljs-number">2</span>) <span class="hljs-comment">// false</span><br>set.clear() <br></code></pre></td></tr></table></figure>
+
+<p><strong>遍历方法</strong></p>
+<ul>
+<li>keys(): 返回键名的遍历器</li>
+<li>values(): 返回键值的遍历器</li>
+<li>entries(): 返回键值对的遍历器</li>
+<li>forEach(): 使用回调函数遍历每个成员</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">let</span> set = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Set</span>([<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>])<br><br><span class="hljs-comment">// 由于set只有键值，没有键名，所以keys() values()行为完全一致</span><br><span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">Array</span>.from(set.keys())) <span class="hljs-comment">// [1,2,3,4]</span><br><span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">Array</span>.from(set.values())) <span class="hljs-comment">// [1,2,3,4]</span><br><span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">Array</span>.from(set.entries())) <span class="hljs-comment">//  [[1,1],[2,2],[3,3],[4,4]]</span><br><br>set.forEach(<span class="hljs-function">(<span class="hljs-params">item</span>) =&gt;</span> &#123; <span class="hljs-built_in">console</span>.log(item)&#125;) <span class="hljs-comment">// 1,2,3,4</span><br></code></pre></td></tr></table></figure>
+
+<h5 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h5><h3 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h3><p>因为 <code>Set</code> 结构的值是唯一的，我们可以很轻松的实现以下</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">let</span> arr = [<span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>];<br><span class="hljs-keyword">let</span> unique = [... new <span class="hljs-built_in">Set</span>(arr)];<br><br><span class="hljs-keyword">let</span> a = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Set</span>([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>]);<br><span class="hljs-keyword">let</span> b = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Set</span>([<span class="hljs-number">4</span>, <span class="hljs-number">3</span>, <span class="hljs-number">2</span>]);<br>    <br><span class="hljs-comment">// 并集</span><br><span class="hljs-keyword">let</span> union = [...new <span class="hljs-built_in">Set</span>([...a, ...b])]; <span class="hljs-comment">// [1,2,3,4]</span><br>    <br><span class="hljs-comment">// 交集</span><br><span class="hljs-keyword">let</span> intersect = [...new <span class="hljs-built_in">Set</span>([...a].filter(<span class="hljs-function"><span class="hljs-params">x</span> =&gt;</span> b.has(x)))]; [<span class="hljs-number">2</span>,<span class="hljs-number">3</span>]<br>    <br><span class="hljs-comment">// 差集</span><br><span class="hljs-keyword">let</span> difference = <span class="hljs-built_in">Array</span>.from(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Set</span>([...a].filter(<span class="hljs-function"><span class="hljs-params">x</span> =&gt;</span> !b.has(x)))); [<span class="hljs-number">1</span>]<br></code></pre></td></tr></table></figure>
+
+<h4 id="WeakSet"><a href="#WeakSet" class="headerlink" title="WeakSet"></a>WeakSet</h4><blockquote>
+<p>WeakSet 对象是一些对象值的集合, 并且其中的每个对象值都只能出现一次。在WeakSet的集合中是唯一的</p>
+</blockquote>
+<p><code>WeakSet</code> 的出现主要解决弱引用对象存储的场景, 其结构与<code>Set</code>类似</p>
+<p>与<code>Set</code>的区别</p>
+<ul>
+<li>与Set相比，WeakSet 只能是对象的集合，而不能是任何类型的任意值</li>
+<li>WeakSet集合中对象的引用为弱引用。 如果没有其他的对WeakSet中对象的引用，那么这些对象会被当成垃圾回收掉。 这也意味着WeakSet中没有存储当前对象的列表。 正因为这样，WeakSet 是不可枚举的</li>
+</ul>
+<p><code>WeakSet</code> 的属性跟操作方法与 <code>Set</code> 一致，不同的是 <code>WeakSet</code> 没有遍历方法，因为其成员都是弱引用，弱引用随时都会消失，遍历机制无法保证成员的存在</p>
+<p><strong>上面一直有提到弱引用，那弱引用到底是指什么呢？</strong></p>
+<blockquote>
+<p>弱引用是指不能确保其引用的对象不会被垃圾回收器回收的引用，换句话说就是可能在任意时间被回收</p>
+</blockquote>
+<p>基本跟 <code>Set</code> 类似，同样具有如下方法 <strong>属性</strong></p>
+<ul>
+<li>size: 返回 Map 结构的元素总数</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">let</span> map = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Map</span>()<br>map.set(<span class="hljs-string">&#x27;name&#x27;</span>, <span class="hljs-string">&#x27;vuejs.cn&#x27;</span>);<br><span class="hljs-built_in">console</span>.log(map.size) <span class="hljs-comment">// 1</span><br><br><span class="hljs-built_in">console</span>.log(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Map</span>([[<span class="hljs-string">&#x27;name&#x27;</span>,<span class="hljs-string">&#x27;vue3js.cn&#x27;</span>], [<span class="hljs-string">&#x27;age&#x27;</span>,<span class="hljs-string">&#x27;18&#x27;</span>]]).size) <span class="hljs-comment">// 2</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>操作方法</strong></p>
+<ul>
+<li>set(key, value): 向 Map 中加入或更新键值对</li>
+<li>get(key): 读取 key 对用的值，如果没有，返回 undefined</li>
+<li>has(key): 某个键是否在 Map 对象中，在返回 true 否则返回 false</li>
+<li>delete(key): 删除某个键，返回 true, 如果删除失败返回 false</li>
+<li>clear(): 删除所有元素</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">let</span> map = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Map</span>()<br>map.set(<span class="hljs-string">&#x27;name&#x27;</span>,<span class="hljs-string">&#x27;vue3js.cn&#x27;</span>)<br>map.set(<span class="hljs-string">&#x27;age&#x27;</span>,<span class="hljs-string">&#x27;18&#x27;</span>)<br><span class="hljs-built_in">console</span>.log(map) <span class="hljs-comment">// Map &#123;&quot;name&quot; =&gt; &quot;vuejs.cn&quot;, &quot;age&quot; =&gt; &quot;18&quot;&#125;</span><br>map.get(<span class="hljs-string">&#x27;name&#x27;</span>) <span class="hljs-comment">// vue3js.cn </span><br>map.has(<span class="hljs-string">&#x27;name&#x27;</span>) <span class="hljs-comment">// true</span><br>map.delete(<span class="hljs-string">&#x27;name&#x27;</span>)  <br>map.has(name) <span class="hljs-comment">// false</span><br>map.clear() <span class="hljs-comment">// Map &#123;&#125; </span><br></code></pre></td></tr></table></figure>
+
+<p><strong>遍历方法</strong></p>
+<ul>
+<li>keys()：返回键名的遍历器</li>
+<li>values()：返回键值的遍历器</li>
+<li>entries()：返回所有成员的遍历器</li>
+<li>forEach()：遍历 Map 的所有成员</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">let</span> map = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Map</span>()<br>map.set(<span class="hljs-string">&#x27;name&#x27;</span>,<span class="hljs-string">&#x27;vue3js.cn&#x27;</span>)<br>map.set(<span class="hljs-string">&#x27;age&#x27;</span>,<span class="hljs-string">&#x27;18&#x27;</span>)<br><br><span class="hljs-built_in">console</span>.log([...map.keys()])  <span class="hljs-comment">// [&quot;name&quot;, &quot;age&quot;]</span><br><span class="hljs-built_in">console</span>.log([...map.values()])  <span class="hljs-comment">// [&quot;vue3js.cn&quot;, &quot;18&quot;]</span><br><span class="hljs-built_in">console</span>.log([...map.entries()]) <span class="hljs-comment">// [[&#x27;name&#x27;,&#x27;vue3js.cn&#x27;], [&#x27;age&#x27;,&#x27;18&#x27;]]</span><br><br><span class="hljs-comment">// name vuejs.cn</span><br><span class="hljs-comment">// age 18</span><br>map.forEach(<span class="hljs-function">(<span class="hljs-params">value, key</span>) =&gt;</span> &#123; <span class="hljs-built_in">console</span>.log(key, value)&#125;) <br></code></pre></td></tr></table></figure>
+
+<h5 id="应用场景-1"><a href="#应用场景-1" class="headerlink" title="应用场景"></a>应用场景</h5><p><code>Map</code> 会保留所有元素的顺序, 是在基于可迭代的基础上构建的，如果考虑到元素迭代或顺序保留或键值类型丰富的情况下都可以使用，下面摘抄自 <code>vue3</code> 源码中依赖收集的核心实现</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">let</span> depsMap = targetMap.get(target)<br><span class="hljs-keyword">if</span> (!depsMap) &#123;<br>  targetMap.set(target, (depsMap = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Map</span>()))<br>&#125;<br><span class="hljs-keyword">let</span> dep = depsMap.get(key)<br><span class="hljs-keyword">if</span> (!dep) &#123;<br>  depsMap.set(key, (dep = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Set</span>()))<br>&#125;<br><span class="hljs-keyword">if</span> (!dep.has(activeEffect)) &#123;<br>  dep.add(activeEffect)<br>  activeEffect.deps.push(dep)<br>  ...<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h5 id="WeakMap"><a href="#WeakMap" class="headerlink" title="WeakMap"></a>WeakMap</h5><blockquote>
+<p>WeakMap 对象是一组键/值对的集合，其中的键是弱引用的。其键必须是对象，而值可以是任意的</p>
+</blockquote>
+<p>与<code>Map</code>的区别</p>
+<ul>
+<li>Map 的键可以是任意类型，WeakMap 的键只能是对象类型</li>
+<li>WeakMap 键名所指向的对象，不计入垃圾回收机制</li>
+</ul>
+<p><code>WeakMap</code> 的属性跟操作方法与 <code>Map</code> 一致，同 <code>WeakSet</code> 一样，因为是弱引用，所以 <code>WeakSet</code> 也没有遍历方法</p>
+<h5 id="类型的转换"><a href="#类型的转换" class="headerlink" title="类型的转换"></a>类型的转换</h5><ul>
+<li><code>Map</code> 转为 <code>Array</code></li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-comment">// 解构</span><br><span class="hljs-keyword">const</span> map = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Map</span>([[<span class="hljs-number">1</span>, <span class="hljs-number">1</span>], [<span class="hljs-number">2</span>, <span class="hljs-number">2</span>], [<span class="hljs-number">3</span>, <span class="hljs-number">3</span>]])<br><span class="hljs-built_in">console</span>.log([...map])	<span class="hljs-comment">// [[1, 1], [2, 2], [3, 3]]</span><br><br><span class="hljs-comment">// Array.from()</span><br><span class="hljs-keyword">const</span> map = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Map</span>([[<span class="hljs-number">1</span>, <span class="hljs-number">1</span>], [<span class="hljs-number">2</span>, <span class="hljs-number">2</span>], [<span class="hljs-number">3</span>, <span class="hljs-number">3</span>]])<br><span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">Array</span>.from(map))	<span class="hljs-comment">// [[1, 1], [2, 2], [3, 3]]</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><code>Array</code> 转为 <code>Map</code></li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> map = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Map</span>([[<span class="hljs-number">1</span>, <span class="hljs-number">1</span>], [<span class="hljs-number">2</span>, <span class="hljs-number">2</span>], [<span class="hljs-number">3</span>, <span class="hljs-number">3</span>]])<br><span class="hljs-built_in">console</span>.log(map)	<span class="hljs-comment">// Map &#123;1 =&gt; 1, 2 =&gt; 2, 3 =&gt; 3&#125;</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><code>Map</code> 转为 <code>Object</code></li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-comment">// 非字符串键名会被转换为字符串</span><br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">mapToObj</span>(<span class="hljs-params">map</span>) </span>&#123;<br>    <span class="hljs-keyword">let</span> obj = <span class="hljs-built_in">Object</span>.create(<span class="hljs-literal">null</span>)<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> [key, value] <span class="hljs-keyword">of</span> map) &#123;<br>        obj[key] = value<br>    &#125;<br>    <span class="hljs-keyword">return</span> obj<br>&#125;<br><span class="hljs-keyword">const</span> map = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Map</span>().set(<span class="hljs-string">&#x27;name&#x27;</span>, <span class="hljs-string">&#x27;vue3js.cn&#x27;</span>).set(<span class="hljs-string">&#x27;age&#x27;</span>, <span class="hljs-string">&#x27;18&#x27;</span>)<br>mapToObj(map)  <span class="hljs-comment">// &#123;name: &quot;vue3js.cn&quot;, age: &quot;18&quot;&#125;</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><code>Object</code> 转为 <code>Map</code></li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">let</span> obj = &#123;<span class="hljs-string">&quot;a&quot;</span>:<span class="hljs-number">1</span>, <span class="hljs-string">&quot;b&quot;</span>:<span class="hljs-number">2</span>&#125;;<br><span class="hljs-keyword">let</span> map = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Map</span>(<span class="hljs-built_in">Object</span>.entries(obj))<br></code></pre></td></tr></table></figure>
+
+<h5 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h5><ul>
+<li>Set、Map、WeakSet、WeakMap、都是一种集合的数据结构</li>
+<li>Set、WeakSet 是[值,值]的集合，且具有唯一性</li>
+<li>Map 和 WeakMap 是一种[键,值]的集合，Map 的键可以是任意类型，WeakMap 的键只能是对象类型</li>
+<li>Set 和 Map 有遍历方法，WeakSet 和 WeakMap 属于弱引用不可遍历</li>
+</ul>
+
+      </section>
+      <section class="extra">
+        
+        <ul class="copyright">
+  
+  <li><strong>本文作者：</strong>lc</li>
+  <li><strong>本文链接：</strong><a href="http://example.com/2021/03/18/vu3%E6%BA%90%E7%A0%812/index.html">http://example.com/2021/03/18/vu3%E6%BA%90%E7%A0%812/index.html</a></li>
+  <li><strong>版权声明：</strong>本博客所有文章均采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh"
+      rel="external nofollow" target="_blank"> BY-NC-SA </a>许可协议，转载请注明出处！</li>
+  
+</ul>
+        
+        
+        <section class="donate">
+  <div class="qrcode">
+    <img   class="lazyload" data-original="https://pic.izhaoo.com/alipay.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" >
+  </div>
+  <div class="icon">
+    <a href="javascript:;" id="alipay"><i class="iconfont iconalipay"></i></a>
+    <a href="javascript:;" id="wechat"><i class="iconfont iconwechat-fill"></i></a>
+  </div>
+</section>
+        
+        
+  <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vue3%E6%BA%90%E7%A0%81-Set%E3%80%81Map%E3%80%81WeakSet%E3%80%81WeakMap/" rel="tag">Vue3源码-Set、Map、WeakSet、WeakMap</a></li></ul>
+
+        
+<nav class="nav">
+  
+    <a href="/2021/03/18/python/"><i class="iconfont iconleft"></i>Python基础</a>
+  
+  
+    <a href="/2021/03/18/vue3/">Vue3<i class="iconfont iconright"></i></a>
+  
+</nav>
+
+      </section>
+      
+      <section class="comments">
+  
+  <div class="btn" id="comments-btn">查看评论</div>
+  
+  
+</section>
+      
+    </section>
+  </div>
+</article>
+  </div>
+</main>
+  <footer class="footer">
+  <div class="footer-social">
+    
+    
+    
+    
+    
+    <a href="tencent://message/?Menu=yes&uin=2504971404 " target="_blank" onMouseOver="this.style.color= '#12B7F5'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconQQ "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="javascript:; " target="_blank" onMouseOver="this.style.color= '#09BB07'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconwechat-fill "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="https://www.instagram.com/izhaoo/ " target="_blank" onMouseOver="this.style.color= '#DA2E76'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconinstagram "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="https://github.com/izhaoo " target="_blank" onMouseOver="this.style.color= '#24292E'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  icongithub-fill "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="mailto:izhaoo@163.com " target="_blank" onMouseOver="this.style.color='#FFBE5B'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconmail"></i>
+    </a>
+    
+  </div>
+  <div class="footer-copyright"><p>Powered by <a target="_blank" href="https://hexo.io">Hexo</a>  |  Theme - <a target="_blank" href="https://github.com/izhaoo/hexo-theme-zhaoo">zhaoo</a></p></div>
+</footer>
+  
+      <div class="fab fab-plus">
+    <i class="iconfont iconplus"></i>
+  </div>
+  
+  <div class="fab fab-daovoice">
+    <i class="iconfont iconcomment"></i>
+  </div>
+  
+  <div class="fab fab-up">
+    <i class="iconfont iconcaret-up"></i>
+  </div>
+  
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+
+
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+
+
+
+
+
+
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+
+
+
+
+
+<script src="https://cdn.bootcss.com/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+
+
+
+
+
+
+<script src="/js/utils.js"></script>
+<script src="/js/modules.js"></script>
+<script src="/js/zui.js"></script>
+<script src="/js/script.js"></script>
+
+
+
+
+
+<script>
+  (function (i, s, o, g, r, a, m) {
+    i["DaoVoiceObject"] = r;
+    i[r] = i[r] || function () {
+      (i[r].q = i[r].q || []).push(arguments)
+    }, i[r].l = 1 * new Date();
+    a = s.createElement(o), m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    a.charset = "utf-8";
+    m.parentNode.insertBefore(a, m)
+  })(window, document, "script", ('https:' == document.location.protocol ? 'https:' : 'http:') +
+    "//widget.daovoice.io/widget/0f81ff2f.js", "daovoice")
+  daovoice('init', {
+    app_id: "abcdefg"
+  }, {
+    launcher: {
+      disableLauncherIcon: true,
+    },
+  });
+  daovoice('update');
+</script>
+
+
+
+<script>
+  (function () {
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    } else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+<script>
+  var _hmt = _hmt || [];
+  (function () {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?4c204d8bc027a0455b5fc642ac334ca8";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+
+
+
+
+
+
+
+
+
+</html>

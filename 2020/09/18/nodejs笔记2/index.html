@@ -1,0 +1,670 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>nodejs-2 - cocacola</title>
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="google" content="notranslate" />
+
+  
+  
+  <meta name="description" content="nodejs笔记2web应用架构client-客户端，..."> 
+  
+  <meta name="author" content="lc"> 
+
+  
+    <link rel="icon" href="/images/icons/favicon-16x16.png" type="image/png" sizes="16x16">
+  
+  
+    <link rel="icon" href="/images/icons/favicon-32x32.png" type="image/png" sizes="32x32">
+  
+  
+    <link rel="apple-touch-icon" href="/images/icons/apple-touch-icon.png" sizes="180x180">
+  
+  
+    <meta rel="mask-icon" href="/images/icons/stun-logo.svg" color="#333333">
+  
+  
+    <meta rel="msapplication-TileImage" content="/images/icons/favicon-144x144.png">
+    <meta rel="msapplication-TileColor" content="#000000">
+  
+
+  
+<link rel="stylesheet" href="/css/style.css">
+
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1445822_h1619vhl1nr.css">
+
+  
+
+  
+  
+  
+<link rel="stylesheet" href="https://cdn.bootcss.com/fancybox/3.5.7/jquery.fancybox.min.css">
+
+  
+
+  
+  
+  
+<link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.18.1/styles/xcode.min.css">
+
+  
+
+  <script>
+    var CONFIG = window.CONFIG || {};
+    var ZHAOO = window.ZHAOO || {};
+    CONFIG = {
+      isHome: false,
+      fancybox: true,
+      pjax: false,
+      lazyload: {
+        enable: true,
+        loadingImage: '',
+      },
+      donate: {
+        enable: true,
+        alipay: 'https://pic.izhaoo.com/alipay.jpg',
+        wechat: 'https://pic.izhaoo.com/wechat.jpg'
+      },
+      motto: {
+        api: '',
+        default: '将喜欢的一切留在身边，这便是努力的意义。'
+      },
+      galleries: {
+        enable: true
+      },
+      fab: {
+        enable: true,
+        alwaysShow: false
+      },
+      carrier: {
+        enable: true
+      },
+      daovoice: {
+        enable: true
+      }
+    }
+  </script>
+
+  
+
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body class="lock-screen">
+  <div class="loading"></div>
+  
+
+
+<nav class="navbar">
+  <div class="left"></div>
+  <div class="center">nodejs-2</div>
+  <div class="right">
+    <i class="iconfont iconmenu j-navbar-menu"></i>
+  </div>
+</nav>
+
+  <nav class="menu">
+  <div class="menu-wrap">
+    <div class="menu-close">
+      <i class="iconfont iconbaseline-close-px"></i>
+    </div>
+    <ul class="menu-content">
+      
+      
+      
+      
+      <li class="menu-item"><a href="/ " class="underline"> 首页</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/galleries " class="underline"> 摄影</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/archives " class="underline"> 归档</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/tags " class="underline"> 标签</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/categories " class="underline"> 分类</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/about " class="underline"> 关于</a></li>
+      
+    </ul>
+    <div class="menu-copyright"><p>Powered by <a target="_blank" href="https://hexo.io">Hexo</a>  |  Theme - <a target="_blank" href="https://github.com/izhaoo/hexo-theme-zhaoo">zhaoo</a></p></div>
+  </div>
+</nav>
+  <main id="main">
+  <div class="container" id="container">
+    <article class="article">
+  <div class="wrap">
+    <section class="head">
+  <img   class="lazyload" data-original="https://gitee.com/cocacolalc/imgs-hexo/raw/master/img/photo-1620680741158-48410cc39150.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
+  <div class="head-mask">
+    <h1 class="head-title">nodejs-2</h1>
+    <div class="head-info">
+      <span class="post-info-item"><i class="iconfont iconcalendar"></i>September 18, 2020</span
+        class="post-info-item">
+      
+      <span class="post-info-item"><i class="iconfont iconfont-size"></i>4978</span>
+    </div>
+  </div>
+</section>
+    <section class="main">
+      <section class="content">
+        <h1 id="nodejs笔记2"><a href="#nodejs笔记2" class="headerlink" title="nodejs笔记2"></a>nodejs笔记2</h1><h2 id="web应用架构"><a href="#web应用架构" class="headerlink" title="web应用架构"></a>web应用架构</h2><p>client-客户端，一般指浏览器，浏览器可以通过http协议向服务器请求数据。</p>
+<p>server-服务端，一般指web服务器，可以接收客户请求，并向客户端发送响应数据。</p>
+<h5 id="http-server"><a href="#http-server" class="headerlink" title="http server"></a>http server</h5><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-comment">//支持web服务的http</span><br><br>*<span class="hljs-keyword">const</span>* http=<span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;http&#x27;</span>)<br><br>*<span class="hljs-keyword">let</span>* count=<span class="hljs-number">0</span><br><br><span class="hljs-comment">//创建一个服务,如果有url访问到了这个服务，回调函数执行</span><br><br><span class="hljs-comment">// 回调函数中，第一个形参request代表的是请求对象，里面存放了请求信息</span><br><br><span class="hljs-comment">// 第二个参数response：响应对象</span><br><br>*<span class="hljs-keyword">var</span>* serve=http.createServer((*request*,*response*)*=&gt;*&#123;<br><br>  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&#x27;有人访问&#x27;</span>+(++count))<br><br>  <span class="hljs-comment">//设置响应头；200是成功 编码 类型</span><br><br>  *response*.writeHead(<span class="hljs-number">200</span>,&#123;<span class="hljs-string">&#x27;Content-Type&#x27;</span>:<span class="hljs-string">&#x27;text/html;charset=utf-8&#x27;</span>&#125;)<br><br>  <span class="hljs-comment">// 响应对象中添加数据</span><br><br>  *response*.write(<span class="hljs-string">&#x27;我是相应内容&#x27;</span>,<span class="hljs-string">&#x27;utf-8&#x27;</span>)<br><br>  <span class="hljs-comment">// 结束</span><br><br>  *response*.end()<br><br>&#125;)<br><br><span class="hljs-comment">// 把服务监听3000端口</span><br><br>serve.listen(<span class="hljs-string">&#x27;3000&#x27;</span>,(*err*)*=&gt;*&#123;<br><br>  <span class="hljs-keyword">if</span>(*err*) <span class="hljs-keyword">return</span> <span class="hljs-built_in">console</span>.log(*err*)<br><br>  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&#x27;serve listen at 3000&#x27;</span>)<br><br>&#125;)<br><br><span class="hljs-comment">// url ：http：协议</span><br><br><span class="hljs-comment">// 域名：或者 ip DFS服务器</span><br><br><span class="hljs-comment">// 端口：80默认</span><br><br></code></pre></td></tr></table></figure>
+
+<h5 id="http"><a href="#http" class="headerlink" title="http"></a>http</h5><p>http域名或者IP</p>
+<p>端口号</p>
+<p>相对路径</p>
+<h5 id="nodejs-http-server"><a href="#nodejs-http-server" class="headerlink" title="nodejs http server"></a>nodejs http server</h5><p>加载http包</p>
+<p>http.createServer((request,response)=&gt;{</p>
+<p>回调函数</p>
+<p>request：请求对象</p>
+<p>response：响应对象</p>
+<p>server.listen(‘3000’)</p>
+<p>})</p>
+<h5 id="http工作原理-过程"><a href="#http工作原理-过程" class="headerlink" title="http工作原理  (过程)"></a>http工作原理  (过程)</h5><ul>
+<li><p>1  客户端连接到web服务器</p>
+</li>
+<li><p>2  发送http请求</p>
+</li>
+<li><p>3   服务器接收解释请求并返回http响应</p>
+</li>
+<li><p>4  释放连接tcp连接</p>
+</li>
+</ul>
+<h5 id="path"><a href="#path" class="headerlink" title="path"></a>path</h5><ul>
+<li>专注于文件路径</li>
+</ul>
+<h5 id="url"><a href="#url" class="headerlink" title="url"></a>url</h5><ul>
+<li>专注于处理url地址</li>
+</ul>
+<h5 id="querystring"><a href="#querystring" class="headerlink" title="querystring"></a>querystring</h5><ul>
+<li>专注于url中使用get请求后面解析参数</li>
+</ul>
+<h5 id="解析url"><a href="#解析url" class="headerlink" title="解析url"></a>解析url</h5><blockquote>
+<p>new  URL(request.url,’http://${request.headers.host}’)</p>
+</blockquote>
+<h5 id="get-set"><a href="#get-set" class="headerlink" title="get   set"></a>get   set</h5><ul>
+<li>get 参数，是拼接在url后面；post参数body</li>
+<li>浏览器地址栏中访问的url</li>
+</ul>
+<h5 id="nodejs区分get-post"><a href="#nodejs区分get-post" class="headerlink" title="nodejs区分get post"></a>nodejs区分get post</h5><p>request.method</p>
+<p>nodejs 从get  post  获取参数数据</p>
+<ul>
+<li>get  获取参数  分析url  </li>
+<li>post获取参数</li>
+</ul>
+<h5 id="创建express项目"><a href="#创建express项目" class="headerlink" title="创建express项目"></a>创建express项目</h5><ul>
+<li>安装一个创建express项目的工具（express生成器）–express-generator</li>
+</ul>
+<p>安装命令：</p>
+<blockquote>
+<p>npm install express-generator -g</p>
+</blockquote>
+<p>全局安装：</p>
+<ul>
+<li>使用这个工具生成一个express项目</li>
+</ul>
+<p>命令是：</p>
+<blockquote>
+<p>express –view=ejs myprogramName </p>
+</blockquote>
+<ul>
+<li><p>myprogramName是项目的名字</p>
+</li>
+<li><p>–view=ejs 设置项目的页面使用的模板引擎；设置模版引擎为ejs pug</p>
+</li>
+<li><p>创建完成项目文件之后； </p>
+</li>
+<li><p>cd myprogramName 命令窗口前面的路径定位到项目文件</p>
+</li>
+<li><p>D:\work\Lesson\202002\2-165\Day08\my1</p>
+</li>
+</ul>
+<blockquote>
+<p>npm i </p>
+</blockquote>
+<p>会在my1这个文件夹下寻找package.json，获取dependencies里面的包；并且全部安装；</p>
+<ul>
+<li>启动项目</li>
+</ul>
+<blockquote>
+<p>SET DEBUG=my1:* &amp; npm start</p>
+</blockquote>
+<ul>
+<li>默认是在3000端口号： localhost:3000 127.0.0.1:3000</li>
+</ul>
+<h5 id="项目文件："><a href="#项目文件：" class="headerlink" title="项目文件："></a>项目文件：</h5><ul>
+<li><p>bin/www 可以修改服务的端口号：</p>
+</li>
+<li><p>node_modules 所有局部安装的包</p>
+</li>
+<li><p>pulic 存放静态文件的；</p>
+</li>
+<li><p>routes 路由</p>
+</li>
+<li><p>views 页面</p>
+</li>
+<li><p>app.js 启动js</p>
+</li>
+<li><p>package.json npm配置文件</p>
+</li>
+</ul>
+<p>npm i 就是安装的dependencies下的包</p>
+<p>npm start 就是运行的scripts下面start命令</p>
+<h5 id="app-js-文件"><a href="#app-js-文件" class="headerlink" title="app.js 文件"></a>app.js 文件</h5><h5 id="路由："><a href="#路由：" class="headerlink" title="路由："></a>路由：</h5><ul>
+<li><p>在routes文件夹下 写路由文件</p>
+</li>
+<li><p>app.js中启用路由：</p>
+</li>
+</ul>
+<h5 id="响应返回页面"><a href="#响应返回页面" class="headerlink" title="响应返回页面"></a>响应返回页面</h5><p>在路由中，使用res.render(“list”)；</p>
+<p>-页面必须放在views下；而且后缀名必须是.ejs</p>
+<h5 id="怎么获取url传递的数据："><a href="#怎么获取url传递的数据：" class="headerlink" title="怎么获取url传递的数据："></a>怎么获取url传递的数据：</h5><ul>
+<li><p>get 参数: 在路由 req.query 属性，存放了所有get请求的参数：</p>
+</li>
+<li><p>post 数据 req.body 存储</p>
+</li>
+</ul>
+<h5 id="动态路由"><a href="#动态路由" class="headerlink" title="动态路由"></a>动态路由</h5><p>req.params</p>
+<h5 id="路由的路径是可以用正则表达式"><a href="#路由的路径是可以用正则表达式" class="headerlink" title="路由的路径是可以用正则表达式"></a>路由的路径是可以用正则表达式</h5><h5 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h5><ul>
+<li><p>npm i express-generator -g 如果安装过了，不用再安装</p>
+</li>
+<li><p>生成一个项目</p>
+</li>
+</ul>
+<blockquote>
+<p>express –view=ejs xiaou</p>
+</blockquote>
+<blockquote>
+<p>cd xiaou</p>
+</blockquote>
+<blockquote>
+<p>npm i </p>
+</blockquote>
+<blockquote>
+<p>npm start</p>
+</blockquote>
+<ul>
+<li><p>把index.html复制到views，并且要ejs后缀；</p>
+</li>
+<li><p>设计一个路由： 设计url地址；访问这个url，</p>
+</li>
+<li><p>routes文件夹下创建一个新的路由文件index.js</p>
+</li>
+</ul>
+<h5 id="node-js"><a href="#node-js" class="headerlink" title="node.js"></a>node.js</h5><ul>
+<li>单线程</li>
+<li>非阻塞</li>
+<li>事件驱动</li>
+</ul>
+<h5 id="模块化commonJS"><a href="#模块化commonJS" class="headerlink" title="模块化commonJS"></a>模块化commonJS</h5><ul>
+<li>定义模块：</li>
+</ul>
+<p>modules.exporys{}</p>
+<p>modules.exporys.xxx=xx</p>
+<p>exports.xxx=xx</p>
+<ul>
+<li>加载模块：</li>
+</ul>
+<p>通过js（模块）的加载路径：</p>
+<p>const mymoudule=require(‘模块’)</p>
+<p>通过js（模块）的标识：核心模块（nodejs自带的    ）</p>
+<p>const http=require(‘http’)</p>
+<h5 id="事件"><a href="#事件" class="headerlink" title="事件"></a>事件</h5><ul>
+<li>初始化</li>
+<li>绑定事件</li>
+<li>触发事件</li>
+<li>传值：</li>
+</ul>
+<h5 id="npm"><a href="#npm" class="headerlink" title="npm"></a>npm</h5><ul>
+<li>包：</li>
+<li>全局安装    -g   本地安装</li>
+<li>依赖   和   开发依赖：</li>
+</ul>
+<p>依赖：express   简写–save    -S</p>
+<p>开发依赖：less  简写  –save-dev   -D</p>
+<h5 id="文件系统"><a href="#文件系统" class="headerlink" title="文件系统"></a>文件系统</h5><h5 id="nodejs-http"><a href="#nodejs-http" class="headerlink" title="nodejs  http"></a>nodejs  http</h5><ul>
+<li><p><a target="_blank" rel="noopener" href="http://www.ddd.com/">http://www.ddd.com:80</a>   默认是80</p>
+<h5 id="http四个步骤："><a href="#http四个步骤：" class="headerlink" title="http四个步骤："></a>http四个步骤：</h5><ul>
+<li>客户端向服务端发起的连接</li>
+<li>客户端向服务器发送的数据</li>
+<li>服务器响应客户端</li>
+<li>客户端结束连接</li>
+</ul>
+<h5 id="nodejs下的一些小模块"><a href="#nodejs下的一些小模块" class="headerlink" title="nodejs下的一些小模块"></a>nodejs下的一些小模块</h5><ul>
+<li>path</li>
+<li>url</li>
+<li>queryString</li>
+</ul>
+<h5 id="express"><a href="#express" class="headerlink" title="express"></a>express</h5><p>基于nodejs的一个web开发框架：</p>
+<h5 id="创建esperss项目的步骤"><a href="#创建esperss项目的步骤" class="headerlink" title="创建esperss项目的步骤"></a>创建esperss项目的步骤</h5><ul>
+<li>全局安装espress项目生成器</li>
+</ul>
+</li>
+</ul>
+<p>命令：npm i express-generator -g</p>
+<p>创建express项目的基础框架</p>
+<blockquote>
+<p>express –view=ejs xiaou</p>
+</blockquote>
+<blockquote>
+<p>cd xiaou</p>
+</blockquote>
+<blockquote>
+<p>npm i </p>
+</blockquote>
+<blockquote>
+<p>npm start</p>
+</blockquote>
+<h5 id="路由"><a href="#路由" class="headerlink" title="路由"></a>路由</h5><p>在routes创建新的路由文件product.js</p>
+<p>路由地址的匹配</p>
+<p>正则</p>
+<p>动态路由</p>
+<h5 id="路由返回数据"><a href="#路由返回数据" class="headerlink" title="路由返回数据"></a>路由返回数据</h5><ul>
+<li>字符串：res.send()</li>
+<li>页面：res.render(‘文件路径’)；文件夹是是固定的views文件夹</li>
+<li>json  res.json({})</li>
+</ul>
+<h5 id="中间件："><a href="#中间件：" class="headerlink" title="中间件："></a>中间件：</h5><p>每个请求都会经过中间件的检查过滤</p>
+<p>1、中间件就是一种功能的封装方式，就是封装在程序中处理http请求的功能，  </p>
+<p>2、中间件是在管道中执行</p>
+<p>3、中间件有一个next()函数，如果不调用next函数，请求就在这个中间件中终止了，</p>
+<p>4、中间件和路由处理器的参数中都有回调函数，这个函数有2,3,4个参数</p>
+<p>如果有两个参数就是req和res；</p>
+<p>如果有三个参数就是req,res和next</p>
+<p>如果有四个参数就是err，req，res，next</p>
+<p>5、如果不调用next ，管道就会终止，不会再有处理器做后续响应，应该向客户端发送一个响应</p>
+<p>6、如果调用了next，不应该发送响应到客户端，如果发送了，则后面发送的响应都会被忽略</p>
+<p>7、中间件的第一个参数可以是路径，如果忽略则全部都匹配</p>
+<h5 id="ejs"><a href="#ejs" class="headerlink" title="ejs"></a>ejs</h5><p>res.render(‘页面的相对路径‘，data)  第二个参数是数据。传递给页面    的数据</p>
+<p>第二个参数是传递给页面中的模板引擎数据</p>
+<p>模板引擎中的语法</p>
+<p>&lt;%# 注释%&gt;</p>
+<h5 id="art-template-模板引擎"><a href="#art-template-模板引擎" class="headerlink" title="art -template  模板引擎"></a>art -template  模板引擎</h5><ul>
+<li><p>espress项目中，使用arttemplate模板引擎</p>
+</li>
+<li><p>安装arttemplate包和express下的支持包</p>
+</li>
+<li><p>npm  i art - template  -S</p>
+</li>
+<li><p>npm  i express-art - template  -S</p>
+</li>
+</ul>
+<h2 id="MySql"><a href="#MySql" class="headerlink" title="MySql"></a>MySql</h2><ul>
+<li>数据库：存储文件：</li>
+<li>MySQl:服务类的程序：</li>
+</ul>
+<h3 id="常见数据库"><a href="#常见数据库" class="headerlink" title="常见数据库"></a>常见数据库</h3><ul>
+<li>Oracle</li>
+<li>mysql</li>
+<li>ms sql server</li>
+<li>mongodb</li>
+</ul>
+<h3 id="分类："><a href="#分类：" class="headerlink" title="分类："></a>分类：</h3><ul>
+<li>关系数据库</li>
+<li>非关系数据库</li>
+</ul>
+<h3 id="mysql"><a href="#mysql" class="headerlink" title="mysql"></a>mysql</h3><ul>
+<li>第一范式（1NF）：要求数据库表的每一列都是不可分割的原子数据项</li>
+<li>第二范式（2NF）：在1NF的基础上，非主键属性必须完全依赖于主键</li>
+<li>第三范式（3NF）：在2NF基础上，任何非主键属性不依赖于其它非主键属性（在2NF基础上消除传递依赖）</li>
+<li>反范式：</li>
+</ul>
+<h3 id="mysql-语法：sql语法"><a href="#mysql-语法：sql语法" class="headerlink" title="mysql 语法：sql语法"></a>mysql 语法：sql语法</h3><ul>
+<li>DDL  DML</li>
+</ul>
+<h3 id="数据库：database"><a href="#数据库：database" class="headerlink" title="数据库：database"></a>数据库：database</h3><pre><code>-   创建数据库：
+&gt;create database if not exists xiaou ;</code></pre>
+<h3 id="表：table"><a href="#表：table" class="headerlink" title="表：table"></a>表：table</h3><ul>
+<li>创建表：</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> <span class="hljs-string">`xiaou`</span>.<span class="hljs-string">`user`</span> (<br>  <span class="hljs-string">`cardid`</span> <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">45</span>) <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,<br>  <span class="hljs-string">`name`</span> <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">45</span>) <span class="hljs-literal">NULL</span>,<br>  <span class="hljs-string">`age`</span> <span class="hljs-built_in">INT</span> <span class="hljs-literal">NULL</span>,<br>  <span class="hljs-string">`address`</span> <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">45</span>) <span class="hljs-literal">NULL</span>,<br>  <span class="hljs-string">`height`</span> <span class="hljs-built_in">FLOAT</span> <span class="hljs-literal">NULL</span>,<br>  <span class="hljs-string">`createby`</span> <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">45</span>) <span class="hljs-literal">NULL</span>,<br>  <span class="hljs-string">`createtime`</span> <span class="hljs-built_in">DATE</span> <span class="hljs-literal">NULL</span>,<br>  <span class="hljs-string">`updateby`</span> <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">45</span>) <span class="hljs-literal">NULL</span>,<br>  <span class="hljs-string">`updatetime`</span> <span class="hljs-built_in">DATE</span> <span class="hljs-literal">NULL</span>,<br>  PRIMARY <span class="hljs-keyword">KEY</span> (<span class="hljs-string">`cardid`</span>));<br><br><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>修改表：</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">TABLE</span> <span class="hljs-string">`xiaou`</span>.<span class="hljs-string">`user`</span> <br><span class="hljs-keyword">ADD</span> <span class="hljs-keyword">COLUMN</span> <span class="hljs-string">`disc`</span> <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">45</span>) <span class="hljs-literal">NULL</span> <span class="hljs-keyword">AFTER</span> <span class="hljs-string">`tel`</span>;<br><br><span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">TABLE</span> <span class="hljs-string">`xiaou`</span>.<span class="hljs-string">`user`</span> <br><span class="hljs-keyword">DROP</span> <span class="hljs-keyword">COLUMN</span> <span class="hljs-string">`disc`</span>;<br><br><br></code></pre></td></tr></table></figure>
+
+<h3 id="删除表、删除数据库"><a href="#删除表、删除数据库" class="headerlink" title="删除表、删除数据库"></a>删除表、删除数据库</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">drop</span> <span class="hljs-keyword">table</span> stud;<br><span class="hljs-keyword">drop</span> <span class="hljs-keyword">database</span> ujiuye;<br><br><br></code></pre></td></tr></table></figure>
+
+<h3 id="中文："><a href="#中文：" class="headerlink" title="中文："></a>中文：</h3><p>修改字段编码为urf8  ;utf8-general-ci;</p>
+<h3 id="插入数据："><a href="#插入数据：" class="headerlink" title="插入数据："></a>插入数据：</h3><ul>
+<li><p>insert into </p>
+</li>
+<li><p>格式<br><strong>全部列添加数据：</strong><br>insert into table_name (id,name,age,<code>drop</code>) values(10,’zs’,100,’eer’);<br>如果对所有的列添加数据： 前面的（列名、）是可以省略的；<br>insert into table_name values(10,’zs’,100,’eer’);</p>
+</li>
+</ul>
+<p><strong>部分列添加数据：</strong><br>insert into table_name (id,name) values(10,’zs’);</p>
+<h3 id="修改数据："><a href="#修改数据：" class="headerlink" title="修改数据："></a>修改数据：</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">update</span> xiaou.user <span class="hljs-keyword">set</span> <span class="hljs-keyword">name</span>=<span class="hljs-string">&#x27;zs2000&#x27;</span>,age=<span class="hljs-number">2000</span> <span class="hljs-keyword">where</span> address=<span class="hljs-string">&#x27;上海&#x27;</span>;<br><br><br></code></pre></td></tr></table></figure>
+
+<p>###　删除数据：</p>
+
+      </section>
+      <section class="extra">
+        
+        <ul class="copyright">
+  
+  <li><strong>本文作者：</strong>lc</li>
+  <li><strong>本文链接：</strong><a href="http://example.com/2020/09/18/nodejs%E7%AC%94%E8%AE%B02/index.html">http://example.com/2020/09/18/nodejs%E7%AC%94%E8%AE%B02/index.html</a></li>
+  <li><strong>版权声明：</strong>本博客所有文章均采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh"
+      rel="external nofollow" target="_blank"> BY-NC-SA </a>许可协议，转载请注明出处！</li>
+  
+</ul>
+        
+        
+        <section class="donate">
+  <div class="qrcode">
+    <img   class="lazyload" data-original="https://pic.izhaoo.com/alipay.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" >
+  </div>
+  <div class="icon">
+    <a href="javascript:;" id="alipay"><i class="iconfont iconalipay"></i></a>
+    <a href="javascript:;" id="wechat"><i class="iconfont iconwechat-fill"></i></a>
+  </div>
+</section>
+        
+        
+        
+<nav class="nav">
+  
+    <a href="/2020/09/18/es6/"><i class="iconfont iconleft"></i>es6</a>
+  
+  
+    <a href="/2020/09/18/nodejs%E7%AC%94%E8%AE%B0/">nodejs-1<i class="iconfont iconright"></i></a>
+  
+</nav>
+
+      </section>
+      
+      <section class="comments">
+  
+  <div class="btn" id="comments-btn">查看评论</div>
+  
+  
+</section>
+      
+    </section>
+  </div>
+</article>
+  </div>
+</main>
+  <footer class="footer">
+  <div class="footer-social">
+    
+    
+    
+    
+    
+    <a href="tencent://message/?Menu=yes&uin=2504971404 " target="_blank" onMouseOver="this.style.color= '#12B7F5'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconQQ "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="javascript:; " target="_blank" onMouseOver="this.style.color= '#09BB07'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconwechat-fill "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="https://www.instagram.com/izhaoo/ " target="_blank" onMouseOver="this.style.color= '#DA2E76'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconinstagram "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="https://github.com/izhaoo " target="_blank" onMouseOver="this.style.color= '#24292E'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  icongithub-fill "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="mailto:izhaoo@163.com " target="_blank" onMouseOver="this.style.color='#FFBE5B'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconmail"></i>
+    </a>
+    
+  </div>
+  <div class="footer-copyright"><p>Powered by <a target="_blank" href="https://hexo.io">Hexo</a>  |  Theme - <a target="_blank" href="https://github.com/izhaoo/hexo-theme-zhaoo">zhaoo</a></p></div>
+</footer>
+  
+      <div class="fab fab-plus">
+    <i class="iconfont iconplus"></i>
+  </div>
+  
+  <div class="fab fab-daovoice">
+    <i class="iconfont iconcomment"></i>
+  </div>
+  
+  <div class="fab fab-up">
+    <i class="iconfont iconcaret-up"></i>
+  </div>
+  
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+
+
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+
+
+
+
+
+
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+
+
+
+
+
+<script src="https://cdn.bootcss.com/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+
+
+
+
+
+
+<script src="/js/utils.js"></script>
+<script src="/js/modules.js"></script>
+<script src="/js/zui.js"></script>
+<script src="/js/script.js"></script>
+
+
+
+
+
+<script>
+  (function (i, s, o, g, r, a, m) {
+    i["DaoVoiceObject"] = r;
+    i[r] = i[r] || function () {
+      (i[r].q = i[r].q || []).push(arguments)
+    }, i[r].l = 1 * new Date();
+    a = s.createElement(o), m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    a.charset = "utf-8";
+    m.parentNode.insertBefore(a, m)
+  })(window, document, "script", ('https:' == document.location.protocol ? 'https:' : 'http:') +
+    "//widget.daovoice.io/widget/0f81ff2f.js", "daovoice")
+  daovoice('init', {
+    app_id: "abcdefg"
+  }, {
+    launcher: {
+      disableLauncherIcon: true,
+    },
+  });
+  daovoice('update');
+</script>
+
+
+
+<script>
+  (function () {
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    } else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+<script>
+  var _hmt = _hmt || [];
+  (function () {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?4c204d8bc027a0455b5fc642ac334ca8";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+
+
+
+
+
+
+
+
+
+</html>
