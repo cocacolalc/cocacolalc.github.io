@@ -390,102 +390,6 @@
 ]]></content>
   </entry>
   <entry>
-    <title>Python基础</title>
-    <url>/2021/03/18/python/</url>
-    <content><![CDATA[<h5 id="Python-中文编码"><a href="#Python-中文编码" class="headerlink" title="Python 中文编码"></a>Python 中文编码</h5><figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-comment">#!/usr/bin/python</span><br><span class="hljs-comment"># -*- coding: UTF-8 -*-</span><br><br>文件开头加入 <span class="hljs-comment"># -*- coding: UTF-8 -*- 或者 # coding=utf-8</span><br><br>print(<span class="hljs-string">&#x27;你好&#x27;</span>) <span class="hljs-comment">#输出你好</span><br><br><span class="hljs-comment"># #号键即是注释</span><br></code></pre></td></tr></table></figure>
-
-<h5 id="变量类型和运算符"><a href="#变量类型和运算符" class="headerlink" title="变量类型和运算符"></a>变量类型和运算符</h5><figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python">name = value<br><span class="hljs-comment"># Python 使用等号=作为赋值运算符</span><br><span class="hljs-comment"># name 表示变量名；value 表示值，也就是要存储的数据</span><br><span class="hljs-comment"># Python 是弱类型的语言</span><br></code></pre></td></tr></table></figure>
-
-
-
-<h5 id="条件判断"><a href="#条件判断" class="headerlink" title="条件判断"></a>条件判断</h5><p>计算机之所以能做很多自动化的任务，因为它可以自己做条件判断。</p>
-<p>比如，输入用户年龄，根据年龄打印不同的内容，在Python程序中，用<code>if</code>语句实现：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python">age = <span class="hljs-number">20</span><br><span class="hljs-keyword">if</span> age &gt;= <span class="hljs-number">18</span>:<br>    print(<span class="hljs-string">&#x27;your age is&#x27;</span>, age)<br>    print(<span class="hljs-string">&#x27;adult&#x27;</span>)<br></code></pre></td></tr></table></figure>
-
-<p>根据Python的缩进规则，如果<code>if</code>语句判断是<code>True</code>，就把缩进的两行print语句执行了，否则，什么也不做。</p>
-<p>也可以给<code>if</code>添加一个<code>else</code>语句，意思是，如果<code>if</code>判断是<code>False</code>，不要执行<code>if</code>的内容，去把<code>else</code>执行了：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python">age = <span class="hljs-number">3</span><br><span class="hljs-keyword">if</span> age &gt;= <span class="hljs-number">18</span>:<br>    print(<span class="hljs-string">&#x27;your age is&#x27;</span>, age)<br>    print(<span class="hljs-string">&#x27;adult&#x27;</span>)<br><span class="hljs-keyword">else</span>:<br>    print(<span class="hljs-string">&#x27;your age is&#x27;</span>, age)<br>    print(<span class="hljs-string">&#x27;teenager&#x27;</span>)<br></code></pre></td></tr></table></figure>
-
-<p>注意不要少写了冒号<code>:</code>。</p>
-<p>当然上面的判断是很粗略的，完全可以用<code>elif</code>做更细致的判断：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python">age = <span class="hljs-number">3</span><br><span class="hljs-keyword">if</span> age &gt;= <span class="hljs-number">18</span>:<br>    print(<span class="hljs-string">&#x27;adult&#x27;</span>)<br><span class="hljs-keyword">elif</span> age &gt;= <span class="hljs-number">6</span>:<br>    print(<span class="hljs-string">&#x27;teenager&#x27;</span>)<br><span class="hljs-keyword">else</span>:<br>    print(<span class="hljs-string">&#x27;kid&#x27;</span>)<br></code></pre></td></tr></table></figure>
-
-<p><code>elif</code>是<code>else if</code>的缩写，完全可以有多个<code>elif</code>，所以<code>if</code>语句的完整形式就是：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">if</span> &lt;条件判断<span class="hljs-number">1</span>&gt;:<br>    &lt;执行<span class="hljs-number">1</span>&gt;<br><span class="hljs-keyword">elif</span> &lt;条件判断<span class="hljs-number">2</span>&gt;:<br>    &lt;执行<span class="hljs-number">2</span>&gt;<br><span class="hljs-keyword">elif</span> &lt;条件判断<span class="hljs-number">3</span>&gt;:<br>    &lt;执行<span class="hljs-number">3</span>&gt;<br><span class="hljs-keyword">else</span>:<br>    &lt;执行<span class="hljs-number">4</span>&gt;<br></code></pre></td></tr></table></figure>
-
-<p><code>if</code>语句执行有个特点，它是从上往下判断，如果在某个判断上是<code>True</code>，把该判断对应的语句执行后，就忽略掉剩下的<code>elif</code>和<code>else</code>，所以，请测试并解释为什么下面的程序打印的是<code>teenager</code>：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">age &#x3D; 20<br>if age &gt;&#x3D; 6:<br>    print(&#39;teenager&#39;)<br>elif age &gt;&#x3D; 18:<br>    print(&#39;adult&#39;)<br>else:<br>    print(&#39;kid&#39;)<br></code></pre></td></tr></table></figure>
-
-<p><code>if</code>判断条件还可以简写，比如写：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">if</span> x:<br>    print(<span class="hljs-string">&#x27;True&#x27;</span>)<br></code></pre></td></tr></table></figure>
-
-<p>只要<code>x</code>是非零数值、非空字符串、非空list等，就判断为<code>True</code>，否则为<code>False</code>。</p>
-<h3 id="再议-input"><a href="#再议-input" class="headerlink" title="再议 input"></a>再议 input</h3><p>最后看一个有问题的条件判断。很多同学会用<code>input()</code>读取用户的输入，这样可以自己输入，程序运行得更有意思：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python">birth = input(<span class="hljs-string">&#x27;birth: &#x27;</span>)<br><span class="hljs-keyword">if</span> birth &lt; <span class="hljs-number">2000</span>:<br>    print(<span class="hljs-string">&#x27;00前&#x27;</span>)<br><span class="hljs-keyword">else</span>:<br>    print(<span class="hljs-string">&#x27;00后&#x27;</span>)<br></code></pre></td></tr></table></figure>
-
-<p>输入<code>1982</code>，结果报错：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python">Traceback (most recent call last):<br>  File <span class="hljs-string">&quot;&lt;stdin&gt;&quot;</span>, line <span class="hljs-number">1</span>, <span class="hljs-keyword">in</span> &lt;module&gt;<br>TypeError: unorderable types: str() &gt; int()<br></code></pre></td></tr></table></figure>
-
-<p>这是因为<code>input()</code>返回的数据类型是<code>str</code>，<code>str</code>不能直接和整数比较，必须先把<code>str</code>转换成整数。Python提供了<code>int()</code>函数来完成这件事情：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python">s = input(<span class="hljs-string">&#x27;birth: &#x27;</span>)<br>birth = int(s)<br><span class="hljs-keyword">if</span> birth &lt; <span class="hljs-number">2000</span>:<br>    print(<span class="hljs-string">&#x27;00前&#x27;</span>)<br><span class="hljs-keyword">else</span>:<br>    print(<span class="hljs-string">&#x27;00后&#x27;</span>)<br></code></pre></td></tr></table></figure>
-
-<p>再次运行，就可以得到正确地结果。但是，如果输入<code>abc</code>呢？又会得到一个错误信息：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python">Traceback (most recent call last):<br>  File <span class="hljs-string">&quot;&lt;stdin&gt;&quot;</span>, line <span class="hljs-number">1</span>, <span class="hljs-keyword">in</span> &lt;module&gt;<br>ValueError: invalid literal <span class="hljs-keyword">for</span> int() <span class="hljs-keyword">with</span> base <span class="hljs-number">10</span>: <span class="hljs-string">&#x27;abc&#x27;</span><br></code></pre></td></tr></table></figure>
-
-<p>原来<code>int()</code>函数发现一个字符串并不是合法的数字时就会报错，程序就退出了。</p>
-<h5 id="循环"><a href="#循环" class="headerlink" title="循环"></a>循环</h5><p>要计算1+2+3，我们可以直接写表达式：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-number">1</span> + <span class="hljs-number">2</span> + <span class="hljs-number">3</span><br><span class="hljs-number">6</span><br></code></pre></td></tr></table></figure>
-
-<p>要计算1+2+3+…+10，勉强也能写出来。</p>
-<p>但是，要计算1+2+3+…+10000，直接写表达式就不可能了。</p>
-<p>为了让计算机能计算成千上万次的重复运算，我们就需要循环语句。</p>
-<p>Python的循环有两种，一种是for…in循环，依次把list或tuple中的每个元素迭代出来，看例子：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python">names = [<span class="hljs-string">&#x27;Michael&#x27;</span>, <span class="hljs-string">&#x27;Bob&#x27;</span>, <span class="hljs-string">&#x27;Tracy&#x27;</span>]<br><span class="hljs-keyword">for</span> name <span class="hljs-keyword">in</span> names:<br>    print(name)<br></code></pre></td></tr></table></figure>
-
-<p>执行这段代码，会依次打印<code>names</code>的每一个元素：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python">Michael<br>Bob<br>Tracy<br></code></pre></td></tr></table></figure>
-
-<p>所以<code>for x in ...</code>循环就是把每个元素代入变量<code>x</code>，然后执行缩进块的语句。</p>
-<p>再比如我们想计算1-10的整数之和，可以用一个<code>sum</code>变量做累加：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python">sum = <span class="hljs-number">0</span><br><span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>, <span class="hljs-number">7</span>, <span class="hljs-number">8</span>, <span class="hljs-number">9</span>, <span class="hljs-number">10</span>]:<br>    sum = sum + x<br>print(sum)<br></code></pre></td></tr></table></figure>
-
-<p>如果要计算1-100的整数之和，从1写到100有点困难，幸好Python提供一个<code>range()</code>函数，可以生成一个整数序列，再通过<code>list()</code>函数可以转换为list。比如<code>range(5)</code>生成的序列是从0开始小于5的整数：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>list(range(<span class="hljs-number">5</span>))<br>[<span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>]<br></code></pre></td></tr></table></figure>
-
-<p><code>range(101)</code>就可以生成0-100的整数序列，计算如下：</p>
-<p><code># -*- coding: utf-8 -*- </code> Run</p>
-<p>请自行运行上述代码，看看结果是不是当年高斯同学心算出的5050。</p>
-<p>第二种循环是while循环，只要条件满足，就不断循环，条件不满足时退出循环。比如我们要计算100以内所有奇数之和，可以用while循环实现：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python">sum = <span class="hljs-number">0</span><br>n = <span class="hljs-number">99</span><br><span class="hljs-keyword">while</span> n &gt; <span class="hljs-number">0</span>:<br>    sum = sum + n<br>    n = n - <span class="hljs-number">2</span><br>print(sum)<br></code></pre></td></tr></table></figure>
-
-<p>在循环内部变量<code>n</code>不断自减，直到变为<code>-1</code>时，不再满足while条件，循环退出。</p>
-<p>第二种循环是while循环，只要条件满足，就不断循环，条件不满足时退出循环。比如我们要计算100以内所有奇数之和，可以用while循环实现：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python">sum = <span class="hljs-number">0</span><br>n = <span class="hljs-number">99</span><br><span class="hljs-keyword">while</span> n &gt; <span class="hljs-number">0</span>:<br>    sum = sum + n<br>    n = n - <span class="hljs-number">2</span><br>print(sum)<br></code></pre></td></tr></table></figure>
-
-<p>在循环内部变量<code>n</code>不断自减，直到变为<code>-1</code>时，不再满足while条件，循环退出。</p>
-<h3 id="break"><a href="#break" class="headerlink" title="break"></a>break</h3><p>在循环中，<code>break</code>语句可以提前退出循环。例如，本来要循环打印1～100的数字：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python">n = <span class="hljs-number">1</span><br><span class="hljs-keyword">while</span> n &lt;= <span class="hljs-number">100</span>:<br>    print(n)<br>    n = n + <span class="hljs-number">1</span><br>print(<span class="hljs-string">&#x27;END&#x27;</span>)<br></code></pre></td></tr></table></figure>
-
-<p>上面的代码可以打印出1~100。</p>
-<p>如果要提前结束循环，可以用<code>break</code>语句：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python">n = <span class="hljs-number">1</span><br><span class="hljs-keyword">while</span> n &lt;= <span class="hljs-number">100</span>:<br>    <span class="hljs-keyword">if</span> n &gt; <span class="hljs-number">10</span>: <span class="hljs-comment"># 当n = 11时，条件满足，执行break语句</span><br>        <span class="hljs-keyword">break</span> <span class="hljs-comment"># break语句会结束当前循环</span><br>    print(n)<br>    n = n + <span class="hljs-number">1</span><br>print(<span class="hljs-string">&#x27;END&#x27;</span>)<br></code></pre></td></tr></table></figure>
-
-<p>执行上面的代码可以看到，打印出1~10后，紧接着打印<code>END</code>，程序结束。</p>
-<p>可见<code>break</code>的作用是提前结束循环。</p>
-<h3 id="continue"><a href="#continue" class="headerlink" title="continue"></a>continue</h3><p>在循环过程中，也可以通过<code>continue</code>语句，跳过当前的这次循环，直接开始下一次循环。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python">n = <span class="hljs-number">0</span><br><span class="hljs-keyword">while</span> n &lt; <span class="hljs-number">10</span>:<br>    n = n + <span class="hljs-number">1</span><br>    print(n)<br></code></pre></td></tr></table></figure>
-
-<p>上面的程序可以打印出1～10。但是，如果我们想只打印奇数，可以用<code>continue</code>语句跳过某些循环：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python">n = <span class="hljs-number">0</span><br><span class="hljs-keyword">while</span> n &lt; <span class="hljs-number">10</span>:<br>    n = n + <span class="hljs-number">1</span><br>    <span class="hljs-keyword">if</span> n % <span class="hljs-number">2</span> == <span class="hljs-number">0</span>: <span class="hljs-comment"># 如果n是偶数，执行continue语句</span><br>        <span class="hljs-keyword">continue</span> <span class="hljs-comment"># continue语句会直接继续下一轮循环，后续的print()语句不会执行</span><br>    print(n)<br></code></pre></td></tr></table></figure>
-
-<p>执行上面的代码可以看到，打印的不再是1～10，而是1，3，5，7，9。</p>
-<p>可见<code>continue</code>的作用是提前结束本轮循环，并直接开始下一轮循环。</p>
-]]></content>
-      <tags>
-        <tag>Python基础</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>nodejs-2</title>
     <url>/2020/09/18/nodejs%E7%AC%94%E8%AE%B02/</url>
     <content><![CDATA[<h1 id="nodejs笔记2"><a href="#nodejs笔记2" class="headerlink" title="nodejs笔记2"></a>nodejs笔记2</h1><h2 id="web应用架构"><a href="#web应用架构" class="headerlink" title="web应用架构"></a>web应用架构</h2><p>client-客户端，一般指浏览器，浏览器可以通过http协议向服务器请求数据。</p>
@@ -776,10 +680,291 @@
 </li>
 </ul>
 <p><strong>部分列添加数据：</strong><br>insert into table_name (id,name) values(10,’zs’);</p>
-<h3 id="修改数据："><a href="#修改数据：" class="headerlink" title="修改数据："></a>修改数据：</h3><figure class="highlight sql"><table><tr><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">update</span> xiaou.user <span class="hljs-keyword">set</span> <span class="hljs-keyword">name</span>=<span class="hljs-string">&#x27;zs2000&#x27;</span>,age=<span class="hljs-number">2000</span> <span class="hljs-keyword">where</span> address=<span class="hljs-string">&#x27;上海&#x27;</span>;<br><br><br></code></pre></td></tr></table></figure>
-
-<p>###　删除数据：</p>
+<h3 id="修改数据："><a href="#修改数据：" class="headerlink" title="修改数据："></a>修改数据：</h3><figure class="highlight sql"><table><tr><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">update</span> xiaou.user <span class="hljs-keyword">set</span> <span class="hljs-keyword">name</span>=<span class="hljs-string">&#x27;zs2000&#x27;</span>,age=<span class="hljs-number">2000</span> <span class="hljs-keyword">where</span> address=<span class="hljs-string">&#x27;上海&#x27;</span>;<br></code></pre></td></tr></table></figure>
 ]]></content>
+  </entry>
+  <entry>
+    <title>Python基础</title>
+    <url>/2021/03/18/python/</url>
+    <content><![CDATA[<h5 id="Python-中文编码"><a href="#Python-中文编码" class="headerlink" title="Python 中文编码"></a>Python 中文编码</h5><figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-comment">#!/usr/bin/python</span><br><span class="hljs-comment"># -*- coding: UTF-8 -*-</span><br><br>文件开头加入 <span class="hljs-comment"># -*- coding: UTF-8 -*- 或者 # coding=utf-8</span><br><br>print(<span class="hljs-string">&#x27;你好&#x27;</span>) <span class="hljs-comment">#输出你好</span><br><br><span class="hljs-comment"># #号键即是注释</span><br></code></pre></td></tr></table></figure>
+
+<h5 id="变量类型和运算符"><a href="#变量类型和运算符" class="headerlink" title="变量类型和运算符"></a>变量类型和运算符</h5><figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python">name = value<br><span class="hljs-comment"># Python 使用等号=作为赋值运算符</span><br><span class="hljs-comment"># name 表示变量名；value 表示值，也就是要存储的数据</span><br><span class="hljs-comment"># Python 是弱类型的语言</span><br></code></pre></td></tr></table></figure>
+
+
+
+<h5 id="条件判断"><a href="#条件判断" class="headerlink" title="条件判断"></a>条件判断</h5><p>计算机之所以能做很多自动化的任务，因为它可以自己做条件判断。</p>
+<p>比如，输入用户年龄，根据年龄打印不同的内容，在Python程序中，用<code>if</code>语句实现：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python">age = <span class="hljs-number">20</span><br><span class="hljs-keyword">if</span> age &gt;= <span class="hljs-number">18</span>:<br>    print(<span class="hljs-string">&#x27;your age is&#x27;</span>, age)<br>    print(<span class="hljs-string">&#x27;adult&#x27;</span>)<br></code></pre></td></tr></table></figure>
+
+<p>根据Python的缩进规则，如果<code>if</code>语句判断是<code>True</code>，就把缩进的两行print语句执行了，否则，什么也不做。</p>
+<p>也可以给<code>if</code>添加一个<code>else</code>语句，意思是，如果<code>if</code>判断是<code>False</code>，不要执行<code>if</code>的内容，去把<code>else</code>执行了：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python">age = <span class="hljs-number">3</span><br><span class="hljs-keyword">if</span> age &gt;= <span class="hljs-number">18</span>:<br>    print(<span class="hljs-string">&#x27;your age is&#x27;</span>, age)<br>    print(<span class="hljs-string">&#x27;adult&#x27;</span>)<br><span class="hljs-keyword">else</span>:<br>    print(<span class="hljs-string">&#x27;your age is&#x27;</span>, age)<br>    print(<span class="hljs-string">&#x27;teenager&#x27;</span>)<br></code></pre></td></tr></table></figure>
+
+<p>注意不要少写了冒号<code>:</code>。</p>
+<p>当然上面的判断是很粗略的，完全可以用<code>elif</code>做更细致的判断：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python">age = <span class="hljs-number">3</span><br><span class="hljs-keyword">if</span> age &gt;= <span class="hljs-number">18</span>:<br>    print(<span class="hljs-string">&#x27;adult&#x27;</span>)<br><span class="hljs-keyword">elif</span> age &gt;= <span class="hljs-number">6</span>:<br>    print(<span class="hljs-string">&#x27;teenager&#x27;</span>)<br><span class="hljs-keyword">else</span>:<br>    print(<span class="hljs-string">&#x27;kid&#x27;</span>)<br></code></pre></td></tr></table></figure>
+
+<p><code>elif</code>是<code>else if</code>的缩写，完全可以有多个<code>elif</code>，所以<code>if</code>语句的完整形式就是：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">if</span> &lt;条件判断<span class="hljs-number">1</span>&gt;:<br>    &lt;执行<span class="hljs-number">1</span>&gt;<br><span class="hljs-keyword">elif</span> &lt;条件判断<span class="hljs-number">2</span>&gt;:<br>    &lt;执行<span class="hljs-number">2</span>&gt;<br><span class="hljs-keyword">elif</span> &lt;条件判断<span class="hljs-number">3</span>&gt;:<br>    &lt;执行<span class="hljs-number">3</span>&gt;<br><span class="hljs-keyword">else</span>:<br>    &lt;执行<span class="hljs-number">4</span>&gt;<br></code></pre></td></tr></table></figure>
+
+<p><code>if</code>语句执行有个特点，它是从上往下判断，如果在某个判断上是<code>True</code>，把该判断对应的语句执行后，就忽略掉剩下的<code>elif</code>和<code>else</code>，所以，请测试并解释为什么下面的程序打印的是<code>teenager</code>：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">age &#x3D; 20<br>if age &gt;&#x3D; 6:<br>    print(&#39;teenager&#39;)<br>elif age &gt;&#x3D; 18:<br>    print(&#39;adult&#39;)<br>else:<br>    print(&#39;kid&#39;)<br></code></pre></td></tr></table></figure>
+
+<p><code>if</code>判断条件还可以简写，比如写：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">if</span> x:<br>    print(<span class="hljs-string">&#x27;True&#x27;</span>)<br></code></pre></td></tr></table></figure>
+
+<p>只要<code>x</code>是非零数值、非空字符串、非空list等，就判断为<code>True</code>，否则为<code>False</code>。</p>
+<h3 id="再议-input"><a href="#再议-input" class="headerlink" title="再议 input"></a>再议 input</h3><p>最后看一个有问题的条件判断。很多同学会用<code>input()</code>读取用户的输入，这样可以自己输入，程序运行得更有意思：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python">birth = input(<span class="hljs-string">&#x27;birth: &#x27;</span>)<br><span class="hljs-keyword">if</span> birth &lt; <span class="hljs-number">2000</span>:<br>    print(<span class="hljs-string">&#x27;00前&#x27;</span>)<br><span class="hljs-keyword">else</span>:<br>    print(<span class="hljs-string">&#x27;00后&#x27;</span>)<br></code></pre></td></tr></table></figure>
+
+<p>输入<code>1982</code>，结果报错：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python">Traceback (most recent call last):<br>  File <span class="hljs-string">&quot;&lt;stdin&gt;&quot;</span>, line <span class="hljs-number">1</span>, <span class="hljs-keyword">in</span> &lt;module&gt;<br>TypeError: unorderable types: str() &gt; int()<br></code></pre></td></tr></table></figure>
+
+<p>这是因为<code>input()</code>返回的数据类型是<code>str</code>，<code>str</code>不能直接和整数比较，必须先把<code>str</code>转换成整数。Python提供了<code>int()</code>函数来完成这件事情：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python">s = input(<span class="hljs-string">&#x27;birth: &#x27;</span>)<br>birth = int(s)<br><span class="hljs-keyword">if</span> birth &lt; <span class="hljs-number">2000</span>:<br>    print(<span class="hljs-string">&#x27;00前&#x27;</span>)<br><span class="hljs-keyword">else</span>:<br>    print(<span class="hljs-string">&#x27;00后&#x27;</span>)<br></code></pre></td></tr></table></figure>
+
+<p>再次运行，就可以得到正确地结果。但是，如果输入<code>abc</code>呢？又会得到一个错误信息：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python">Traceback (most recent call last):<br>  File <span class="hljs-string">&quot;&lt;stdin&gt;&quot;</span>, line <span class="hljs-number">1</span>, <span class="hljs-keyword">in</span> &lt;module&gt;<br>ValueError: invalid literal <span class="hljs-keyword">for</span> int() <span class="hljs-keyword">with</span> base <span class="hljs-number">10</span>: <span class="hljs-string">&#x27;abc&#x27;</span><br></code></pre></td></tr></table></figure>
+
+<p>原来<code>int()</code>函数发现一个字符串并不是合法的数字时就会报错，程序就退出了。</p>
+<h5 id="循环"><a href="#循环" class="headerlink" title="循环"></a>循环</h5><p>要计算1+2+3，我们可以直接写表达式：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-number">1</span> + <span class="hljs-number">2</span> + <span class="hljs-number">3</span><br><span class="hljs-number">6</span><br></code></pre></td></tr></table></figure>
+
+<p>要计算1+2+3+…+10，勉强也能写出来。</p>
+<p>但是，要计算1+2+3+…+10000，直接写表达式就不可能了。</p>
+<p>为了让计算机能计算成千上万次的重复运算，我们就需要循环语句。</p>
+<p>Python的循环有两种，一种是for…in循环，依次把list或tuple中的每个元素迭代出来，看例子：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python">names = [<span class="hljs-string">&#x27;Michael&#x27;</span>, <span class="hljs-string">&#x27;Bob&#x27;</span>, <span class="hljs-string">&#x27;Tracy&#x27;</span>]<br><span class="hljs-keyword">for</span> name <span class="hljs-keyword">in</span> names:<br>    print(name)<br></code></pre></td></tr></table></figure>
+
+<p>执行这段代码，会依次打印<code>names</code>的每一个元素：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python">Michael<br>Bob<br>Tracy<br></code></pre></td></tr></table></figure>
+
+<p>所以<code>for x in ...</code>循环就是把每个元素代入变量<code>x</code>，然后执行缩进块的语句。</p>
+<p>再比如我们想计算1-10的整数之和，可以用一个<code>sum</code>变量做累加：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python">sum = <span class="hljs-number">0</span><br><span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>, <span class="hljs-number">7</span>, <span class="hljs-number">8</span>, <span class="hljs-number">9</span>, <span class="hljs-number">10</span>]:<br>    sum = sum + x<br>print(sum)<br></code></pre></td></tr></table></figure>
+
+<p>如果要计算1-100的整数之和，从1写到100有点困难，幸好Python提供一个<code>range()</code>函数，可以生成一个整数序列，再通过<code>list()</code>函数可以转换为list。比如<code>range(5)</code>生成的序列是从0开始小于5的整数：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>list(range(<span class="hljs-number">5</span>))<br>[<span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>]<br></code></pre></td></tr></table></figure>
+
+<p><code>range(101)</code>就可以生成0-100的整数序列，计算如下：</p>
+<p><code># -*- coding: utf-8 -*- </code> Run</p>
+<p>请自行运行上述代码，看看结果是不是当年高斯同学心算出的5050。</p>
+<p>第二种循环是while循环，只要条件满足，就不断循环，条件不满足时退出循环。比如我们要计算100以内所有奇数之和，可以用while循环实现：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python">sum = <span class="hljs-number">0</span><br>n = <span class="hljs-number">99</span><br><span class="hljs-keyword">while</span> n &gt; <span class="hljs-number">0</span>:<br>    sum = sum + n<br>    n = n - <span class="hljs-number">2</span><br>print(sum)<br></code></pre></td></tr></table></figure>
+
+<p>在循环内部变量<code>n</code>不断自减，直到变为<code>-1</code>时，不再满足while条件，循环退出。</p>
+<p>第二种循环是while循环，只要条件满足，就不断循环，条件不满足时退出循环。比如我们要计算100以内所有奇数之和，可以用while循环实现：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python">sum = <span class="hljs-number">0</span><br>n = <span class="hljs-number">99</span><br><span class="hljs-keyword">while</span> n &gt; <span class="hljs-number">0</span>:<br>    sum = sum + n<br>    n = n - <span class="hljs-number">2</span><br>print(sum)<br></code></pre></td></tr></table></figure>
+
+<p>在循环内部变量<code>n</code>不断自减，直到变为<code>-1</code>时，不再满足while条件，循环退出。</p>
+<h3 id="break"><a href="#break" class="headerlink" title="break"></a>break</h3><p>在循环中，<code>break</code>语句可以提前退出循环。例如，本来要循环打印1～100的数字：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python">n = <span class="hljs-number">1</span><br><span class="hljs-keyword">while</span> n &lt;= <span class="hljs-number">100</span>:<br>    print(n)<br>    n = n + <span class="hljs-number">1</span><br>print(<span class="hljs-string">&#x27;END&#x27;</span>)<br></code></pre></td></tr></table></figure>
+
+<p>上面的代码可以打印出1~100。</p>
+<p>如果要提前结束循环，可以用<code>break</code>语句：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python">n = <span class="hljs-number">1</span><br><span class="hljs-keyword">while</span> n &lt;= <span class="hljs-number">100</span>:<br>    <span class="hljs-keyword">if</span> n &gt; <span class="hljs-number">10</span>: <span class="hljs-comment"># 当n = 11时，条件满足，执行break语句</span><br>        <span class="hljs-keyword">break</span> <span class="hljs-comment"># break语句会结束当前循环</span><br>    print(n)<br>    n = n + <span class="hljs-number">1</span><br>print(<span class="hljs-string">&#x27;END&#x27;</span>)<br></code></pre></td></tr></table></figure>
+
+<p>执行上面的代码可以看到，打印出1~10后，紧接着打印<code>END</code>，程序结束。</p>
+<p>可见<code>break</code>的作用是提前结束循环。</p>
+<h3 id="continue"><a href="#continue" class="headerlink" title="continue"></a>continue</h3><p>在循环过程中，也可以通过<code>continue</code>语句，跳过当前的这次循环，直接开始下一次循环。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python">n = <span class="hljs-number">0</span><br><span class="hljs-keyword">while</span> n &lt; <span class="hljs-number">10</span>:<br>    n = n + <span class="hljs-number">1</span><br>    print(n)<br></code></pre></td></tr></table></figure>
+
+<p>上面的程序可以打印出1～10。但是，如果我们想只打印奇数，可以用<code>continue</code>语句跳过某些循环：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python">n = <span class="hljs-number">0</span><br><span class="hljs-keyword">while</span> n &lt; <span class="hljs-number">10</span>:<br>    n = n + <span class="hljs-number">1</span><br>    <span class="hljs-keyword">if</span> n % <span class="hljs-number">2</span> == <span class="hljs-number">0</span>: <span class="hljs-comment"># 如果n是偶数，执行continue语句</span><br>        <span class="hljs-keyword">continue</span> <span class="hljs-comment"># continue语句会直接继续下一轮循环，后续的print()语句不会执行</span><br>    print(n)<br></code></pre></td></tr></table></figure>
+
+<p>执行上面的代码可以看到，打印的不再是1～10，而是1，3，5，7，9。</p>
+<p>可见<code>continue</code>的作用是提前结束本轮循环，并直接开始下一轮循环。</p>
+]]></content>
+      <tags>
+        <tag>Python基础</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Vue3源码-Proxy</title>
+    <url>/2021/03/18/vue3%E6%BA%90%E7%A0%81/</url>
+    <content><![CDATA[<h5 id="语法："><a href="#语法：" class="headerlink" title="语法："></a>语法：</h5><figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> proxy = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Proxy</span>(target, handle)<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>target 要使用 Proxy 包装的目标对象（可以是任何类型的对象，包括原生数组，函数，甚至另一个代理</li>
+<li>handler 一个通常以函数作为属性的对象，用来定制拦截行为</li>
+</ul>
+<p>例：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> origon=&#123;&#125;<br><br><span class="hljs-keyword">const</span> obj=<span class="hljs-keyword">new</span> <span class="hljs-built_in">Proxy</span>(origon,&#123;<br>   get:<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">target,propkey,receiver</span>)</span>&#123;<br>      <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;10&quot;</span><br>   &#125;<br>&#125;)<br><span class="hljs-built_in">console</span>.log(obj.b);<span class="hljs-comment">//10</span><br><span class="hljs-built_in">console</span>.log(obj.a);<span class="hljs-comment">//10</span><br><span class="hljs-built_in">console</span>.log(origon.a);<span class="hljs-comment">//undefined</span><br><span class="hljs-built_in">console</span>.log(origon.a);<span class="hljs-comment">//undefined</span><br><br></code></pre></td></tr></table></figure>
+
+<p>上方代码我们给一个空对象的get架设了一层代理，所有<code>get</code>操作都会直接返回我们定制的数字10，需要注意的是，代理只会对<code>proxy</code>对象生效，如上方的<code>origin</code>就没有任何效果</p>
+<h2 id="Handler-对象常用的方法"><a href="#Handler-对象常用的方法" class="headerlink" title="Handler 对象常用的方法"></a>Handler 对象常用的方法</h2><table>
+<thead>
+<tr>
+<th>方法</th>
+<th align="left">描述</th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>handler.has()</td>
+<td align="left">in 操作符的捕捉器。</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>handler.get()</td>
+<td align="left">属性读取操作的捕捉器。</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>handler.set()</td>
+<td align="left">属性设置操作的捕捉器。</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>handler.deleteProperty()</td>
+<td align="left">delete 操作符的捕捉器。</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>handler.ownKeys()</td>
+<td align="left">Object.getOwnPropertyNames 方法和 Object.getOwnPropertySymbols 方法的捕捉器。</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>handler.apply()</td>
+<td align="left">函数调用操作的捕捉器。</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>handler.construct()</td>
+<td align="left">new 操作符的捕捉器</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td align="left"></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<p>下面挑<code>handler.get</code>重点讲一下，其它方法的使用也都大同小异，不同的是参数的区别</p>
+<h3 id="handler-get"><a href="#handler-get" class="headerlink" title="handler.get"></a>handler.get</h3><p><code>get</code>我们在上面例子已经体验过了，现在详细介绍一下，用于代理目标对象的属性读取操作</p>
+<p>授受三个参数 <code>get(target, propKey, ?receiver)</code></p>
+<ul>
+<li>target 目标对象</li>
+<li>propkey 属性名</li>
+<li>receiver Proxy 实例本身</li>
+</ul>
+<p>例：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> preson = &#123;<br>   like: <span class="hljs-string">&#x27;vue.js&#x27;</span><br>&#125;<br><br><span class="hljs-keyword">const</span> obj = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Proxy</span>(preson, &#123;<br>   get: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">target, propkey</span>) </span>&#123;<br>      <span class="hljs-keyword">if</span> (propkey <span class="hljs-keyword">in</span> target) &#123;<br>         <span class="hljs-keyword">return</span> target[propkey]<br>      &#125; <span class="hljs-keyword">else</span> &#123;<br>         <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">ReferenceError</span>(<span class="hljs-string">&#x27;错误&#x27;</span>)<br>      &#125;<br>   &#125;<br>&#125;)<br><span class="hljs-built_in">console</span>.log(obj.like);<span class="hljs-comment">// vuejs</span><br><span class="hljs-built_in">console</span>.log(obj.text);<span class="hljs-comment">//错误</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>注意:</strong></p>
+<ul>
+<li>如果要访问的目标属性是不可写以及不可配置的，则返回的值必须与该目标属性的值相同</li>
+<li>如果要访问的目标属性没有配置访问方法，即get方法是undefined的，则返回值必须为undefined</li>
+</ul>
+<p>如：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> obj = &#123;&#125;;<br><span class="hljs-built_in">Object</span>.defineProperty(obj, <span class="hljs-string">&quot;a&quot;</span>, &#123; <br>  configurable: <span class="hljs-literal">false</span>, <br>  enumerable: <span class="hljs-literal">false</span>, <br>  value: <span class="hljs-number">10</span>, <br>  writable: <span class="hljs-literal">false</span> <br>&#125;)<br><br><span class="hljs-keyword">const</span> p = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Proxy</span>(obj, &#123;<br>  get: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">target, prop</span>) </span>&#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">20</span>;<br>  &#125;<br>&#125;)<br><br>p.a <span class="hljs-comment">// Uncaught TypeError: &#x27;get&#x27; on proxy: property &#x27;a&#x27; is a read-only and non-configurable..</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="可撤消的Proxy"><a href="#可撤消的Proxy" class="headerlink" title="可撤消的Proxy"></a>可撤消的Proxy</h2><figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">proxy&#96;有一个唯一的静态方法，&#96;Proxy.revocable(target, handler)<br></code></pre></td></tr></table></figure>
+
+<p><code>Proxy.revocable()</code>方法可以用来创建一个可撤销的代理对象</p>
+<p>该方法的返回值是一个对象，其结构为： <code>&#123;&quot;proxy&quot;: proxy, &quot;revoke&quot;: revoke&#125;</code></p>
+<ul>
+<li>proxy 表示新生成的代理对象本身，和用一般方式 new Proxy(target, handler) 创建的代理对象没什么不同，只是它可以被撤销掉。</li>
+<li>revoke 撤销方法，调用的时候不需要加任何参数，就可以撤销掉和它一起生成的那个代理对象。</li>
+</ul>
+<p>该方法常用于完全封闭对目标对象的访问, 如下示例</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> target = &#123; <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;vuejs&#x27;</span>&#125;<br><span class="hljs-keyword">const</span> &#123;proxy, revoke&#125; = <span class="hljs-built_in">Proxy</span>.revocable(target, handler)<br>proxy.name <span class="hljs-comment">// 正常取值输出 vuejs</span><br>revoke() <span class="hljs-comment">// 取值完成对proxy进行封闭，撤消代理</span><br>proxy.name <span class="hljs-comment">// TypeError: Revoked</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="Proxy的应用场景"><a href="#Proxy的应用场景" class="headerlink" title="Proxy的应用场景"></a>Proxy的应用场景</h2><p><code>Proxy</code>的应用范围很广，下方列举几个典型的应用场景</p>
+<h3 id="校验器"><a href="#校验器" class="headerlink" title="#校验器"></a><a href="https://vue3js.cn/es6/#%E6%A0%A1%E9%AA%8C%E5%99%A8">#</a><strong>校验器</strong></h3><p>想要一个<code>number</code>，拿回来的却是<code>string</code>，惊不惊喜？意不意外？下面我们使用<code>Proxy</code>实现一个逻辑分离的数据格式验证器</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> target = &#123;<br>  _id: <span class="hljs-string">&#x27;1024&#x27;</span>,<br>  name:  <span class="hljs-string">&#x27;vuejs&#x27;</span><br>&#125;<br><br><span class="hljs-keyword">const</span> validators = &#123;  <br>    name(val) &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">typeof</span> val === <span class="hljs-string">&#x27;string&#x27;</span>;<br>    &#125;,<br>    _id(val) &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">typeof</span> val === <span class="hljs-string">&#x27;number&#x27;</span> &amp;&amp; val &gt; <span class="hljs-number">1024</span>;<br>    &#125;<br>&#125;<br><br><span class="hljs-keyword">const</span> createValidator = <span class="hljs-function">(<span class="hljs-params">target, validator</span>) =&gt;</span> &#123;<br>  <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Proxy</span>(target, &#123;<br>    _validator: validator,<br>    set(target, propkey, value, proxy)&#123;<br>      <span class="hljs-keyword">let</span> validator = <span class="hljs-built_in">this</span>._validator[propkey](value)<br>      <span class="hljs-keyword">if</span>(validator)&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-built_in">Reflect</span>.set(target, propkey, value, proxy)<br>      &#125;<span class="hljs-keyword">else</span> &#123;<br>        <span class="hljs-keyword">throw</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">`Cannot set <span class="hljs-subst">$&#123;propkey&#125;</span> to <span class="hljs-subst">$&#123;value&#125;</span>. Invalid type.`</span>)<br>      &#125;<br>    &#125;<br>  &#125;)<br>&#125;<br><br><span class="hljs-keyword">const</span> proxy = createValidator(target, validators)<br><br>proxy.name = <span class="hljs-string">&#x27;vue-js.com&#x27;</span> <span class="hljs-comment">// vue-js.com</span><br>proxy.name = <span class="hljs-number">10086</span> <span class="hljs-comment">// Uncaught Error: Cannot set name to 10086. Invalid type.</span><br>proxy._id = <span class="hljs-number">1025</span> <span class="hljs-comment">// 1025</span><br>proxy._id = <span class="hljs-number">22</span>  <span class="hljs-comment">// Uncaught Error: Cannot set _id to 22. Invalid type </span><br></code></pre></td></tr></table></figure>
+
+<h3 id="私有属性"><a href="#私有属性" class="headerlink" title="私有属性"></a>私有属性</h3><p>在日常编写代码的过程中，我们想定义一些私有属性，通常是在团队中进行约定，大家按照约定在变量名之前添加下划线 _ 或者其它格式来表明这是一个私有属性，但我们不能保证他能真私‘私有化’，下面使用Proxy轻松实现私有属性拦截</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> target = &#123;<br>   _id: <span class="hljs-string">&#x27;123&#x27;</span>,<br>   name: <span class="hljs-string">&#x27;张三&#x27;</span><br>&#125;<br><br><span class="hljs-keyword">const</span> proxy = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Proxy</span>(target, &#123;<br>   get(target, key, proxy) &#123;<br>      <span class="hljs-keyword">if</span> (key[<span class="hljs-number">0</span>] === <span class="hljs-string">&quot;_&quot;</span>) &#123;<br>         <span class="hljs-keyword">throw</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">&#x27;我是私有属性&#x27;</span>)<br>      &#125;<br>      <span class="hljs-keyword">return</span> <span class="hljs-built_in">Reflect</span>.get(target, key, proxy)<br>   &#125;,<br>   set(target, key, val, proxy) &#123;<br>      <span class="hljs-keyword">if</span> (key[<span class="hljs-number">0</span>] === <span class="hljs-string">&quot;_&quot;</span>) &#123;<br>         <span class="hljs-keyword">throw</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">&#x27;我是私有属性&#x27;</span>)<br>      &#125;<br>      <span class="hljs-keyword">return</span> <span class="hljs-built_in">Reflect</span>.set(target, key, val, proxy)<br>   &#125;<br>&#125;)<br><br><span class="hljs-built_in">console</span>.log(proxy.name);<span class="hljs-comment">//张三</span><br><span class="hljs-built_in">console</span>.log(proxy._id);<span class="hljs-comment">//Error: 我是私有属性</span><br><span class="hljs-built_in">console</span>.log(proxy.name = <span class="hljs-string">&#x27;李四&#x27;</span>);<span class="hljs-comment">//李四</span><br><span class="hljs-built_in">console</span>.log(proxy._id = <span class="hljs-number">456</span>);<span class="hljs-comment">//Error: 我是私有属性</span><br><br></code></pre></td></tr></table></figure>
+
+<p><code>Proxy</code> 使用场景还有很多很多，不再一一列举，如果你需要在某一个动作的生命周期内做一些特定的处理，那么<code>Proxy</code> 都是适合的</p>
+<h4 id="为什么要用Proxy重构"><a href="#为什么要用Proxy重构" class="headerlink" title="为什么要用Proxy重构"></a>为什么要用Proxy重构</h4><p>在 <code>Proxy</code> 之前，<code>JavaScript</code> 中就提供过 <code>Object.defineProperty</code>，允许对对象的 <code>getter/setter</code> 进行拦截</p>
+<p>Vue3.0之前的双向绑定是由 <code>defineProperty</code> 实现, 在3.0重构为 <code>Proxy</code>，那么两者的区别究竟在哪里呢？</p>
+<p>首先我们再来回顾一下它的定义</p>
+<blockquote>
+<p>Object.defineProperty() 方法会直接在一个<strong>对象上</strong>定义一个<strong>新属性</strong>，或者修改一个对象的现有属性，并返回此对象</p>
+</blockquote>
+<p>上面给两个词划了重点，<strong>对象上</strong>，<strong>属性</strong>，我们可以理解为是针对对象上的某一个属性做处理的</p>
+<p><strong>语法</strong></p>
+<ul>
+<li>obj 要定义属性的对象</li>
+<li>prop 要定义或修改的属性的名称或 Symbol</li>
+<li>descriptor 要定义或修改的属性描述符</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-built_in">Object</span>.defineProperty(obj, prop, descriptor)<br></code></pre></td></tr></table></figure>
+
+<p>举个例子</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> obj = &#123;&#125;<br><span class="hljs-built_in">Object</span>.defineProperty(obj, <span class="hljs-string">&quot;a&quot;</span>, &#123;<br>  value : <span class="hljs-number">1</span>,<br>  writable : <span class="hljs-literal">false</span>, <span class="hljs-comment">// 是否可写 </span><br>  configurable : <span class="hljs-literal">false</span>, <span class="hljs-comment">// 是否可配置</span><br>  enumerable : <span class="hljs-literal">false</span> <span class="hljs-comment">// 是否可枚举</span><br>&#125;)<br><br><span class="hljs-comment">// 上面给了三个false, 下面的相关操作就很容易理解了</span><br>obj.a = <span class="hljs-number">2</span> <span class="hljs-comment">// 无效</span><br><span class="hljs-keyword">delete</span> obj.a <span class="hljs-comment">// 无效</span><br><span class="hljs-keyword">for</span>(key <span class="hljs-keyword">in</span> obj)&#123;<br>  <span class="hljs-built_in">console</span>.log(key) <span class="hljs-comment">// 无效 </span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="Vue中的defineProperty"><a href="#Vue中的defineProperty" class="headerlink" title="#Vue中的defineProperty"></a><a href="https://vue3js.cn/es6/#vue%E4%B8%AD%E7%9A%84defineproperty">#</a><strong>Vue中的defineProperty</strong></h3><p>Vue3之前的双向绑定都是通过 <code>defineProperty</code> 的 <code>getter,setter</code> 来实现的，我们先来体验一下 <code>getter,setter</code></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> obj = &#123;&#125;;<br><span class="hljs-built_in">Object</span>.defineProperty(obj, <span class="hljs-string">&#x27;a&#x27;</span>, &#123;<br>  set(val) &#123;<br>    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`开始设置新值: <span class="hljs-subst">$&#123;val&#125;</span>`</span>)<br>  &#125;,<br>  get() &#123; <br>    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`开始读取属性`</span>)<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>; <br>  &#125;,<br>  writable : <span class="hljs-literal">true</span><br>&#125;)<br><br>obj.a = <span class="hljs-number">2</span> <span class="hljs-comment">// 开始设置新值: 2</span><br>obj.a <span class="hljs-comment">// 开始获取属性 </span><br></code></pre></td></tr></table></figure>
+
+<p>看到这里，我相信有些同学已经想到了实现双向绑定背后的流程了，其实很简单嘛，只要我们观察到对象属性的变更，再去通知更新视图就好了</p>
+<p>我们摘抄一段 Vue 源码中的核心实现验证一下，这一部分一笔代过，不是本文重点</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-comment">// 源码位置：https://github.com/vuejs/vue/blob/ef56410a2c/src/core/observer/index.js#L135</span><br><span class="hljs-comment">// ...</span><br><span class="hljs-built_in">Object</span>.defineProperty(obj, key, &#123;<br>  enumerable: <span class="hljs-literal">true</span>,<br>  configurable: <span class="hljs-literal">true</span>,<br>  get: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">reactiveGetter</span> (<span class="hljs-params"></span>) </span>&#123;<br>    <span class="hljs-comment">// ...</span><br>    <span class="hljs-keyword">if</span> (Dep.target) &#123;<br>      <span class="hljs-comment">// 收集依赖</span><br>      dep.depend()<br>    &#125;<br>    <span class="hljs-keyword">return</span> value<br>  &#125;,<br>  set: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">reactiveSetter</span> (<span class="hljs-params">newVal</span>) </span>&#123;<br>    <span class="hljs-comment">// ...</span><br>    <span class="hljs-comment">// 通知视图更新</span><br>    dep.notify()<br>  &#125;<br>&#125;)<br></code></pre></td></tr></table></figure>
+
+<h3 id="对象新增属性为什么不更新"><a href="#对象新增属性为什么不更新" class="headerlink" title="#对象新增属性为什么不更新"></a><a href="https://vue3js.cn/es6/#%E5%AF%B9%E8%B1%A1%E6%96%B0%E5%A2%9E%E5%B1%9E%E6%80%A7%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%8D%E6%9B%B4%E6%96%B0">#</a><strong>对象新增属性为什么不更新</strong></h3><p>这个问题用过Vue的同学应该有超过95%比例遇到过</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js">data  () &#123;<br>  <span class="hljs-keyword">return</span>  &#123;<br>    obj: &#123;<br>      a: <span class="hljs-number">1</span><br>    &#125;<br>  &#125;<br>&#125;<br><br>methods: &#123;<br>  update () &#123;<br>    <span class="hljs-built_in">this</span>.obj.b = <span class="hljs-number">2</span><br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>上面的伪代码，当我们执行 <code>update</code> 更新 <code>obj</code> 时，我们预期视图是要随之更新的，实际是并不会</p>
+<p>这个其实很好理解，我们先要明白 <code>vue</code> 中 <code>data init</code> 的时机，<code>data init</code> 是在生命周期 <code>created</code> 之前的操作，会对 <code>data</code> 绑定一个观察者 <code>Observer</code>，之后 <code>data</code> 中的字段更新都会通知依赖收集器<code>Dep</code>触发视图更新</p>
+<p>然后我们回到 <code>defineProperty</code> 本身，是对<strong>对象上的属性</strong>做操作，而非对象本身</p>
+<p>一句话来说就是，在 <code>Observer data</code> 时，新增属性并不存在，自然就不会有 <code>getter, setter</code>，也就解释了为什么新增视图不更新，解决有很多种，<code>Vue</code> 提供的全局<code>$set</code> 本质也是给新增的属性手动 <code>observer</code></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-comment">// 源码位置 https://github.com/vuejs/vue/blob/dev/src/core/observer/index.js#L201</span><br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">set</span> (<span class="hljs-params">target: Array&lt;any&gt; | Object, key: any, val: any</span>): <span class="hljs-title">any</span> </span>&#123;<br>  <span class="hljs-comment">// ....</span><br>  <span class="hljs-keyword">if</span> (!ob) &#123;<br>    target[key] = val<br>    <span class="hljs-keyword">return</span> val<br>  &#125;<br>  defineReactive(ob.value, key, val)<br>  ob.dep.notify()<br>  <span class="hljs-keyword">return</span> val<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="数组变异"><a href="#数组变异" class="headerlink" title="#数组变异"></a><a href="https://vue3js.cn/es6/#%E6%95%B0%E7%BB%84%E5%8F%98%E5%BC%82">#</a>数组变异</h3><blockquote>
+<p>由于 JavaScript 的限制，Vue 不能检测以下数组的变动： 当你利用索引直接设置一个数组项时，例如：vm.items[indexOfItem] = newValue</p>
+</blockquote>
+<p>先来看一段代码</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> vm = <span class="hljs-keyword">new</span> Vue(&#123;<br>  data: &#123;<br>    items: [<span class="hljs-string">&#x27;1&#x27;</span>, <span class="hljs-string">&#x27;2&#x27;</span>, <span class="hljs-string">&#x27;3&#x27;</span>]<br>  &#125;<br>&#125;)<br>vm.items[<span class="hljs-number">1</span>] = <span class="hljs-string">&#x27;4&#x27;</span> <span class="hljs-comment">// 视图并未更新</span><br></code></pre></td></tr></table></figure>
+
+<p>文档已经做出了解释，但并不是<code>defineProperty</code>的锅，而是尤大在设计上对性能的权衡，下面这段代码可以验证</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">defineReactive</span>(<span class="hljs-params">data, key, val</span>) </span>&#123;<br>  <span class="hljs-built_in">Object</span>.defineProperty(data, key, &#123;<br>    enumerable: <span class="hljs-literal">true</span>,<br>    configurable: <span class="hljs-literal">true</span>,<br>      get: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">defineGet</span>(<span class="hljs-params"></span>) </span>&#123;<br>        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`get key: <span class="hljs-subst">$&#123;key&#125;</span> val: <span class="hljs-subst">$&#123;val&#125;</span>`</span>);<br>        <span class="hljs-keyword">return</span> val;<br>      &#125;,<br>      set: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">defineSet</span>(<span class="hljs-params">newVal</span>) </span>&#123;<br>        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`set key: <span class="hljs-subst">$&#123;key&#125;</span> val: <span class="hljs-subst">$&#123;newVal&#125;</span>`</span>);<br>        val = newVal;<br>      &#125;<br>  &#125;)<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">observe</span>(<span class="hljs-params">data</span>) </span>&#123;<br>  <span class="hljs-built_in">Object</span>.keys(data).forEach(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">key</span>) </span>&#123;<br>    defineReactive(data, key, data[key]);<br>  &#125;)<br>&#125;<br><br><span class="hljs-keyword">let</span> test = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>];<br><br>observe(test);<br><br>test[<span class="hljs-number">0</span>] = <span class="hljs-number">4</span> <span class="hljs-comment">// set key: 0 val: 4</span><br></code></pre></td></tr></table></figure>
+
+<p>虽然说索引变更不是 <code>defineProperty</code> 的锅，但新增索引的确是 <code>defineProperty</code> 做不到的，所以就有了数组的变异方法</p>
+<p>能看到这里，大概也能猜到内部实现了，还是跟<code>$set</code>一样，手动 <code>observer</code>，下面我们验证一下</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> methodsToPatch = [<br>  <span class="hljs-string">&#x27;push&#x27;</span>,<br>  <span class="hljs-string">&#x27;pop&#x27;</span>,<br>  <span class="hljs-string">&#x27;shift&#x27;</span>,<br>  <span class="hljs-string">&#x27;unshift&#x27;</span>,<br>  <span class="hljs-string">&#x27;splice&#x27;</span>,<br>  <span class="hljs-string">&#x27;sort&#x27;</span>,<br>  <span class="hljs-string">&#x27;reverse&#x27;</span><br>]<br><br>methodsToPatch.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">method</span>) </span>&#123;<br>  <span class="hljs-comment">// 缓存原生数组</span><br>  <span class="hljs-keyword">const</span> original = arrayProto[method]<br>  <span class="hljs-comment">// def使用Object.defineProperty重新定义属性</span><br>  def(arrayMethods, method, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">mutator</span> (<span class="hljs-params">...args</span>) </span>&#123;<br>    <span class="hljs-keyword">const</span> result = original.apply(<span class="hljs-built_in">this</span>, args) <span class="hljs-comment">// 调用原生数组的方法</span><br><br>    <span class="hljs-keyword">const</span> ob = <span class="hljs-built_in">this</span>.__ob__  <span class="hljs-comment">// ob就是observe实例observe才能响应式</span><br>    <span class="hljs-keyword">let</span> inserted<br>    <span class="hljs-keyword">switch</span> (method) &#123;<br>      <span class="hljs-comment">// push和unshift方法会增加数组的索引，但是新增的索引位需要手动observe的</span><br>      <span class="hljs-keyword">case</span> <span class="hljs-string">&#x27;push&#x27;</span>:<br>      <span class="hljs-keyword">case</span> <span class="hljs-string">&#x27;unshift&#x27;</span>:<br>        inserted = args<br>        <span class="hljs-keyword">break</span><br>      <span class="hljs-comment">// 同理，splice的第三个参数，为新增的值，也需要手动observe</span><br>      <span class="hljs-keyword">case</span> <span class="hljs-string">&#x27;splice&#x27;</span>:<br>        inserted = args.slice(<span class="hljs-number">2</span>)<br>        <span class="hljs-keyword">break</span><br>    &#125;<br>    <span class="hljs-comment">// 其余的方法都是在原有的索引上更新，初始化的时候已经observe过了</span><br>    <span class="hljs-keyword">if</span> (inserted) ob.observeArray(inserted)<br>    <span class="hljs-comment">// dep通知所有的订阅者触发回调</span><br>    ob.dep.notify()<br>    <span class="hljs-keyword">return</span> result<br>  &#125;)<br>&#125;)<br></code></pre></td></tr></table></figure>
+
+<h4 id="对比"><a href="#对比" class="headerlink" title="对比"></a>对比</h4><p>一个优秀的开源框架本身就是一个不断打碎重朔的过程，上面做了些许铺垫，现在我们简要总结一下</p>
+<ul>
+<li><code>Proxy</code> 作为新标准将受到浏览器厂商重点持续的性能优化</li>
+<li><code>Proxy</code> 能观察的类型比 <code>defineProperty</code> 更丰富</li>
+<li><code>Proxy</code> 不兼容IE，也没有 <code>polyfill</code>, <code>defineProperty</code> 能支持到IE9</li>
+<li><code>Object.definedProperty</code> 是劫持对象的属性，新增元素需要再次 <code>definedProperty</code>。而 <code>Proxy</code> 劫持的是整个对象，不需要做特殊处理</li>
+<li>使用 <code>defineProperty</code> 时，我们修改原来的 <code>obj</code> 对象就可以触发拦截，而使用 <code>proxy</code>，就必须修改代理对象，即 <code>Proxy</code> 的实例才可以触发拦截</li>
+</ul>
+]]></content>
+      <tags>
+        <tag>Vue3源码-Proxy</tag>
+      </tags>
   </entry>
   <entry>
     <title>Vue3源码-Set、Map、WeakSet、WeakMap</title>
@@ -1044,229 +1229,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Vue3源码-Proxy</title>
-    <url>/2021/03/18/vue3%E6%BA%90%E7%A0%81/</url>
-    <content><![CDATA[<h5 id="语法："><a href="#语法：" class="headerlink" title="语法："></a>语法：</h5><figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> proxy = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Proxy</span>(target, handle)<br></code></pre></td></tr></table></figure>
-
-<ul>
-<li>target 要使用 Proxy 包装的目标对象（可以是任何类型的对象，包括原生数组，函数，甚至另一个代理</li>
-<li>handler 一个通常以函数作为属性的对象，用来定制拦截行为</li>
-</ul>
-<p>例：</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> origon=&#123;&#125;<br><br><span class="hljs-keyword">const</span> obj=<span class="hljs-keyword">new</span> <span class="hljs-built_in">Proxy</span>(origon,&#123;<br>   get:<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">target,propkey,receiver</span>)</span>&#123;<br>      <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;10&quot;</span><br>   &#125;<br>&#125;)<br><span class="hljs-built_in">console</span>.log(obj.b);<span class="hljs-comment">//10</span><br><span class="hljs-built_in">console</span>.log(obj.a);<span class="hljs-comment">//10</span><br><span class="hljs-built_in">console</span>.log(origon.a);<span class="hljs-comment">//undefined</span><br><span class="hljs-built_in">console</span>.log(origon.a);<span class="hljs-comment">//undefined</span><br><br></code></pre></td></tr></table></figure>
-
-<p>上方代码我们给一个空对象的get架设了一层代理，所有<code>get</code>操作都会直接返回我们定制的数字10，需要注意的是，代理只会对<code>proxy</code>对象生效，如上方的<code>origin</code>就没有任何效果</p>
-<h2 id="Handler-对象常用的方法"><a href="#Handler-对象常用的方法" class="headerlink" title="Handler 对象常用的方法"></a>Handler 对象常用的方法</h2><table>
-<thead>
-<tr>
-<th>方法</th>
-<th align="left">描述</th>
-<th></th>
-<th></th>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody><tr>
-<td>handler.has()</td>
-<td align="left">in 操作符的捕捉器。</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>handler.get()</td>
-<td align="left">属性读取操作的捕捉器。</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>handler.set()</td>
-<td align="left">属性设置操作的捕捉器。</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>handler.deleteProperty()</td>
-<td align="left">delete 操作符的捕捉器。</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>handler.ownKeys()</td>
-<td align="left">Object.getOwnPropertyNames 方法和 Object.getOwnPropertySymbols 方法的捕捉器。</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>handler.apply()</td>
-<td align="left">函数调用操作的捕捉器。</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>handler.construct()</td>
-<td align="left">new 操作符的捕捉器</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td align="left"></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-</tbody></table>
-<p>下面挑<code>handler.get</code>重点讲一下，其它方法的使用也都大同小异，不同的是参数的区别</p>
-<h3 id="handler-get"><a href="#handler-get" class="headerlink" title="handler.get"></a>handler.get</h3><p><code>get</code>我们在上面例子已经体验过了，现在详细介绍一下，用于代理目标对象的属性读取操作</p>
-<p>授受三个参数 <code>get(target, propKey, ?receiver)</code></p>
-<ul>
-<li>target 目标对象</li>
-<li>propkey 属性名</li>
-<li>receiver Proxy 实例本身</li>
-</ul>
-<p>例：</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> preson = &#123;<br>   like: <span class="hljs-string">&#x27;vue.js&#x27;</span><br>&#125;<br><br><span class="hljs-keyword">const</span> obj = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Proxy</span>(preson, &#123;<br>   get: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">target, propkey</span>) </span>&#123;<br>      <span class="hljs-keyword">if</span> (propkey <span class="hljs-keyword">in</span> target) &#123;<br>         <span class="hljs-keyword">return</span> target[propkey]<br>      &#125; <span class="hljs-keyword">else</span> &#123;<br>         <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">ReferenceError</span>(<span class="hljs-string">&#x27;错误&#x27;</span>)<br>      &#125;<br>   &#125;<br>&#125;)<br><span class="hljs-built_in">console</span>.log(obj.like);<span class="hljs-comment">// vuejs</span><br><span class="hljs-built_in">console</span>.log(obj.text);<span class="hljs-comment">//错误</span><br></code></pre></td></tr></table></figure>
-
-<p><strong>注意:</strong></p>
-<ul>
-<li>如果要访问的目标属性是不可写以及不可配置的，则返回的值必须与该目标属性的值相同</li>
-<li>如果要访问的目标属性没有配置访问方法，即get方法是undefined的，则返回值必须为undefined</li>
-</ul>
-<p>如：</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> obj = &#123;&#125;;<br><span class="hljs-built_in">Object</span>.defineProperty(obj, <span class="hljs-string">&quot;a&quot;</span>, &#123; <br>  configurable: <span class="hljs-literal">false</span>, <br>  enumerable: <span class="hljs-literal">false</span>, <br>  value: <span class="hljs-number">10</span>, <br>  writable: <span class="hljs-literal">false</span> <br>&#125;)<br><br><span class="hljs-keyword">const</span> p = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Proxy</span>(obj, &#123;<br>  get: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">target, prop</span>) </span>&#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">20</span>;<br>  &#125;<br>&#125;)<br><br>p.a <span class="hljs-comment">// Uncaught TypeError: &#x27;get&#x27; on proxy: property &#x27;a&#x27; is a read-only and non-configurable..</span><br></code></pre></td></tr></table></figure>
-
-<h2 id="可撤消的Proxy"><a href="#可撤消的Proxy" class="headerlink" title="可撤消的Proxy"></a>可撤消的Proxy</h2><figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">proxy&#96;有一个唯一的静态方法，&#96;Proxy.revocable(target, handler)<br></code></pre></td></tr></table></figure>
-
-<p><code>Proxy.revocable()</code>方法可以用来创建一个可撤销的代理对象</p>
-<p>该方法的返回值是一个对象，其结构为： <code>&#123;&quot;proxy&quot;: proxy, &quot;revoke&quot;: revoke&#125;</code></p>
-<ul>
-<li>proxy 表示新生成的代理对象本身，和用一般方式 new Proxy(target, handler) 创建的代理对象没什么不同，只是它可以被撤销掉。</li>
-<li>revoke 撤销方法，调用的时候不需要加任何参数，就可以撤销掉和它一起生成的那个代理对象。</li>
-</ul>
-<p>该方法常用于完全封闭对目标对象的访问, 如下示例</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> target = &#123; <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;vuejs&#x27;</span>&#125;<br><span class="hljs-keyword">const</span> &#123;proxy, revoke&#125; = <span class="hljs-built_in">Proxy</span>.revocable(target, handler)<br>proxy.name <span class="hljs-comment">// 正常取值输出 vuejs</span><br>revoke() <span class="hljs-comment">// 取值完成对proxy进行封闭，撤消代理</span><br>proxy.name <span class="hljs-comment">// TypeError: Revoked</span><br></code></pre></td></tr></table></figure>
-
-<h2 id="Proxy的应用场景"><a href="#Proxy的应用场景" class="headerlink" title="Proxy的应用场景"></a>Proxy的应用场景</h2><p><code>Proxy</code>的应用范围很广，下方列举几个典型的应用场景</p>
-<h3 id="校验器"><a href="#校验器" class="headerlink" title="#校验器"></a><a href="https://vue3js.cn/es6/#%E6%A0%A1%E9%AA%8C%E5%99%A8">#</a><strong>校验器</strong></h3><p>想要一个<code>number</code>，拿回来的却是<code>string</code>，惊不惊喜？意不意外？下面我们使用<code>Proxy</code>实现一个逻辑分离的数据格式验证器</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> target = &#123;<br>  _id: <span class="hljs-string">&#x27;1024&#x27;</span>,<br>  name:  <span class="hljs-string">&#x27;vuejs&#x27;</span><br>&#125;<br><br><span class="hljs-keyword">const</span> validators = &#123;  <br>    name(val) &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">typeof</span> val === <span class="hljs-string">&#x27;string&#x27;</span>;<br>    &#125;,<br>    _id(val) &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">typeof</span> val === <span class="hljs-string">&#x27;number&#x27;</span> &amp;&amp; val &gt; <span class="hljs-number">1024</span>;<br>    &#125;<br>&#125;<br><br><span class="hljs-keyword">const</span> createValidator = <span class="hljs-function">(<span class="hljs-params">target, validator</span>) =&gt;</span> &#123;<br>  <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Proxy</span>(target, &#123;<br>    _validator: validator,<br>    set(target, propkey, value, proxy)&#123;<br>      <span class="hljs-keyword">let</span> validator = <span class="hljs-built_in">this</span>._validator[propkey](value)<br>      <span class="hljs-keyword">if</span>(validator)&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-built_in">Reflect</span>.set(target, propkey, value, proxy)<br>      &#125;<span class="hljs-keyword">else</span> &#123;<br>        <span class="hljs-keyword">throw</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">`Cannot set <span class="hljs-subst">$&#123;propkey&#125;</span> to <span class="hljs-subst">$&#123;value&#125;</span>. Invalid type.`</span>)<br>      &#125;<br>    &#125;<br>  &#125;)<br>&#125;<br><br><span class="hljs-keyword">const</span> proxy = createValidator(target, validators)<br><br>proxy.name = <span class="hljs-string">&#x27;vue-js.com&#x27;</span> <span class="hljs-comment">// vue-js.com</span><br>proxy.name = <span class="hljs-number">10086</span> <span class="hljs-comment">// Uncaught Error: Cannot set name to 10086. Invalid type.</span><br>proxy._id = <span class="hljs-number">1025</span> <span class="hljs-comment">// 1025</span><br>proxy._id = <span class="hljs-number">22</span>  <span class="hljs-comment">// Uncaught Error: Cannot set _id to 22. Invalid type </span><br></code></pre></td></tr></table></figure>
-
-<h3 id="私有属性"><a href="#私有属性" class="headerlink" title="私有属性"></a>私有属性</h3><p>在日常编写代码的过程中，我们想定义一些私有属性，通常是在团队中进行约定，大家按照约定在变量名之前添加下划线 _ 或者其它格式来表明这是一个私有属性，但我们不能保证他能真私‘私有化’，下面使用Proxy轻松实现私有属性拦截</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> target = &#123;<br>   _id: <span class="hljs-string">&#x27;123&#x27;</span>,<br>   name: <span class="hljs-string">&#x27;张三&#x27;</span><br>&#125;<br><br><span class="hljs-keyword">const</span> proxy = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Proxy</span>(target, &#123;<br>   get(target, key, proxy) &#123;<br>      <span class="hljs-keyword">if</span> (key[<span class="hljs-number">0</span>] === <span class="hljs-string">&quot;_&quot;</span>) &#123;<br>         <span class="hljs-keyword">throw</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">&#x27;我是私有属性&#x27;</span>)<br>      &#125;<br>      <span class="hljs-keyword">return</span> <span class="hljs-built_in">Reflect</span>.get(target, key, proxy)<br>   &#125;,<br>   set(target, key, val, proxy) &#123;<br>      <span class="hljs-keyword">if</span> (key[<span class="hljs-number">0</span>] === <span class="hljs-string">&quot;_&quot;</span>) &#123;<br>         <span class="hljs-keyword">throw</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">&#x27;我是私有属性&#x27;</span>)<br>      &#125;<br>      <span class="hljs-keyword">return</span> <span class="hljs-built_in">Reflect</span>.set(target, key, val, proxy)<br>   &#125;<br>&#125;)<br><br><span class="hljs-built_in">console</span>.log(proxy.name);<span class="hljs-comment">//张三</span><br><span class="hljs-built_in">console</span>.log(proxy._id);<span class="hljs-comment">//Error: 我是私有属性</span><br><span class="hljs-built_in">console</span>.log(proxy.name = <span class="hljs-string">&#x27;李四&#x27;</span>);<span class="hljs-comment">//李四</span><br><span class="hljs-built_in">console</span>.log(proxy._id = <span class="hljs-number">456</span>);<span class="hljs-comment">//Error: 我是私有属性</span><br><br></code></pre></td></tr></table></figure>
-
-<p><code>Proxy</code> 使用场景还有很多很多，不再一一列举，如果你需要在某一个动作的生命周期内做一些特定的处理，那么<code>Proxy</code> 都是适合的</p>
-<h4 id="为什么要用Proxy重构"><a href="#为什么要用Proxy重构" class="headerlink" title="为什么要用Proxy重构"></a>为什么要用Proxy重构</h4><p>在 <code>Proxy</code> 之前，<code>JavaScript</code> 中就提供过 <code>Object.defineProperty</code>，允许对对象的 <code>getter/setter</code> 进行拦截</p>
-<p>Vue3.0之前的双向绑定是由 <code>defineProperty</code> 实现, 在3.0重构为 <code>Proxy</code>，那么两者的区别究竟在哪里呢？</p>
-<p>首先我们再来回顾一下它的定义</p>
-<blockquote>
-<p>Object.defineProperty() 方法会直接在一个<strong>对象上</strong>定义一个<strong>新属性</strong>，或者修改一个对象的现有属性，并返回此对象</p>
-</blockquote>
-<p>上面给两个词划了重点，<strong>对象上</strong>，<strong>属性</strong>，我们可以理解为是针对对象上的某一个属性做处理的</p>
-<p><strong>语法</strong></p>
-<ul>
-<li>obj 要定义属性的对象</li>
-<li>prop 要定义或修改的属性的名称或 Symbol</li>
-<li>descriptor 要定义或修改的属性描述符</li>
-</ul>
-<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-built_in">Object</span>.defineProperty(obj, prop, descriptor)<br></code></pre></td></tr></table></figure>
-
-<p>举个例子</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> obj = &#123;&#125;<br><span class="hljs-built_in">Object</span>.defineProperty(obj, <span class="hljs-string">&quot;a&quot;</span>, &#123;<br>  value : <span class="hljs-number">1</span>,<br>  writable : <span class="hljs-literal">false</span>, <span class="hljs-comment">// 是否可写 </span><br>  configurable : <span class="hljs-literal">false</span>, <span class="hljs-comment">// 是否可配置</span><br>  enumerable : <span class="hljs-literal">false</span> <span class="hljs-comment">// 是否可枚举</span><br>&#125;)<br><br><span class="hljs-comment">// 上面给了三个false, 下面的相关操作就很容易理解了</span><br>obj.a = <span class="hljs-number">2</span> <span class="hljs-comment">// 无效</span><br><span class="hljs-keyword">delete</span> obj.a <span class="hljs-comment">// 无效</span><br><span class="hljs-keyword">for</span>(key <span class="hljs-keyword">in</span> obj)&#123;<br>  <span class="hljs-built_in">console</span>.log(key) <span class="hljs-comment">// 无效 </span><br>&#125;<br></code></pre></td></tr></table></figure>
-
-<h3 id="Vue中的defineProperty"><a href="#Vue中的defineProperty" class="headerlink" title="#Vue中的defineProperty"></a><a href="https://vue3js.cn/es6/#vue%E4%B8%AD%E7%9A%84defineproperty">#</a><strong>Vue中的defineProperty</strong></h3><p>Vue3之前的双向绑定都是通过 <code>defineProperty</code> 的 <code>getter,setter</code> 来实现的，我们先来体验一下 <code>getter,setter</code></p>
-<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> obj = &#123;&#125;;<br><span class="hljs-built_in">Object</span>.defineProperty(obj, <span class="hljs-string">&#x27;a&#x27;</span>, &#123;<br>  set(val) &#123;<br>    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`开始设置新值: <span class="hljs-subst">$&#123;val&#125;</span>`</span>)<br>  &#125;,<br>  get() &#123; <br>    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`开始读取属性`</span>)<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>; <br>  &#125;,<br>  writable : <span class="hljs-literal">true</span><br>&#125;)<br><br>obj.a = <span class="hljs-number">2</span> <span class="hljs-comment">// 开始设置新值: 2</span><br>obj.a <span class="hljs-comment">// 开始获取属性 </span><br></code></pre></td></tr></table></figure>
-
-<p>看到这里，我相信有些同学已经想到了实现双向绑定背后的流程了，其实很简单嘛，只要我们观察到对象属性的变更，再去通知更新视图就好了</p>
-<p>我们摘抄一段 Vue 源码中的核心实现验证一下，这一部分一笔代过，不是本文重点</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-comment">// 源码位置：https://github.com/vuejs/vue/blob/ef56410a2c/src/core/observer/index.js#L135</span><br><span class="hljs-comment">// ...</span><br><span class="hljs-built_in">Object</span>.defineProperty(obj, key, &#123;<br>  enumerable: <span class="hljs-literal">true</span>,<br>  configurable: <span class="hljs-literal">true</span>,<br>  get: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">reactiveGetter</span> (<span class="hljs-params"></span>) </span>&#123;<br>    <span class="hljs-comment">// ...</span><br>    <span class="hljs-keyword">if</span> (Dep.target) &#123;<br>      <span class="hljs-comment">// 收集依赖</span><br>      dep.depend()<br>    &#125;<br>    <span class="hljs-keyword">return</span> value<br>  &#125;,<br>  set: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">reactiveSetter</span> (<span class="hljs-params">newVal</span>) </span>&#123;<br>    <span class="hljs-comment">// ...</span><br>    <span class="hljs-comment">// 通知视图更新</span><br>    dep.notify()<br>  &#125;<br>&#125;)<br></code></pre></td></tr></table></figure>
-
-<h3 id="对象新增属性为什么不更新"><a href="#对象新增属性为什么不更新" class="headerlink" title="#对象新增属性为什么不更新"></a><a href="https://vue3js.cn/es6/#%E5%AF%B9%E8%B1%A1%E6%96%B0%E5%A2%9E%E5%B1%9E%E6%80%A7%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%8D%E6%9B%B4%E6%96%B0">#</a><strong>对象新增属性为什么不更新</strong></h3><p>这个问题用过Vue的同学应该有超过95%比例遇到过</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js">data  () &#123;<br>  <span class="hljs-keyword">return</span>  &#123;<br>    obj: &#123;<br>      a: <span class="hljs-number">1</span><br>    &#125;<br>  &#125;<br>&#125;<br><br>methods: &#123;<br>  update () &#123;<br>    <span class="hljs-built_in">this</span>.obj.b = <span class="hljs-number">2</span><br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p>上面的伪代码，当我们执行 <code>update</code> 更新 <code>obj</code> 时，我们预期视图是要随之更新的，实际是并不会</p>
-<p>这个其实很好理解，我们先要明白 <code>vue</code> 中 <code>data init</code> 的时机，<code>data init</code> 是在生命周期 <code>created</code> 之前的操作，会对 <code>data</code> 绑定一个观察者 <code>Observer</code>，之后 <code>data</code> 中的字段更新都会通知依赖收集器<code>Dep</code>触发视图更新</p>
-<p>然后我们回到 <code>defineProperty</code> 本身，是对<strong>对象上的属性</strong>做操作，而非对象本身</p>
-<p>一句话来说就是，在 <code>Observer data</code> 时，新增属性并不存在，自然就不会有 <code>getter, setter</code>，也就解释了为什么新增视图不更新，解决有很多种，<code>Vue</code> 提供的全局<code>$set</code> 本质也是给新增的属性手动 <code>observer</code></p>
-<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-comment">// 源码位置 https://github.com/vuejs/vue/blob/dev/src/core/observer/index.js#L201</span><br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">set</span> (<span class="hljs-params">target: Array&lt;any&gt; | Object, key: any, val: any</span>): <span class="hljs-title">any</span> </span>&#123;<br>  <span class="hljs-comment">// ....</span><br>  <span class="hljs-keyword">if</span> (!ob) &#123;<br>    target[key] = val<br>    <span class="hljs-keyword">return</span> val<br>  &#125;<br>  defineReactive(ob.value, key, val)<br>  ob.dep.notify()<br>  <span class="hljs-keyword">return</span> val<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<h3 id="数组变异"><a href="#数组变异" class="headerlink" title="#数组变异"></a><a href="https://vue3js.cn/es6/#%E6%95%B0%E7%BB%84%E5%8F%98%E5%BC%82">#</a>数组变异</h3><blockquote>
-<p>由于 JavaScript 的限制，Vue 不能检测以下数组的变动： 当你利用索引直接设置一个数组项时，例如：vm.items[indexOfItem] = newValue</p>
-</blockquote>
-<p>先来看一段代码</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> vm = <span class="hljs-keyword">new</span> Vue(&#123;<br>  data: &#123;<br>    items: [<span class="hljs-string">&#x27;1&#x27;</span>, <span class="hljs-string">&#x27;2&#x27;</span>, <span class="hljs-string">&#x27;3&#x27;</span>]<br>  &#125;<br>&#125;)<br>vm.items[<span class="hljs-number">1</span>] = <span class="hljs-string">&#x27;4&#x27;</span> <span class="hljs-comment">// 视图并未更新</span><br></code></pre></td></tr></table></figure>
-
-<p>文档已经做出了解释，但并不是<code>defineProperty</code>的锅，而是尤大在设计上对性能的权衡，下面这段代码可以验证</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">defineReactive</span>(<span class="hljs-params">data, key, val</span>) </span>&#123;<br>  <span class="hljs-built_in">Object</span>.defineProperty(data, key, &#123;<br>    enumerable: <span class="hljs-literal">true</span>,<br>    configurable: <span class="hljs-literal">true</span>,<br>      get: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">defineGet</span>(<span class="hljs-params"></span>) </span>&#123;<br>        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`get key: <span class="hljs-subst">$&#123;key&#125;</span> val: <span class="hljs-subst">$&#123;val&#125;</span>`</span>);<br>        <span class="hljs-keyword">return</span> val;<br>      &#125;,<br>      set: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">defineSet</span>(<span class="hljs-params">newVal</span>) </span>&#123;<br>        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`set key: <span class="hljs-subst">$&#123;key&#125;</span> val: <span class="hljs-subst">$&#123;newVal&#125;</span>`</span>);<br>        val = newVal;<br>      &#125;<br>  &#125;)<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">observe</span>(<span class="hljs-params">data</span>) </span>&#123;<br>  <span class="hljs-built_in">Object</span>.keys(data).forEach(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">key</span>) </span>&#123;<br>    defineReactive(data, key, data[key]);<br>  &#125;)<br>&#125;<br><br><span class="hljs-keyword">let</span> test = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>];<br><br>observe(test);<br><br>test[<span class="hljs-number">0</span>] = <span class="hljs-number">4</span> <span class="hljs-comment">// set key: 0 val: 4</span><br></code></pre></td></tr></table></figure>
-
-<p>虽然说索引变更不是 <code>defineProperty</code> 的锅，但新增索引的确是 <code>defineProperty</code> 做不到的，所以就有了数组的变异方法</p>
-<p>能看到这里，大概也能猜到内部实现了，还是跟<code>$set</code>一样，手动 <code>observer</code>，下面我们验证一下</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> methodsToPatch = [<br>  <span class="hljs-string">&#x27;push&#x27;</span>,<br>  <span class="hljs-string">&#x27;pop&#x27;</span>,<br>  <span class="hljs-string">&#x27;shift&#x27;</span>,<br>  <span class="hljs-string">&#x27;unshift&#x27;</span>,<br>  <span class="hljs-string">&#x27;splice&#x27;</span>,<br>  <span class="hljs-string">&#x27;sort&#x27;</span>,<br>  <span class="hljs-string">&#x27;reverse&#x27;</span><br>]<br><br>methodsToPatch.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">method</span>) </span>&#123;<br>  <span class="hljs-comment">// 缓存原生数组</span><br>  <span class="hljs-keyword">const</span> original = arrayProto[method]<br>  <span class="hljs-comment">// def使用Object.defineProperty重新定义属性</span><br>  def(arrayMethods, method, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">mutator</span> (<span class="hljs-params">...args</span>) </span>&#123;<br>    <span class="hljs-keyword">const</span> result = original.apply(<span class="hljs-built_in">this</span>, args) <span class="hljs-comment">// 调用原生数组的方法</span><br><br>    <span class="hljs-keyword">const</span> ob = <span class="hljs-built_in">this</span>.__ob__  <span class="hljs-comment">// ob就是observe实例observe才能响应式</span><br>    <span class="hljs-keyword">let</span> inserted<br>    <span class="hljs-keyword">switch</span> (method) &#123;<br>      <span class="hljs-comment">// push和unshift方法会增加数组的索引，但是新增的索引位需要手动observe的</span><br>      <span class="hljs-keyword">case</span> <span class="hljs-string">&#x27;push&#x27;</span>:<br>      <span class="hljs-keyword">case</span> <span class="hljs-string">&#x27;unshift&#x27;</span>:<br>        inserted = args<br>        <span class="hljs-keyword">break</span><br>      <span class="hljs-comment">// 同理，splice的第三个参数，为新增的值，也需要手动observe</span><br>      <span class="hljs-keyword">case</span> <span class="hljs-string">&#x27;splice&#x27;</span>:<br>        inserted = args.slice(<span class="hljs-number">2</span>)<br>        <span class="hljs-keyword">break</span><br>    &#125;<br>    <span class="hljs-comment">// 其余的方法都是在原有的索引上更新，初始化的时候已经observe过了</span><br>    <span class="hljs-keyword">if</span> (inserted) ob.observeArray(inserted)<br>    <span class="hljs-comment">// dep通知所有的订阅者触发回调</span><br>    ob.dep.notify()<br>    <span class="hljs-keyword">return</span> result<br>  &#125;)<br>&#125;)<br></code></pre></td></tr></table></figure>
-
-<h4 id="对比"><a href="#对比" class="headerlink" title="对比"></a>对比</h4><p>一个优秀的开源框架本身就是一个不断打碎重朔的过程，上面做了些许铺垫，现在我们简要总结一下</p>
-<ul>
-<li><code>Proxy</code> 作为新标准将受到浏览器厂商重点持续的性能优化</li>
-<li><code>Proxy</code> 能观察的类型比 <code>defineProperty</code> 更丰富</li>
-<li><code>Proxy</code> 不兼容IE，也没有 <code>polyfill</code>, <code>defineProperty</code> 能支持到IE9</li>
-<li><code>Object.definedProperty</code> 是劫持对象的属性，新增元素需要再次 <code>definedProperty</code>。而 <code>Proxy</code> 劫持的是整个对象，不需要做特殊处理</li>
-<li>使用 <code>defineProperty</code> 时，我们修改原来的 <code>obj</code> 对象就可以触发拦截，而使用 <code>proxy</code>，就必须修改代理对象，即 <code>Proxy</code> 的实例才可以触发拦截</li>
-</ul>
-]]></content>
-      <tags>
-        <tag>Vue3源码-Proxy</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>vue源码理解——生命周期篇</title>
-    <url>/2021/03/18/vue%E6%BA%90%E7%A0%81%E7%90%86%E8%A7%A34/</url>
-    <content><![CDATA[<h4 id="生命周期："><a href="#生命周期：" class="headerlink" title="生命周期："></a>生命周期：</h4><p>在<code>Vue</code>中，每个<code>Vue</code>实例从被创建出来到最终被销毁都会经历一个过程，就像人一样，从出生到死亡。在这一过程里会发生许许多多的事，例如设置数据监听，编译模板，组件挂载等。在<code>Vue</code>中，把<code>Vue</code>实例从被创建出来到最终被销毁的这一过程称为<code>Vue</code>实例的生命周期，同时，在<code>Vue</code>实例生命周期的不同阶段<code>Vue</code>还提供了不同的钩子函数，以方便用户在不同的生命周期阶段做一些额外的事情。那么，接下来的几篇文章我们就从源码角度深入剖析一下一个<code>Vue</code>实例在从生到死的生命周期里到底都经历了些什么，每个阶段都做了哪些事情。</p>
-<h5 id="生命周期流程图"><a href="#生命周期流程图" class="headerlink" title="生命周期流程图"></a>生命周期流程图</h5><p>下图是<code>Vue</code>官网给出的<code>Vue</code>实例的生命周期流程图，如下：</p>
-<p><img src="C:\Users\梁超\AppData\Roaming\Typora\typora-user-images\image-20210425145156115.png" alt="image-20210425145156115"></p>
-<p>从图中我们可以看到，<code>Vue</code>实例的生命周期大致可分为4个阶段：</p>
-<ul>
-<li>初始化阶段：为<code>Vue</code>实例上初始化一些属性，事件以及响应式数据；</li>
-<li>模板编译阶段：将模板编译成渲染函数；</li>
-<li>挂载阶段：将实例挂载到指定的<code>DOM</code>上，即将模板渲染到真实<code>DOM</code>中；</li>
-<li>销毁阶段：将实例自身从父组件中删除，并取消依赖追踪及事件监听器；</li>
-</ul>
-<h6 id="总结：："><a href="#总结：：" class="headerlink" title="总结：："></a>总结：：</h6><p>本篇文章是生命周期篇的开篇综述，借用<code>Vue</code>官网的生命周期流程图介绍了一个<code>Vue</code>实例的生命周期大致可分为四个阶段，分别是初始化阶段、模板编译阶段、挂载阶段、销毁阶段。接下来的几篇文章我们就从这个流程图为基础，自上到下，从每个阶段入手，深入分析在每个阶段里都干了些什么。</p>
-<h2 id="2-new-Vue-都干了什么"><a href="#2-new-Vue-都干了什么" class="headerlink" title="2. new Vue()都干了什么"></a>2. new Vue()都干了什么</h2><p>初始化阶段所做的第一件事就是<code>new Vue()</code>创建一个<code>Vue</code>实例，那么<code>new Vue()</code>的内部都干了什么呢？ 我们知道，<code>new</code> 关键字在 <code>JS</code>中表示从一个类中实例化出一个对象来，由此可见， <code>Vue</code> 实际上是一个类。所以<code>new Vue()</code>实际上是执行了<code>Vue</code>类的构造函数，那么我们来看一下<code>Vue</code>类是如何定义的，<code>Vue</code>类的定义是在源码的<code>src/core/instance/index.js</code> 中，如下：</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Vue</span> (<span class="hljs-params">options</span>) </span>&#123;<br>  <span class="hljs-keyword">if</span> (process.env.NODE_ENV !== <span class="hljs-string">&#x27;production&#x27;</span> &amp;&amp;<br>    !(<span class="hljs-built_in">this</span> <span class="hljs-keyword">instanceof</span> Vue)<br>  ) &#123;<br>    warn(<span class="hljs-string">&#x27;Vue is a constructor and should be called with the `new` keyword&#x27;</span>)<br>  &#125;<br>  <span class="hljs-built_in">this</span>._init(options)<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p>可以看到，<code>Vue</code>类的定义非常简单，其构造函数核心就一行代码：</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-built_in">this</span>._init(options)<br></code></pre></td></tr></table></figure>
-
-<p>调用原型上的<code>_init(options)</code>方法并把用户所写的选项<code>options</code>传入。那这个<code>_init</code>方法是从哪来的呢？在<code>Vue</code>类定义的下面还有几行代码，其中之一就是：</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript">initMixin(Vue)<br></code></pre></td></tr></table></figure>
-
-<p>这一行代码执行了<code>initMixin</code>函数，那<code>initMixin</code>函数又是从哪儿来的呢？该函数定义位于源码的<code>src/core/instance/init.js</code> 中，如下：</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">export</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">initMixin</span> (<span class="hljs-params">Vue</span>) </span>&#123;<br>  Vue.prototype._init = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">options</span>) </span>&#123;<br>    <span class="hljs-keyword">const</span> vm = <span class="hljs-built_in">this</span><br>    vm.$options = mergeOptions(<br>        resolveConstructorOptions(vm.constructor),<br>        options || &#123;&#125;,<br>        vm<br>    )<br>    vm._self = vm<br>    initLifecycle(vm)<br>    initEvents(vm)<br>    initRender(vm)<br>    callHook(vm, <span class="hljs-string">&#x27;beforeCreate&#x27;</span>)<br>    initInjections(vm) <span class="hljs-comment">// resolve injections before data/props</span><br>    initState(vm)<br>    initProvide(vm) <span class="hljs-comment">// resolve provide after data/props</span><br>    callHook(vm, <span class="hljs-string">&#x27;created&#x27;</span>)<br><br>    <span class="hljs-keyword">if</span> (vm.$options.el) &#123;<br>      vm.$mount(vm.$options.el)<br>    &#125;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p>可以看到，在<code>initMixin</code>函数内部就只干了一件事，那就是给<code>Vue</code>类的原型上绑定<code>_init</code>方法，同时<code>_init</code>方法的定义也在该函数内部。现在我们知道了，<code>new Vue()</code>会执行<code>Vue</code>类的构造函数，构造函数内部会执行<code>_init</code>方法，所以<code>new Vue()</code>所干的事情其实就是<code>_init</code>方法所干的事情，那么我们着重来分析下<code>_init</code>方法都干了哪些事情。</p>
-<p>首先，把<code>Vue</code>实例赋值给变量<code>vm</code>，并且把用户传递的<code>options</code>选项与当前构造函数的<code>options</code>属性及其父级构造函数的<code>options</code>属性进行合并（关于属性如何合并的问题下面会介绍），得到一个新的<code>options</code>选项赋值给<code>$options</code>属性，并将<code>$options</code>属性挂载到<code>Vue</code>实例上，如下：</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript">vm.$options = mergeOptions(<br>    resolveConstructorOptions(vm.constructor),<br>    options || &#123;&#125;,<br>    vm<br>)<br></code></pre></td></tr></table></figure>
-
-<p>接着，通过调用一些初始化函数来为<code>Vue</code>实例初始化一些属性，事件，响应式数据等，如下：</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript">nitLifecycle(vm)       <span class="hljs-comment">// 初始化生命周期</span><br>initEvents(vm)        <span class="hljs-comment">// 初始化事件</span><br>initRender(vm)         <span class="hljs-comment">// 初始化渲染</span><br>callHook(vm, <span class="hljs-string">&#x27;beforeCreate&#x27;</span>)  <span class="hljs-comment">// 调用生命周期钩子函数</span><br>initInjections(vm)   <span class="hljs-comment">//初始化injections</span><br>initState(vm)    <span class="hljs-comment">// 初始化props,methods,data,computed,watch</span><br>initProvide(vm) <span class="hljs-comment">// 初始化 provide</span><br>callHook(vm, <span class="hljs-string">&#x27;created&#x27;</span>)  <span class="hljs-comment">// 调用生命周期钩子函数</span><br></code></pre></td></tr></table></figure>]]></content>
-      <tags>
-        <tag>vue源码理解——生命周期篇</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>vue源码理解——实例方法篇</title>
     <url>/2021/03/18/vue%E6%BA%90%E7%A0%81%E7%90%86%E8%A7%A35/</url>
     <content><![CDATA[<h4 id="实例方法："><a href="#实例方法：" class="headerlink" title="实例方法："></a>实例方法：</h4><p>与数据相关的实例方法有3个，分别是<code>vm.$set</code>、<code>vm.$delete</code>和<code>vm.$watch</code>。它们是在<code>stateMixin</code>函数中挂载到<code>Vue</code>原型上的，代码如下：</p>
@@ -1312,6 +1274,42 @@
 ]]></content>
       <tags>
         <tag>vue源码理解——实例方法篇</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>vue源码理解——生命周期篇</title>
+    <url>/2021/03/18/vue%E6%BA%90%E7%A0%81%E7%90%86%E8%A7%A34/</url>
+    <content><![CDATA[<h4 id="生命周期："><a href="#生命周期：" class="headerlink" title="生命周期："></a>生命周期：</h4><p>在<code>Vue</code>中，每个<code>Vue</code>实例从被创建出来到最终被销毁都会经历一个过程，就像人一样，从出生到死亡。在这一过程里会发生许许多多的事，例如设置数据监听，编译模板，组件挂载等。在<code>Vue</code>中，把<code>Vue</code>实例从被创建出来到最终被销毁的这一过程称为<code>Vue</code>实例的生命周期，同时，在<code>Vue</code>实例生命周期的不同阶段<code>Vue</code>还提供了不同的钩子函数，以方便用户在不同的生命周期阶段做一些额外的事情。那么，接下来的几篇文章我们就从源码角度深入剖析一下一个<code>Vue</code>实例在从生到死的生命周期里到底都经历了些什么，每个阶段都做了哪些事情。</p>
+<h5 id="生命周期流程图"><a href="#生命周期流程图" class="headerlink" title="生命周期流程图"></a>生命周期流程图</h5><p>下图是<code>Vue</code>官网给出的<code>Vue</code>实例的生命周期流程图，如下：</p>
+<p><img src="C:\Users\梁超\AppData\Roaming\Typora\typora-user-images\image-20210425145156115.png" alt="image-20210425145156115"></p>
+<p>从图中我们可以看到，<code>Vue</code>实例的生命周期大致可分为4个阶段：</p>
+<ul>
+<li>初始化阶段：为<code>Vue</code>实例上初始化一些属性，事件以及响应式数据；</li>
+<li>模板编译阶段：将模板编译成渲染函数；</li>
+<li>挂载阶段：将实例挂载到指定的<code>DOM</code>上，即将模板渲染到真实<code>DOM</code>中；</li>
+<li>销毁阶段：将实例自身从父组件中删除，并取消依赖追踪及事件监听器；</li>
+</ul>
+<h6 id="总结：："><a href="#总结：：" class="headerlink" title="总结：："></a>总结：：</h6><p>本篇文章是生命周期篇的开篇综述，借用<code>Vue</code>官网的生命周期流程图介绍了一个<code>Vue</code>实例的生命周期大致可分为四个阶段，分别是初始化阶段、模板编译阶段、挂载阶段、销毁阶段。接下来的几篇文章我们就从这个流程图为基础，自上到下，从每个阶段入手，深入分析在每个阶段里都干了些什么。</p>
+<h2 id="2-new-Vue-都干了什么"><a href="#2-new-Vue-都干了什么" class="headerlink" title="2. new Vue()都干了什么"></a>2. new Vue()都干了什么</h2><p>初始化阶段所做的第一件事就是<code>new Vue()</code>创建一个<code>Vue</code>实例，那么<code>new Vue()</code>的内部都干了什么呢？ 我们知道，<code>new</code> 关键字在 <code>JS</code>中表示从一个类中实例化出一个对象来，由此可见， <code>Vue</code> 实际上是一个类。所以<code>new Vue()</code>实际上是执行了<code>Vue</code>类的构造函数，那么我们来看一下<code>Vue</code>类是如何定义的，<code>Vue</code>类的定义是在源码的<code>src/core/instance/index.js</code> 中，如下：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Vue</span> (<span class="hljs-params">options</span>) </span>&#123;<br>  <span class="hljs-keyword">if</span> (process.env.NODE_ENV !== <span class="hljs-string">&#x27;production&#x27;</span> &amp;&amp;<br>    !(<span class="hljs-built_in">this</span> <span class="hljs-keyword">instanceof</span> Vue)<br>  ) &#123;<br>    warn(<span class="hljs-string">&#x27;Vue is a constructor and should be called with the `new` keyword&#x27;</span>)<br>  &#125;<br>  <span class="hljs-built_in">this</span>._init(options)<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>可以看到，<code>Vue</code>类的定义非常简单，其构造函数核心就一行代码：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-built_in">this</span>._init(options)<br></code></pre></td></tr></table></figure>
+
+<p>调用原型上的<code>_init(options)</code>方法并把用户所写的选项<code>options</code>传入。那这个<code>_init</code>方法是从哪来的呢？在<code>Vue</code>类定义的下面还有几行代码，其中之一就是：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript">initMixin(Vue)<br></code></pre></td></tr></table></figure>
+
+<p>这一行代码执行了<code>initMixin</code>函数，那<code>initMixin</code>函数又是从哪儿来的呢？该函数定义位于源码的<code>src/core/instance/init.js</code> 中，如下：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">export</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">initMixin</span> (<span class="hljs-params">Vue</span>) </span>&#123;<br>  Vue.prototype._init = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">options</span>) </span>&#123;<br>    <span class="hljs-keyword">const</span> vm = <span class="hljs-built_in">this</span><br>    vm.$options = mergeOptions(<br>        resolveConstructorOptions(vm.constructor),<br>        options || &#123;&#125;,<br>        vm<br>    )<br>    vm._self = vm<br>    initLifecycle(vm)<br>    initEvents(vm)<br>    initRender(vm)<br>    callHook(vm, <span class="hljs-string">&#x27;beforeCreate&#x27;</span>)<br>    initInjections(vm) <span class="hljs-comment">// resolve injections before data/props</span><br>    initState(vm)<br>    initProvide(vm) <span class="hljs-comment">// resolve provide after data/props</span><br>    callHook(vm, <span class="hljs-string">&#x27;created&#x27;</span>)<br><br>    <span class="hljs-keyword">if</span> (vm.$options.el) &#123;<br>      vm.$mount(vm.$options.el)<br>    &#125;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>可以看到，在<code>initMixin</code>函数内部就只干了一件事，那就是给<code>Vue</code>类的原型上绑定<code>_init</code>方法，同时<code>_init</code>方法的定义也在该函数内部。现在我们知道了，<code>new Vue()</code>会执行<code>Vue</code>类的构造函数，构造函数内部会执行<code>_init</code>方法，所以<code>new Vue()</code>所干的事情其实就是<code>_init</code>方法所干的事情，那么我们着重来分析下<code>_init</code>方法都干了哪些事情。</p>
+<p>首先，把<code>Vue</code>实例赋值给变量<code>vm</code>，并且把用户传递的<code>options</code>选项与当前构造函数的<code>options</code>属性及其父级构造函数的<code>options</code>属性进行合并（关于属性如何合并的问题下面会介绍），得到一个新的<code>options</code>选项赋值给<code>$options</code>属性，并将<code>$options</code>属性挂载到<code>Vue</code>实例上，如下：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript">vm.$options = mergeOptions(<br>    resolveConstructorOptions(vm.constructor),<br>    options || &#123;&#125;,<br>    vm<br>)<br></code></pre></td></tr></table></figure>
+
+<p>接着，通过调用一些初始化函数来为<code>Vue</code>实例初始化一些属性，事件，响应式数据等，如下：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript">nitLifecycle(vm)       <span class="hljs-comment">// 初始化生命周期</span><br>initEvents(vm)        <span class="hljs-comment">// 初始化事件</span><br>initRender(vm)         <span class="hljs-comment">// 初始化渲染</span><br>callHook(vm, <span class="hljs-string">&#x27;beforeCreate&#x27;</span>)  <span class="hljs-comment">// 调用生命周期钩子函数</span><br>initInjections(vm)   <span class="hljs-comment">//初始化injections</span><br>initState(vm)    <span class="hljs-comment">// 初始化props,methods,data,computed,watch</span><br>initProvide(vm) <span class="hljs-comment">// 初始化 provide</span><br>callHook(vm, <span class="hljs-string">&#x27;created&#x27;</span>)  <span class="hljs-comment">// 调用生命周期钩子函数</span><br></code></pre></td></tr></table></figure>]]></content>
+      <tags>
+        <tag>vue源码理解——生命周期篇</tag>
       </tags>
   </entry>
   <entry>
@@ -1398,6 +1396,16 @@
       </tags>
   </entry>
   <entry>
+    <title>vue源码理解——过滤器篇</title>
+    <url>/2021/03/18/vue%E6%BA%90%E7%A0%81%E7%90%86%E8%A7%A37/</url>
+    <content><![CDATA[<h4 id="过虑器"><a href="#过虑器" class="headerlink" title="过虑器"></a>过虑器</h4><p>过滤器在我们日常开发中应该算是一个非常常用的功能了，它经常会被用来格式化模板中的文本。过滤器可以单个使用，也可以多个串联一起使用，还可以传参数使用。那么在<code>Vue</code>中过滤器是如何工作的呢？其内部原理是怎样的？<code>Vue</code>又是如何识别出我们所写的过滤器的？接下来，我们将从源码角度出发，探究过滤器内部的工作原理，分析其工作流程，揭开它神秘的面纱。</p>
+<p>撸码一时爽，一直撸码一直爽！！！</p>
+]]></content>
+      <tags>
+        <tag>vue源码理解——过滤器篇</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>vue源码理解——指令篇</title>
     <url>/2021/03/18/vue%E6%BA%90%E7%A0%81%E7%90%86%E8%A7%A38/</url>
     <content><![CDATA[<h4 id="指令"><a href="#指令" class="headerlink" title="指令"></a>指令</h4><p>在<code>Vue</code>中，除了<code>Vue</code>本身为我们提供的一些内置指令之外，<code>Vue</code>还支持用户自定义指令。并且用户有两种定义指令的方式：一种是使用全局API——<code>Vue.directive</code>来定义全局指令，这种方式定义的指令会被存放在<code>Vue.options[&#39;directives&#39;]</code>中；另一种是在组件内的<code>directive</code>选项中定义专为该组件使用的局部指令，这种方式定义的指令会被存放在<code>vm.$options[&#39;directives&#39;]</code>中。</p>
@@ -1406,16 +1414,6 @@
 ]]></content>
       <tags>
         <tag>vue源码理解——指令篇</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>vue源码理解——过滤器篇</title>
-    <url>/2021/03/18/vue%E6%BA%90%E7%A0%81%E7%90%86%E8%A7%A37/</url>
-    <content><![CDATA[<h4 id="过虑器"><a href="#过虑器" class="headerlink" title="过虑器"></a>过虑器</h4><p>过滤器在我们日常开发中应该算是一个非常常用的功能了，它经常会被用来格式化模板中的文本。过滤器可以单个使用，也可以多个串联一起使用，还可以传参数使用。那么在<code>Vue</code>中过滤器是如何工作的呢？其内部原理是怎样的？<code>Vue</code>又是如何识别出我们所写的过滤器的？接下来，我们将从源码角度出发，探究过滤器内部的工作原理，分析其工作流程，揭开它神秘的面纱。</p>
-<p>撸码一时爽，一直撸码一直爽！！！</p>
-]]></content>
-      <tags>
-        <tag>vue源码理解——过滤器篇</tag>
       </tags>
   </entry>
   <entry>
@@ -1430,6 +1428,28 @@
 ]]></content>
       <tags>
         <tag>vue源码理解——内置组件篇</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>算法理解</title>
+    <url>/2020/09/18/%E7%AE%97%E6%B3%95%E7%90%86%E8%A7%A3/</url>
+    <content><![CDATA[<h5 id="两数之和："><a href="#两数之和：" class="headerlink" title="两数之和："></a>两数之和：</h5><p>​    思路（javaScript）：使用map函数，利用差值判断并返回值。</p>
+<p>​    代码：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><br><span class="hljs-keyword">var</span> findSum=<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">nums,target</span>)</span>&#123;<br>    <span class="hljs-keyword">let</span>  map=<span class="hljs-keyword">new</span> <span class="hljs-built_in">Map</span>();<br>    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i=<span class="hljs-number">0</span>,len=nums.length;i&lt;len;i++)&#123;<br>        <br>        <span class="hljs-comment">//利用差值判断是否有存在与其对应的值</span><br>        <span class="hljs-keyword">let</span> key =target-nums[i]<br>        <span class="hljs-keyword">if</span>(map.has(key))&#123;<br>            <span class="hljs-keyword">return</span> [map.get(key),i]<br>        &#125;<br>        map.set(nums[i],i)<br>    &#125;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+
+
+<h5 id="整数反转："><a href="#整数反转：" class="headerlink" title="整数反转："></a>整数反转：</h5><p>​    思路（javaScript）：利用对10取余，向下取整，二者对应的思想</p>
+<p>​    代码：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> fn=<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">num</span>)</span>&#123;<br>    <span class="hljs-keyword">let</span> res=<span class="hljs-number">0</span><br>    <span class="hljs-keyword">while</span>(num)&#123;<br>        res=res*<span class="hljs-number">10</span>+num%<span class="hljs-number">10</span><br>        <span class="hljs-comment">//res &gt; Math.pow(2, 31) - 1 || res &lt; Math.pow(-2, 31)字节的最小和最大</span><br>        <span class="hljs-keyword">if</span>(res &gt; <span class="hljs-built_in">Math</span>.pow(<span class="hljs-number">2</span>, <span class="hljs-number">31</span>) - <span class="hljs-number">1</span> || res &lt; <span class="hljs-built_in">Math</span>.pow(<span class="hljs-number">-2</span>, <span class="hljs-number">31</span>))&#123;<br>            <span class="hljs-keyword">return</span> <span class="hljs-number">0</span><br>        &#125;<br>        <span class="hljs-comment">// ~~可以理解向下取整，类似Math.floor()</span><br>        num=~~(num/<span class="hljs-number">10</span>)<br>    &#125;<br>    <span class="hljs-keyword">return</span> res<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h5 id="正序数组的中位数："><a href="#正序数组的中位数：" class="headerlink" title="正序数组的中位数："></a>正序数组的中位数：</h5><p>思路（javaScript）：合并数组（concat）并排序（.sort（a,b）=&gt;a-b），在用下标对2取余如果是奇数就就取[nums  .length / 2],如果是偶数就取(nums[nums.length/2-1]+nums[nums/2])/2</p>
+<p>代码：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> find = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">nums1, nums2</span>) </span>&#123;<br>       <span class="hljs-keyword">let</span> nums = nums1.concat(nums2).sort(<span class="hljs-function">(<span class="hljs-params">a, b</span>) =&gt;</span> a - b)<br>       <span class="hljs-keyword">return</span> nums.length % <span class="hljs-number">2</span> == <span class="hljs-number">0</span> ? (nums[nums.length / <span class="hljs-number">2</span> - <span class="hljs-number">1</span>] + nums[nums.length / <span class="hljs-number">2</span>]) / <span class="hljs-number">2</span> : nums[<span class="hljs-built_in">Math</span>.floor(nums<br>          .length / <span class="hljs-number">2</span>)]<br>    &#125;<br></code></pre></td></tr></table></figure>
+
+]]></content>
+      <tags>
+        <tag>算法理解</tag>
       </tags>
   </entry>
   <entry>
