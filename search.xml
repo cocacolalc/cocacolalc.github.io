@@ -1,27 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>js调用exe</title>
-    <url>/2021/03/18/js%E8%B0%83%E7%94%A8exe/</url>
-    <content><![CDATA[<h5 id="1-使用记事本（或其他文本编辑器）创建一个protocal-reg文件，并写入以下内容"><a href="#1-使用记事本（或其他文本编辑器）创建一个protocal-reg文件，并写入以下内容" class="headerlink" title="1.使用记事本（或其他文本编辑器）创建一个protocal.reg文件，并写入以下内容"></a>1.使用记事本（或其他文本编辑器）创建一个protocal.reg文件，并写入以下内容</h5><figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js">Windows Registry Editor Version <span class="hljs-number">5.00</span><br>[HKEY_CLASSES_ROOT\Webshell]<br>@=<span class="hljs-string">&quot;URL:Webshell Protocol Handler&quot;</span><br><span class="hljs-string">&quot;URL Protocol&quot;</span>=<span class="hljs-string">&quot;&quot;</span><br>[HKEY_CLASSES_ROOT\Webshell\DefaultIcon]<br>@=<span class="hljs-string">&quot;C:\\Program Files (x86)\\Tencent\\WeChat\\WeChat.exe&quot;</span><br>[HKEY_CLASSES_ROOT\Webshell\shell]<br>[HKEY_CLASSES_ROOT\Webshell\shell\open]<br>[HKEY_CLASSES_ROOT\Webshell\shell\open\command]<br>@=<span class="hljs-string">&quot;\&quot;C:\\Program Files (x86)\\Tencent\\WeChat\\WeChat.exe\&quot; \&quot;%1\&quot;&quot;</span><br></code></pre></td></tr></table></figure>
-
-<h3 id="2-修改参数"><a href="#2-修改参数" class="headerlink" title="2.修改参数"></a>2.<strong>修改参数</strong></h3><p>使用记事本打开文件后，按照下图说明修改相关参数</p>
-<p>修改红框内名称自定义即可，全部使用英文字符（该名称即为调用时的href），共六处</p>
-<!-- 
-![image-20210423132126316](C:\Users\梁超\AppData\Roaming\Typora\typora-user-images\image-20210423132126316.png) -->
-
-<p><strong>2.2修改可执行文件路径</strong></p>
-<p>需注意：文件路径中使用//分割（重要）</p>
-<!-- 
-![image-20210423132200180](C:\Users\梁超\AppData\Roaming\Typora\typora-user-images\image-20210423132200180.png) -->
-
-<h3 id="3-执行protocal-reg文件"><a href="#3-执行protocal-reg文件" class="headerlink" title="3.执行protocal.reg文件"></a>3.<strong>执行protocal.reg文件</strong></h3><h3 id="4-创建调用连接"><a href="#4-创建调用连接" class="headerlink" title="4.创建调用连接"></a>4.<strong>创建调用连接</strong></h3><p>连接地址为 步骤1中所命名的链接名称，后面加://hello，（hello为传递参数，可任意添加）</p>
-<!-- ![image-20210423132233779](C:\Users\梁超\AppData\Roaming\Typora\typora-user-images\image-20210423132233779.png) -->]]></content>
-      <tags>
-        <tag>js调用exe</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>nodejs-1</title>
     <url>/2020/09/18/nodejs%E7%AC%94%E8%AE%B0/</url>
     <content><![CDATA[<h1 id="node-js"><a href="#node-js" class="headerlink" title="node js"></a>node js</h1><p>nodejs是基于google v8引擎，在服务器端支持javascript的一种运行环境。</p>
@@ -682,6 +661,27 @@
 <p><strong>部分列添加数据：</strong><br>insert into table_name (id,name) values(10,’zs’);</p>
 <h3 id="修改数据："><a href="#修改数据：" class="headerlink" title="修改数据："></a>修改数据：</h3><figure class="highlight sql"><table><tr><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">update</span> xiaou.user <span class="hljs-keyword">set</span> <span class="hljs-keyword">name</span>=<span class="hljs-string">&#x27;zs2000&#x27;</span>,age=<span class="hljs-number">2000</span> <span class="hljs-keyword">where</span> address=<span class="hljs-string">&#x27;上海&#x27;</span>;<br></code></pre></td></tr></table></figure>
 ]]></content>
+  </entry>
+  <entry>
+    <title>js调用exe</title>
+    <url>/2021/03/18/js%E8%B0%83%E7%94%A8exe/</url>
+    <content><![CDATA[<h5 id="1-使用记事本（或其他文本编辑器）创建一个protocal-reg文件，并写入以下内容"><a href="#1-使用记事本（或其他文本编辑器）创建一个protocal-reg文件，并写入以下内容" class="headerlink" title="1.使用记事本（或其他文本编辑器）创建一个protocal.reg文件，并写入以下内容"></a>1.使用记事本（或其他文本编辑器）创建一个protocal.reg文件，并写入以下内容</h5><figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js">Windows Registry Editor Version <span class="hljs-number">5.00</span><br>[HKEY_CLASSES_ROOT\Webshell]<br>@=<span class="hljs-string">&quot;URL:Webshell Protocol Handler&quot;</span><br><span class="hljs-string">&quot;URL Protocol&quot;</span>=<span class="hljs-string">&quot;&quot;</span><br>[HKEY_CLASSES_ROOT\Webshell\DefaultIcon]<br>@=<span class="hljs-string">&quot;C:\\Program Files (x86)\\Tencent\\WeChat\\WeChat.exe&quot;</span><br>[HKEY_CLASSES_ROOT\Webshell\shell]<br>[HKEY_CLASSES_ROOT\Webshell\shell\open]<br>[HKEY_CLASSES_ROOT\Webshell\shell\open\command]<br>@=<span class="hljs-string">&quot;\&quot;C:\\Program Files (x86)\\Tencent\\WeChat\\WeChat.exe\&quot; \&quot;%1\&quot;&quot;</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="2-修改参数"><a href="#2-修改参数" class="headerlink" title="2.修改参数"></a>2.<strong>修改参数</strong></h3><p>使用记事本打开文件后，按照下图说明修改相关参数</p>
+<p>修改红框内名称自定义即可，全部使用英文字符（该名称即为调用时的href），共六处</p>
+<!-- 
+![image-20210423132126316](C:\Users\梁超\AppData\Roaming\Typora\typora-user-images\image-20210423132126316.png) -->
+
+<p><strong>2.2修改可执行文件路径</strong></p>
+<p>需注意：文件路径中使用//分割（重要）</p>
+<!-- 
+![image-20210423132200180](C:\Users\梁超\AppData\Roaming\Typora\typora-user-images\image-20210423132200180.png) -->
+
+<h3 id="3-执行protocal-reg文件"><a href="#3-执行protocal-reg文件" class="headerlink" title="3.执行protocal.reg文件"></a>3.<strong>执行protocal.reg文件</strong></h3><h3 id="4-创建调用连接"><a href="#4-创建调用连接" class="headerlink" title="4.创建调用连接"></a>4.<strong>创建调用连接</strong></h3><p>连接地址为 步骤1中所命名的链接名称，后面加://hello，（hello为传递参数，可任意添加）</p>
+<!-- ![image-20210423132233779](C:\Users\梁超\AppData\Roaming\Typora\typora-user-images\image-20210423132233779.png) -->]]></content>
+      <tags>
+        <tag>js调用exe</tag>
+      </tags>
   </entry>
   <entry>
     <title>Python基础</title>
