@@ -1396,6 +1396,16 @@
       </tags>
   </entry>
   <entry>
+    <title>vue源码理解——过滤器篇</title>
+    <url>/2021/03/18/vue%E6%BA%90%E7%A0%81%E7%90%86%E8%A7%A37/</url>
+    <content><![CDATA[<h4 id="过虑器"><a href="#过虑器" class="headerlink" title="过虑器"></a>过虑器</h4><p>过滤器在我们日常开发中应该算是一个非常常用的功能了，它经常会被用来格式化模板中的文本。过滤器可以单个使用，也可以多个串联一起使用，还可以传参数使用。那么在<code>Vue</code>中过滤器是如何工作的呢？其内部原理是怎样的？<code>Vue</code>又是如何识别出我们所写的过滤器的？接下来，我们将从源码角度出发，探究过滤器内部的工作原理，分析其工作流程，揭开它神秘的面纱。</p>
+<p>撸码一时爽，一直撸码一直爽！！！</p>
+]]></content>
+      <tags>
+        <tag>vue源码理解——过滤器篇</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>vue源码理解——指令篇</title>
     <url>/2021/03/18/vue%E6%BA%90%E7%A0%81%E7%90%86%E8%A7%A38/</url>
     <content><![CDATA[<h4 id="指令"><a href="#指令" class="headerlink" title="指令"></a>指令</h4><p>在<code>Vue</code>中，除了<code>Vue</code>本身为我们提供的一些内置指令之外，<code>Vue</code>还支持用户自定义指令。并且用户有两种定义指令的方式：一种是使用全局API——<code>Vue.directive</code>来定义全局指令，这种方式定义的指令会被存放在<code>Vue.options[&#39;directives&#39;]</code>中；另一种是在组件内的<code>directive</code>选项中定义专为该组件使用的局部指令，这种方式定义的指令会被存放在<code>vm.$options[&#39;directives&#39;]</code>中。</p>
@@ -1404,16 +1414,6 @@
 ]]></content>
       <tags>
         <tag>vue源码理解——指令篇</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>vue源码理解——过滤器篇</title>
-    <url>/2021/03/18/vue%E6%BA%90%E7%A0%81%E7%90%86%E8%A7%A37/</url>
-    <content><![CDATA[<h4 id="过虑器"><a href="#过虑器" class="headerlink" title="过虑器"></a>过虑器</h4><p>过滤器在我们日常开发中应该算是一个非常常用的功能了，它经常会被用来格式化模板中的文本。过滤器可以单个使用，也可以多个串联一起使用，还可以传参数使用。那么在<code>Vue</code>中过滤器是如何工作的呢？其内部原理是怎样的？<code>Vue</code>又是如何识别出我们所写的过滤器的？接下来，我们将从源码角度出发，探究过滤器内部的工作原理，分析其工作流程，揭开它神秘的面纱。</p>
-<p>撸码一时爽，一直撸码一直爽！！！</p>
-]]></content>
-      <tags>
-        <tag>vue源码理解——过滤器篇</tag>
       </tags>
   </entry>
   <entry>
