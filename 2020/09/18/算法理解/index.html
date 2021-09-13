@@ -14,7 +14,8 @@
 
   
   
-  <meta name="description" content="两数之和：​    思路（javaScript）：使用..."> 
+  <meta name="description" content="
+两数之和：​    思路（javaScript）：使..."> 
   
   <meta name="author" content="lc"> 
 
@@ -165,13 +166,14 @@
       <span class="post-info-item"><i class="iconfont iconcalendar"></i>September 18, 2020</span
         class="post-info-item">
       
-      <span class="post-info-item"><i class="iconfont iconfont-size"></i>1211</span>
+      <span class="post-info-item"><i class="iconfont iconfont-size"></i>1212</span>
     </div>
   </div>
 </section>
     <section class="main">
       <section class="content">
-        <h5 id="两数之和："><a href="#两数之和：" class="headerlink" title="两数之和："></a>两数之和：</h5><p>​    思路（javaScript）：使用map函数，利用差值判断并返回值。</p>
+        <p><img   class="lazyload" data-original="https://images.weserv.nl/?url=https://gitee.com/cocacolalc/imgs-hexo/raw/master/img/photo-1621940022939-67cbe6a348d8.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="img"></p>
+<h5 id="两数之和："><a href="#两数之和：" class="headerlink" title="两数之和："></a>两数之和：</h5><p>​    思路（javaScript）：使用map函数，利用差值判断并返回值。</p>
 <p>​    代码：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs js"><br><span class="hljs-keyword">var</span> findSum=<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">nums,target</span>)</span>&#123;<br>    <span class="hljs-keyword">let</span>  map=<span class="hljs-keyword">new</span> <span class="hljs-built_in">Map</span>();<br>    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i=<span class="hljs-number">0</span>,len=nums.length;i&lt;len;i++)&#123;<br>        <br>        <span class="hljs-comment">//利用差值判断是否有存在与其对应的值</span><br>        <span class="hljs-keyword">let</span> key =target-nums[i]<br>        <span class="hljs-keyword">if</span>(map.has(key))&#123;<br>            <span class="hljs-keyword">return</span> [map.get(key),i]<br>        &#125;<br>        map.set(nums[i],i)<br>    &#125;<br>&#125;<br><br></code></pre></td></tr></table></figure>
 
