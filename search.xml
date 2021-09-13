@@ -925,6 +925,123 @@
       </tags>
   </entry>
   <entry>
+    <title>Vue3</title>
+    <url>/2021/03/18/vue3/</url>
+    <content><![CDATA[<p>学习Vue3最快的方式：就是对比veu2它有什么变化，那么对比Vue2</p>
+<p>Vue3有什么不同呢？</p>
+<h3 id="1-vue2和vue3双向数据绑定原理发生了改变"><a href="#1-vue2和vue3双向数据绑定原理发生了改变" class="headerlink" title="1. vue2和vue3双向数据绑定原理发生了改变"></a>1. vue2和vue3双向数据绑定原理发生了改变</h3><p><strong>vue2</strong> 的双向数据绑定是利用ES5 的一个 API <code>Object.definePropert()</code>对数据进行劫持 结合 发布订阅模式的方式来实现的。</p>
+<p><strong>vue3</strong> 中使用了 es6 的 <code>Proxy</code>API 对数据代理。</p>
+<p>相比于vue2.x，使用proxy的优势如下</p>
+<ol>
+<li>defineProperty只能监听某个属性，不能对全对象监听</li>
+<li>可以省去for in、闭包等内容来提升效率（直接绑定整个对象即可）</li>
+<li>可以监听数组，不用再去单独的对数组做特异性操作 vue3.x可以检测到数组内部数据的变化</li>
+</ol>
+<h4 id="2-默认进行懒观察（lazy-observation）。"><a href="#2-默认进行懒观察（lazy-observation）。" class="headerlink" title="2. 默认进行懒观察（lazy observation）。"></a>2. 默认进行懒观察（lazy observation）。</h4><p>在 2.x 版本里，不管数据多大，都会在一开始就为其创建观察者。当数据很大时，这可能会在页面载入时造成明显的性能压力。3.x 版本，只会对「被用于渲染初始可见部分的数据」创建观察者，而且 3.x 的观察者更高效。</p>
+<ol start="3">
+<li><p>更精准的变更通知。<br>比例来说：2.x 版本中，使用 Vue.set 来给对象新增一个属性时，这个对象的所有 watcher 都会重新运行；3.x 版本中，只有依赖那个属性的 watcher 才会重新运行。</p>
+</li>
+<li><p>3.0 新加入了 TypeScript 以及 PWA 的支持<br>5.vue2和vue3组件发送改变<strong>创建一个 <code>template</code></strong></p>
+<p>组件来说，大多代码在Vue2和Vue3都<strong>非常相似</strong>。Vue3支持<code>碎片(Fragments)</code>，就是说在组件可以拥有多个根节点。</p>
+<p>这种新特性可以减少很多组件之间的<code>div</code>包裹元素。在开发vue的时候，我们会发现每一个组件都会有个<code>div</code>元素包裹着。就会出现很多层多余的<code>div</code>元素。<code>碎片(Fragments)</code>解决了这个问题。对于有完美强迫症的童鞋“真的时太棒了”。我们这里的例子里就不展示了，用简单的单根节点的组件。</p>
+<p><strong>Vue2 表格template</strong></p>
+<figure class="highlight html"><table><tr><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">template</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&#x27;form-element&#x27;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span> &#123;&#123; title &#125;&#125; <span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&#x27;text&#x27;</span> <span class="hljs-attr">v-model</span>=<span class="hljs-string">&#x27;username&#x27;</span> <span class="hljs-attr">placeholder</span>=<span class="hljs-string">&#x27;Username&#x27;</span> /&gt;</span><br>    <br>    <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&#x27;password&#x27;</span> <span class="hljs-attr">v-model</span>=<span class="hljs-string">&#x27;password&#x27;</span> <span class="hljs-attr">placeholder</span>=<span class="hljs-string">&#x27;Password&#x27;</span> /&gt;</span><br><br>    <span class="hljs-tag">&lt;<span class="hljs-name">button</span> @<span class="hljs-attr">click</span>=<span class="hljs-string">&#x27;login&#x27;</span>&gt;</span><br>      Submit<br>    <span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span> <br>      Values: &#123;&#123; username + &#x27; &#x27; + password &#125;&#125;<br>    <span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">template</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>在Vue3的唯一真正的不同在于数据获取。Vue3中的<code>反应数据（Reactive Data）</code>是包含在一个<code>反应状态（Reactive State）</code>变量中。— 所以我们需要访问这个反应状态来获取数据值。</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">template</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&#x27;form-element&#x27;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span> &#123;&#123; state.title &#125;&#125; <span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">input</span></span><br><span class="hljs-tag">     <span class="hljs-attr">type</span>=<span class="hljs-string">&#x27;text&#x27;</span></span><br><span class="hljs-tag">     <span class="hljs-attr">v-model</span>=<span class="hljs-string">&#x27;state.username&#x27;</span></span><br><span class="hljs-tag">     <span class="hljs-attr">placeholder</span>=<span class="hljs-string">&#x27;Username&#x27;</span></span><br><span class="hljs-tag">    /&gt;</span><br>    <br>    <span class="hljs-tag">&lt;<span class="hljs-name">input</span></span><br><span class="hljs-tag">     <span class="hljs-attr">type</span>=<span class="hljs-string">&#x27;password&#x27;</span></span><br><span class="hljs-tag">     <span class="hljs-attr">v-model</span>=<span class="hljs-string">&#x27;state.password&#x27;</span></span><br><span class="hljs-tag">     <span class="hljs-attr">placeholder</span>=<span class="hljs-string">&#x27;Password&#x27;</span></span><br><span class="hljs-tag">    /&gt;</span><br><br>    <span class="hljs-tag">&lt;<span class="hljs-name">button</span> @<span class="hljs-attr">click</span>=<span class="hljs-string">&#x27;login&#x27;</span>&gt;</span><br>      Submit<br>    <span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span> <br>      Values: &#123;&#123; state.username + &#x27; &#x27; + state.password &#125;&#125;<br>    <span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">template</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="建立数据-data"><a href="#建立数据-data" class="headerlink" title="建立数据 data"></a><strong>建立数据 <code>data</code></strong></h2><p><strong>这里就是Vue2与Vue3 最大的区别 — Vue2使用<code>选项类型API（Options API）</code>对比Vue3<code>合成型API（Composition API）</code></strong></p>
+<p>旧的选项型API在代码里分割了不同的属性（properties）：data，computed属性，methods，等等。新的合成型API能让我们用方法（function）来分割，相比于旧的API使用属性来分组，这样代码会更加简便和整洁。</p>
+<blockquote>
+<p>现在我们来对比一下Vue2写法和Vue3写法在代码里面的区别。</p>
+</blockquote>
+<p><strong>Vue2</strong> - 这里把两个数据放入data属性中</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;<br>  props: &#123;<br>    title: <span class="hljs-built_in">String</span><br>  &#125;,<br>  data () &#123;<br>    <span class="hljs-keyword">return</span> &#123;<br>      username: <span class="hljs-string">&#x27;&#x27;</span>,<br>      password: <span class="hljs-string">&#x27;&#x27;</span><br>    &#125;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>在<strong>Vue3.0</strong>，我们就需要使用一个新的<code>setup()</code>方法，此方法在组件初始化构造的时候触发。</p>
+<p>为了可以让开发者对反应型数据有更多的控制，我们可以直接使用到 Vue3 的<code>反应API（reactivity API）</code>。</p>
+<p>使用以下三步来建立<code>反应性数据</code>:</p>
+<ol>
+<li>从vue引入<code>reactive</code></li>
+<li>使用<code>reactive()</code>方法来声名我们的数据为反应性数据</li>
+<li>使用<code>setup()</code>方法来返回我们的反应性数据，从而我们的template可以获取这些反应性数据</li>
+</ol>
+<p>上一波代码，让大家更容易理解是怎么实现的。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">import</span> &#123; reactive &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;vue&#x27;</span><br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;<br>  props: &#123;<br>    title: <span class="hljs-built_in">String</span><br>  &#125;,<br>  setup () &#123;<br>    <span class="hljs-keyword">const</span> state = reactive(&#123;<br>      username: <span class="hljs-string">&#x27;&#x27;</span>,<br>      password: <span class="hljs-string">&#x27;&#x27;</span><br>    &#125;)<br><br>    <span class="hljs-keyword">return</span> &#123; state &#125;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>这里构造的反应性数据就可以被<code>template</code>使用，可以通过<code>state.username</code>和<code>state.password</code>获得数据的值。</p>
+<hr>
+<h2 id="Vue2-对比-Vue3的-methods-编写"><a href="#Vue2-对比-Vue3的-methods-编写" class="headerlink" title="Vue2 对比 Vue3的 methods 编写"></a><strong>Vue2 对比 Vue3的 <code>methods</code> 编写</strong></h2><p><strong>Vue2</strong> 的选项型API是把methods分割到独立的属性区域的。我们可以直接在这个属性里面添加方法来处理各种前端逻辑。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;<br>  props: &#123;<br>    title: <span class="hljs-built_in">String</span><br>  &#125;,<br>  data () &#123;<br>    <span class="hljs-keyword">return</span> &#123;<br>      username: <span class="hljs-string">&#x27;&#x27;</span>,<br>      password: <span class="hljs-string">&#x27;&#x27;</span><br>    &#125;<br>  &#125;,<br>  methods: &#123;<br>    login () &#123;<br>      <span class="hljs-comment">// 登陆方法</span><br>    &#125;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><strong>Vue3</strong> 的合成型API里面的<code>setup()</code>方法也是可以用来操控methods的。创建声名方法其实和声名数据状态是一样的。— 我们需要先声名一个方法然后在<code>setup()</code>方法中<code>返回(return)</code>， 这样我们的组件内就可以调用这个方法了。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;<br>  props: &#123;<br>    title: <span class="hljs-built_in">String</span><br>  &#125;,<br>  setup () &#123;<br>    <span class="hljs-keyword">const</span> state = reactive(&#123;<br>      username: <span class="hljs-string">&#x27;&#x27;</span>,<br>      password: <span class="hljs-string">&#x27;&#x27;</span><br>    &#125;)<br><br>    <span class="hljs-keyword">const</span> login = <span class="hljs-function">() =&gt;</span> &#123;<br>      <span class="hljs-comment">// 登陆方法</span><br>    &#125;<br>    <span class="hljs-keyword">return</span> &#123; <br>      login,<br>      state<br>    &#125;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="生命周期钩子-—-Lifecyle-Hooks"><a href="#生命周期钩子-—-Lifecyle-Hooks" class="headerlink" title="生命周期钩子 — Lifecyle Hooks"></a><strong>生命周期钩子 — <code>Lifecyle Hooks</code></strong></h2><p>在 <strong>Vue2</strong>，我们可以直接在组件属性中调用Vue的生命周期的钩子。以下使用一个<code>组件已挂载（mounted）</code>生命周期触发钩子。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;<br>  props: &#123;<br>    title: <span class="hljs-built_in">String</span><br>  &#125;,<br>  data () &#123;<br>    <span class="hljs-keyword">return</span> &#123;<br>      username: <span class="hljs-string">&#x27;&#x27;</span>,<br>      password: <span class="hljs-string">&#x27;&#x27;</span><br>    &#125;<br>  &#125;,<br>  mounted () &#123;<br>    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&#x27;组件已挂载&#x27;</span>)<br>  &#125;,<br>  methods: &#123;<br>    login () &#123;<br>      <span class="hljs-comment">// login method</span><br>    &#125;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>现在 <strong>Vue3</strong> 的合成型API里面的<code>setup()</code>方法可以包含了基本所有东西。生命周期的钩子就是其中之一！</p>
+<p>但是在 Vue3 生周期钩子不是全局可调用的了，需要另外从vue中引入。和刚刚引入<code>reactive</code>一样，生命周期的挂载钩子叫<code>onMounted</code>。</p>
+<p>引入后我们就可以在<code>setup()</code>方法里面使用<code>onMounted</code>挂载的钩子了。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">import</span> &#123; reactive, onMounted &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;vue&#x27;</span><br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;<br>  props: &#123;<br>    title: <span class="hljs-built_in">String</span><br>  &#125;,<br>  setup () &#123;<br>    <span class="hljs-comment">// ..</span><br><br>    onMounted(<span class="hljs-function">() =&gt;</span> &#123;<br>      <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&#x27;组件已挂载&#x27;</span>)<br>    &#125;)<br><br>    <span class="hljs-comment">// ...</span><br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="计算属性-Computed-Properties"><a href="#计算属性-Computed-Properties" class="headerlink" title="计算属性 - Computed Properties"></a><strong>计算属性 - <code>Computed Properties</code></strong></h2><p>我们一起试试添加一个计算属性来转换<code>username</code>成小写字母。</p>
+<p>在 <strong>Vue2</strong> 中实现，我们只需要在组件内的选项属性中添加即可</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;<br>  <span class="hljs-comment">// .. </span><br>  computed: &#123;<br>    lowerCaseUsername () &#123;<br>      <span class="hljs-keyword">return</span> <span class="hljs-built_in">this</span>.username.toLowerCase()<br>    &#125;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><strong>Vue3</strong> 的设计模式给予开发者们按需引入需要使用的依赖包。这样一来就不需要多余的引用导致性能或者打包后太大的问题。Vue2就是有这个一直存在的问题。</p>
+<p>所以在 Vue3 使用计算属性，我们先需要在组件内引入<code>computed</code>。</p>
+<p>使用方式就和<code>反应性数据（reactive data）</code>一样，在<code>state</code>中加入一个计算属性:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">import</span> &#123; reactive, onMounted, computed &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;vue&#x27;</span><br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;<br>  props: &#123;<br>    title: <span class="hljs-built_in">String</span><br>  &#125;,<br>  setup () &#123;<br>    <span class="hljs-keyword">const</span> state = reactive(&#123;<br>      username: <span class="hljs-string">&#x27;&#x27;</span>,<br>      password: <span class="hljs-string">&#x27;&#x27;</span>,<br>      lowerCaseUsername: computed(<span class="hljs-function">() =&gt;</span> state.username.toLowerCase())<br>    &#125;)<br><br>    <span class="hljs-comment">// ...</span><br>  &#125;<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="接收-Props"><a href="#接收-Props" class="headerlink" title="接收 Props"></a><strong>接收 <code>Props</code></strong></h2><p>接收组件<code>props</code>参数传递这一块为我们带来了Vue2和Vue3之间最大的区别。<strong>—<code>this</code>在vue3中与vue2代表着完全不一样的东西。</strong></p>
+<p>在 <strong>Vue2</strong>，<code>this</code>代表的是当前组件，不是某一个特定的属性。所以我们可以直接使用<code>this</code>访问prop属性值。就比如下面的例子在挂载完成后打印处当前传入组件的参数<code>title</code>。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js">mounted () &#123;<br>    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&#x27;title: &#x27;</span> + <span class="hljs-built_in">this</span>.title)<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>但是在 <strong>Vue3</strong> 中，<code>this</code>无法直接拿到props属性，emit events（触发事件）和组件内的其他属性。不过全新的<code>setup()</code>方法可以接收两个参数：</p>
+<ol>
+<li><code>props</code> - 不可变的组件参数</li>
+<li><code>context</code> - Vue3 暴露出来的属性（emit，slots，attrs）</li>
+</ol>
+<p>所以在 Vue3 接收与使用props就会变成这样：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js">setup (props) &#123;<br>    <span class="hljs-comment">// ...</span><br><br>    onMounted(<span class="hljs-function">() =&gt;</span> &#123;<br>      <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&#x27;title: &#x27;</span> + props.title)<br>    &#125;)<br><br>    <span class="hljs-comment">// ...</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="事件-Emitting-Events"><a href="#事件-Emitting-Events" class="headerlink" title="事件 - Emitting Events"></a><strong>事件 - <code>Emitting Events</code></strong></h2><p>在 <strong>Vue2</strong> 中自定义事件是非常直接的，但是在 <strong>Vue3</strong> 的话，我们会有更多的控制的自由度。</p>
+<p>举例，现在我们想在点击提交按钮时触发一个<code>login</code>的事件。</p>
+<p>在 <strong>Vue2</strong> 中我们会调用到<code>this.$emit</code>然后传入事件名和参数对象。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js">login () &#123;<br>      <span class="hljs-built_in">this</span>.$emit(<span class="hljs-string">&#x27;login&#x27;</span>, &#123;<br>        username: <span class="hljs-built_in">this</span>.username,<br>        password: <span class="hljs-built_in">this</span>.password<br>      &#125;)<br> &#125;<br></code></pre></td></tr></table></figure>
+
+<p>但是在 <strong>Vue3</strong>中，我们刚刚说过<code>this</code>已经不是和vue2代表着这个组件了，所以我们需要不一样的自定义事件的方式。</p>
+<p>那怎么办呀？! ლಠ益ಠ)ლ</p>
+<p>不用慌，在<code>setup()</code>中的第二个参数<code>content</code>对象中就有<code>emit</code>，这个是和<code>this.$emit</code>是一样的。那么我们只要在<code>setup()</code>接收第二个参数中使用<strong>分解对象法</strong>取出<code>emit</code>就可以在setup方法中随意使用了。</p>
+<p>然后我们在<code>login</code>方法中编写登陆事件：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js">setup (props, &#123; emit &#125;) &#123;<br>    <span class="hljs-comment">// ...</span><br><br>    <span class="hljs-keyword">const</span> login = <span class="hljs-function">() =&gt;</span> &#123;<br>      emit(<span class="hljs-string">&#x27;login&#x27;</span>, &#123;<br>        username: state.username,<br>        password: state.password<br>      &#125;)<br>    &#125;<br><br>    <span class="hljs-comment">// ...</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="最终的vue2对比vue3代码"><a href="#最终的vue2对比vue3代码" class="headerlink" title="最终的vue2对比vue3代码"></a><strong>最终的vue2对比vue3代码</strong></h2></li>
+</ol>
+<p>  ![img](data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='2000' height='1250'></svg>)</p>
+<p>  真的是太棒了，能看到这里的童鞋们，你们现在基本都看到vue2与vue3其实概念与理念都是一样的。只是有一些属性获取方式和声名和定义方式稍微变了。一直在鬼哭狼嚎的小小前端开发猿人们，你们可以松一口气了吧。</p>
+<p>  总结一下，我觉得 <strong>Vue3</strong> 给我们前端开发者带来了全新的开发体验，更好的使用弹性，可控度也得到了大大的提升。如果你是一个学过或者接触过 <strong>React</strong> 然后现在想使用Vue的话，应该特别兴奋，因为很多使用方式都和React非常相近了 ！</p>
+<p>  全新的<code>合成式API（Composition API）</code>可以提升代码的解耦程度 —— 特别是大型的前端应用，效果会更加明显。还有就是按需引用的有了更细微的可控性，让项目的性能和打包大小有更好的控制。</p>
+<p>  最后我把完成的 <strong>Vue2</strong> 和 <strong>Vue3</strong> 的组件代码发出来给大家：</p>
+<p>  <strong>Vue2</strong></p>
+  <figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js">&lt;template&gt;<br>  &lt;div <span class="hljs-class"><span class="hljs-keyword">class</span></span>=<span class="hljs-string">&#x27;form-element&#x27;</span>&gt;<br>    &lt;h2&gt; &#123;&#123; title &#125;&#125; &lt;/h2&gt;<br>    &lt;input type=<span class="hljs-string">&#x27;text&#x27;</span> v-model=<span class="hljs-string">&#x27;username&#x27;</span> placeholder=<span class="hljs-string">&#x27;Username&#x27;</span> /&gt;<br>    <br>    &lt;input type=<span class="hljs-string">&#x27;password&#x27;</span> v-model=<span class="hljs-string">&#x27;password&#x27;</span> placeholder=<span class="hljs-string">&#x27;Password&#x27;</span> /&gt;<br><br>    &lt;button @click=<span class="hljs-string">&#x27;login&#x27;</span>&gt;<br>      Submit<br>    &lt;/button&gt;<br>    &lt;p&gt; <br>      Values: &#123;&#123; username + <span class="hljs-string">&#x27; &#x27;</span> + password &#125;&#125;<br>    &lt;/p&gt;<br>  &lt;/div&gt;<br>&lt;/template&gt;<br>&lt;script&gt;<br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;<br>  props: &#123;<br>    title: <span class="hljs-built_in">String</span><br>  &#125;,<br>  data () &#123;<br>    <span class="hljs-keyword">return</span> &#123;<br>      username: <span class="hljs-string">&#x27;&#x27;</span>,<br>      password: <span class="hljs-string">&#x27;&#x27;</span><br>    &#125;<br>  &#125;,<br>  mounted () &#123;<br>    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&#x27;title: &#x27;</span> + <span class="hljs-built_in">this</span>.title)<br>  &#125;,<br>  computed: &#123;<br>    lowerCaseUsername () &#123;<br>      <span class="hljs-keyword">return</span> <span class="hljs-built_in">this</span>.username.toLowerCase()<br>    &#125;<br>  &#125;,<br>  methods: &#123;<br>    login () &#123;<br>      <span class="hljs-built_in">this</span>.$emit(<span class="hljs-string">&#x27;login&#x27;</span>, &#123;<br>        username: <span class="hljs-built_in">this</span>.username,<br>        password: <span class="hljs-built_in">this</span>.password<br>      &#125;)<br>    &#125;<br>  &#125;<br>&#125;<br>&lt;/script&gt;<br></code></pre></td></tr></table></figure>
+
+<p>  <strong>Vue3</strong></p>
+  <figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js">&lt;template&gt;<br>  &lt;div <span class="hljs-class"><span class="hljs-keyword">class</span></span>=<span class="hljs-string">&#x27;form-element&#x27;</span>&gt;<br>    &lt;h2&gt; &#123;&#123; state.title &#125;&#125; &lt;/h2&gt;<br>    &lt;input type=<span class="hljs-string">&#x27;text&#x27;</span> v-model=<span class="hljs-string">&#x27;state.username&#x27;</span> placeholder=<span class="hljs-string">&#x27;Username&#x27;</span> /&gt;<br>    <br>    &lt;input type=<span class="hljs-string">&#x27;password&#x27;</span> v-model=<span class="hljs-string">&#x27;state.password&#x27;</span> placeholder=<span class="hljs-string">&#x27;Password&#x27;</span> /&gt;<br><br>    &lt;button @click=<span class="hljs-string">&#x27;login&#x27;</span>&gt;<br>      Submit<br>    &lt;/button&gt;<br>    &lt;p&gt; <br>      Values: &#123;&#123; state.username + <span class="hljs-string">&#x27; &#x27;</span> + state.password &#125;&#125;<br>    &lt;/p&gt;<br>  &lt;/div&gt;<br>&lt;/template&gt;<br>&lt;script&gt;<br><span class="hljs-keyword">import</span> &#123; reactive, onMounted, computed &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;vue&#x27;</span><br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;<br>  props: &#123;<br>    title: <span class="hljs-built_in">String</span><br>  &#125;,<br>  setup (props, &#123; emit &#125;) &#123;<br>    <span class="hljs-keyword">const</span> state = reactive(&#123;<br>      username: <span class="hljs-string">&#x27;&#x27;</span>,<br>      password: <span class="hljs-string">&#x27;&#x27;</span>,<br>      lowerCaseUsername: computed(<span class="hljs-function">() =&gt;</span> state.username.toLowerCase())<br>    &#125;)<br><br>    onMounted(<span class="hljs-function">() =&gt;</span> &#123;<br>      <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&#x27;title: &#x27;</span> + props.title)<br>    &#125;)<br><br>    <span class="hljs-keyword">const</span> login = <span class="hljs-function">() =&gt;</span> &#123;<br>      emit(<span class="hljs-string">&#x27;login&#x27;</span>, &#123;<br>        username: state.username,<br>        password: state.password<br>      &#125;)<br>    &#125;<br><br>    <span class="hljs-keyword">return</span> &#123; <br>      login,<br>      state<br>    &#125;<br>  &#125;<br>&#125;<br>&lt;/script&gt;<br></code></pre></td></tr></table></figure>
+
+]]></content>
+      <tags>
+        <tag>Vue3</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Vue3源码-Proxy</title>
     <url>/2021/03/18/vue3%E6%BA%90%E7%A0%81/</url>
     <content><![CDATA[<h5 id="语法："><a href="#语法：" class="headerlink" title="语法："></a>语法：</h5><figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> proxy = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Proxy</span>(target, handle)<br></code></pre></td></tr></table></figure>
@@ -1112,123 +1229,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Vue3</title>
-    <url>/2021/03/18/vue3/</url>
-    <content><![CDATA[<p>学习Vue3最快的方式：就是对比veu2它有什么变化，那么对比Vue2</p>
-<p>Vue3有什么不同呢？</p>
-<h3 id="1-vue2和vue3双向数据绑定原理发生了改变"><a href="#1-vue2和vue3双向数据绑定原理发生了改变" class="headerlink" title="1. vue2和vue3双向数据绑定原理发生了改变"></a>1. vue2和vue3双向数据绑定原理发生了改变</h3><p><strong>vue2</strong> 的双向数据绑定是利用ES5 的一个 API <code>Object.definePropert()</code>对数据进行劫持 结合 发布订阅模式的方式来实现的。</p>
-<p><strong>vue3</strong> 中使用了 es6 的 <code>Proxy</code>API 对数据代理。</p>
-<p>相比于vue2.x，使用proxy的优势如下</p>
-<ol>
-<li>defineProperty只能监听某个属性，不能对全对象监听</li>
-<li>可以省去for in、闭包等内容来提升效率（直接绑定整个对象即可）</li>
-<li>可以监听数组，不用再去单独的对数组做特异性操作 vue3.x可以检测到数组内部数据的变化</li>
-</ol>
-<h4 id="2-默认进行懒观察（lazy-observation）。"><a href="#2-默认进行懒观察（lazy-observation）。" class="headerlink" title="2. 默认进行懒观察（lazy observation）。"></a>2. 默认进行懒观察（lazy observation）。</h4><p>在 2.x 版本里，不管数据多大，都会在一开始就为其创建观察者。当数据很大时，这可能会在页面载入时造成明显的性能压力。3.x 版本，只会对「被用于渲染初始可见部分的数据」创建观察者，而且 3.x 的观察者更高效。</p>
-<ol start="3">
-<li><p>更精准的变更通知。<br>比例来说：2.x 版本中，使用 Vue.set 来给对象新增一个属性时，这个对象的所有 watcher 都会重新运行；3.x 版本中，只有依赖那个属性的 watcher 才会重新运行。</p>
-</li>
-<li><p>3.0 新加入了 TypeScript 以及 PWA 的支持<br>5.vue2和vue3组件发送改变<strong>创建一个 <code>template</code></strong></p>
-<p>组件来说，大多代码在Vue2和Vue3都<strong>非常相似</strong>。Vue3支持<code>碎片(Fragments)</code>，就是说在组件可以拥有多个根节点。</p>
-<p>这种新特性可以减少很多组件之间的<code>div</code>包裹元素。在开发vue的时候，我们会发现每一个组件都会有个<code>div</code>元素包裹着。就会出现很多层多余的<code>div</code>元素。<code>碎片(Fragments)</code>解决了这个问题。对于有完美强迫症的童鞋“真的时太棒了”。我们这里的例子里就不展示了，用简单的单根节点的组件。</p>
-<p><strong>Vue2 表格template</strong></p>
-<figure class="highlight html"><table><tr><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">template</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&#x27;form-element&#x27;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span> &#123;&#123; title &#125;&#125; <span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&#x27;text&#x27;</span> <span class="hljs-attr">v-model</span>=<span class="hljs-string">&#x27;username&#x27;</span> <span class="hljs-attr">placeholder</span>=<span class="hljs-string">&#x27;Username&#x27;</span> /&gt;</span><br>    <br>    <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&#x27;password&#x27;</span> <span class="hljs-attr">v-model</span>=<span class="hljs-string">&#x27;password&#x27;</span> <span class="hljs-attr">placeholder</span>=<span class="hljs-string">&#x27;Password&#x27;</span> /&gt;</span><br><br>    <span class="hljs-tag">&lt;<span class="hljs-name">button</span> @<span class="hljs-attr">click</span>=<span class="hljs-string">&#x27;login&#x27;</span>&gt;</span><br>      Submit<br>    <span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span> <br>      Values: &#123;&#123; username + &#x27; &#x27; + password &#125;&#125;<br>    <span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">template</span>&gt;</span><br></code></pre></td></tr></table></figure>
-
-<p>在Vue3的唯一真正的不同在于数据获取。Vue3中的<code>反应数据（Reactive Data）</code>是包含在一个<code>反应状态（Reactive State）</code>变量中。— 所以我们需要访问这个反应状态来获取数据值。</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">template</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&#x27;form-element&#x27;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span> &#123;&#123; state.title &#125;&#125; <span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">input</span></span><br><span class="hljs-tag">     <span class="hljs-attr">type</span>=<span class="hljs-string">&#x27;text&#x27;</span></span><br><span class="hljs-tag">     <span class="hljs-attr">v-model</span>=<span class="hljs-string">&#x27;state.username&#x27;</span></span><br><span class="hljs-tag">     <span class="hljs-attr">placeholder</span>=<span class="hljs-string">&#x27;Username&#x27;</span></span><br><span class="hljs-tag">    /&gt;</span><br>    <br>    <span class="hljs-tag">&lt;<span class="hljs-name">input</span></span><br><span class="hljs-tag">     <span class="hljs-attr">type</span>=<span class="hljs-string">&#x27;password&#x27;</span></span><br><span class="hljs-tag">     <span class="hljs-attr">v-model</span>=<span class="hljs-string">&#x27;state.password&#x27;</span></span><br><span class="hljs-tag">     <span class="hljs-attr">placeholder</span>=<span class="hljs-string">&#x27;Password&#x27;</span></span><br><span class="hljs-tag">    /&gt;</span><br><br>    <span class="hljs-tag">&lt;<span class="hljs-name">button</span> @<span class="hljs-attr">click</span>=<span class="hljs-string">&#x27;login&#x27;</span>&gt;</span><br>      Submit<br>    <span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span> <br>      Values: &#123;&#123; state.username + &#x27; &#x27; + state.password &#125;&#125;<br>    <span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">template</span>&gt;</span><br></code></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="建立数据-data"><a href="#建立数据-data" class="headerlink" title="建立数据 data"></a><strong>建立数据 <code>data</code></strong></h2><p><strong>这里就是Vue2与Vue3 最大的区别 — Vue2使用<code>选项类型API（Options API）</code>对比Vue3<code>合成型API（Composition API）</code></strong></p>
-<p>旧的选项型API在代码里分割了不同的属性（properties）：data，computed属性，methods，等等。新的合成型API能让我们用方法（function）来分割，相比于旧的API使用属性来分组，这样代码会更加简便和整洁。</p>
-<blockquote>
-<p>现在我们来对比一下Vue2写法和Vue3写法在代码里面的区别。</p>
-</blockquote>
-<p><strong>Vue2</strong> - 这里把两个数据放入data属性中</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;<br>  props: &#123;<br>    title: <span class="hljs-built_in">String</span><br>  &#125;,<br>  data () &#123;<br>    <span class="hljs-keyword">return</span> &#123;<br>      username: <span class="hljs-string">&#x27;&#x27;</span>,<br>      password: <span class="hljs-string">&#x27;&#x27;</span><br>    &#125;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p>在<strong>Vue3.0</strong>，我们就需要使用一个新的<code>setup()</code>方法，此方法在组件初始化构造的时候触发。</p>
-<p>为了可以让开发者对反应型数据有更多的控制，我们可以直接使用到 Vue3 的<code>反应API（reactivity API）</code>。</p>
-<p>使用以下三步来建立<code>反应性数据</code>:</p>
-<ol>
-<li>从vue引入<code>reactive</code></li>
-<li>使用<code>reactive()</code>方法来声名我们的数据为反应性数据</li>
-<li>使用<code>setup()</code>方法来返回我们的反应性数据，从而我们的template可以获取这些反应性数据</li>
-</ol>
-<p>上一波代码，让大家更容易理解是怎么实现的。</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">import</span> &#123; reactive &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;vue&#x27;</span><br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;<br>  props: &#123;<br>    title: <span class="hljs-built_in">String</span><br>  &#125;,<br>  setup () &#123;<br>    <span class="hljs-keyword">const</span> state = reactive(&#123;<br>      username: <span class="hljs-string">&#x27;&#x27;</span>,<br>      password: <span class="hljs-string">&#x27;&#x27;</span><br>    &#125;)<br><br>    <span class="hljs-keyword">return</span> &#123; state &#125;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p>这里构造的反应性数据就可以被<code>template</code>使用，可以通过<code>state.username</code>和<code>state.password</code>获得数据的值。</p>
-<hr>
-<h2 id="Vue2-对比-Vue3的-methods-编写"><a href="#Vue2-对比-Vue3的-methods-编写" class="headerlink" title="Vue2 对比 Vue3的 methods 编写"></a><strong>Vue2 对比 Vue3的 <code>methods</code> 编写</strong></h2><p><strong>Vue2</strong> 的选项型API是把methods分割到独立的属性区域的。我们可以直接在这个属性里面添加方法来处理各种前端逻辑。</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;<br>  props: &#123;<br>    title: <span class="hljs-built_in">String</span><br>  &#125;,<br>  data () &#123;<br>    <span class="hljs-keyword">return</span> &#123;<br>      username: <span class="hljs-string">&#x27;&#x27;</span>,<br>      password: <span class="hljs-string">&#x27;&#x27;</span><br>    &#125;<br>  &#125;,<br>  methods: &#123;<br>    login () &#123;<br>      <span class="hljs-comment">// 登陆方法</span><br>    &#125;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p><strong>Vue3</strong> 的合成型API里面的<code>setup()</code>方法也是可以用来操控methods的。创建声名方法其实和声名数据状态是一样的。— 我们需要先声名一个方法然后在<code>setup()</code>方法中<code>返回(return)</code>， 这样我们的组件内就可以调用这个方法了。</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;<br>  props: &#123;<br>    title: <span class="hljs-built_in">String</span><br>  &#125;,<br>  setup () &#123;<br>    <span class="hljs-keyword">const</span> state = reactive(&#123;<br>      username: <span class="hljs-string">&#x27;&#x27;</span>,<br>      password: <span class="hljs-string">&#x27;&#x27;</span><br>    &#125;)<br><br>    <span class="hljs-keyword">const</span> login = <span class="hljs-function">() =&gt;</span> &#123;<br>      <span class="hljs-comment">// 登陆方法</span><br>    &#125;<br>    <span class="hljs-keyword">return</span> &#123; <br>      login,<br>      state<br>    &#125;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="生命周期钩子-—-Lifecyle-Hooks"><a href="#生命周期钩子-—-Lifecyle-Hooks" class="headerlink" title="生命周期钩子 — Lifecyle Hooks"></a><strong>生命周期钩子 — <code>Lifecyle Hooks</code></strong></h2><p>在 <strong>Vue2</strong>，我们可以直接在组件属性中调用Vue的生命周期的钩子。以下使用一个<code>组件已挂载（mounted）</code>生命周期触发钩子。</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;<br>  props: &#123;<br>    title: <span class="hljs-built_in">String</span><br>  &#125;,<br>  data () &#123;<br>    <span class="hljs-keyword">return</span> &#123;<br>      username: <span class="hljs-string">&#x27;&#x27;</span>,<br>      password: <span class="hljs-string">&#x27;&#x27;</span><br>    &#125;<br>  &#125;,<br>  mounted () &#123;<br>    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&#x27;组件已挂载&#x27;</span>)<br>  &#125;,<br>  methods: &#123;<br>    login () &#123;<br>      <span class="hljs-comment">// login method</span><br>    &#125;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p>现在 <strong>Vue3</strong> 的合成型API里面的<code>setup()</code>方法可以包含了基本所有东西。生命周期的钩子就是其中之一！</p>
-<p>但是在 Vue3 生周期钩子不是全局可调用的了，需要另外从vue中引入。和刚刚引入<code>reactive</code>一样，生命周期的挂载钩子叫<code>onMounted</code>。</p>
-<p>引入后我们就可以在<code>setup()</code>方法里面使用<code>onMounted</code>挂载的钩子了。</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">import</span> &#123; reactive, onMounted &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;vue&#x27;</span><br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;<br>  props: &#123;<br>    title: <span class="hljs-built_in">String</span><br>  &#125;,<br>  setup () &#123;<br>    <span class="hljs-comment">// ..</span><br><br>    onMounted(<span class="hljs-function">() =&gt;</span> &#123;<br>      <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&#x27;组件已挂载&#x27;</span>)<br>    &#125;)<br><br>    <span class="hljs-comment">// ...</span><br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="计算属性-Computed-Properties"><a href="#计算属性-Computed-Properties" class="headerlink" title="计算属性 - Computed Properties"></a><strong>计算属性 - <code>Computed Properties</code></strong></h2><p>我们一起试试添加一个计算属性来转换<code>username</code>成小写字母。</p>
-<p>在 <strong>Vue2</strong> 中实现，我们只需要在组件内的选项属性中添加即可</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;<br>  <span class="hljs-comment">// .. </span><br>  computed: &#123;<br>    lowerCaseUsername () &#123;<br>      <span class="hljs-keyword">return</span> <span class="hljs-built_in">this</span>.username.toLowerCase()<br>    &#125;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p><strong>Vue3</strong> 的设计模式给予开发者们按需引入需要使用的依赖包。这样一来就不需要多余的引用导致性能或者打包后太大的问题。Vue2就是有这个一直存在的问题。</p>
-<p>所以在 Vue3 使用计算属性，我们先需要在组件内引入<code>computed</code>。</p>
-<p>使用方式就和<code>反应性数据（reactive data）</code>一样，在<code>state</code>中加入一个计算属性:</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">import</span> &#123; reactive, onMounted, computed &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;vue&#x27;</span><br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;<br>  props: &#123;<br>    title: <span class="hljs-built_in">String</span><br>  &#125;,<br>  setup () &#123;<br>    <span class="hljs-keyword">const</span> state = reactive(&#123;<br>      username: <span class="hljs-string">&#x27;&#x27;</span>,<br>      password: <span class="hljs-string">&#x27;&#x27;</span>,<br>      lowerCaseUsername: computed(<span class="hljs-function">() =&gt;</span> state.username.toLowerCase())<br>    &#125;)<br><br>    <span class="hljs-comment">// ...</span><br>  &#125;<br></code></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="接收-Props"><a href="#接收-Props" class="headerlink" title="接收 Props"></a><strong>接收 <code>Props</code></strong></h2><p>接收组件<code>props</code>参数传递这一块为我们带来了Vue2和Vue3之间最大的区别。<strong>—<code>this</code>在vue3中与vue2代表着完全不一样的东西。</strong></p>
-<p>在 <strong>Vue2</strong>，<code>this</code>代表的是当前组件，不是某一个特定的属性。所以我们可以直接使用<code>this</code>访问prop属性值。就比如下面的例子在挂载完成后打印处当前传入组件的参数<code>title</code>。</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js">mounted () &#123;<br>    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&#x27;title: &#x27;</span> + <span class="hljs-built_in">this</span>.title)<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p>但是在 <strong>Vue3</strong> 中，<code>this</code>无法直接拿到props属性，emit events（触发事件）和组件内的其他属性。不过全新的<code>setup()</code>方法可以接收两个参数：</p>
-<ol>
-<li><code>props</code> - 不可变的组件参数</li>
-<li><code>context</code> - Vue3 暴露出来的属性（emit，slots，attrs）</li>
-</ol>
-<p>所以在 Vue3 接收与使用props就会变成这样：</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js">setup (props) &#123;<br>    <span class="hljs-comment">// ...</span><br><br>    onMounted(<span class="hljs-function">() =&gt;</span> &#123;<br>      <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&#x27;title: &#x27;</span> + props.title)<br>    &#125;)<br><br>    <span class="hljs-comment">// ...</span><br>&#125;<br></code></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="事件-Emitting-Events"><a href="#事件-Emitting-Events" class="headerlink" title="事件 - Emitting Events"></a><strong>事件 - <code>Emitting Events</code></strong></h2><p>在 <strong>Vue2</strong> 中自定义事件是非常直接的，但是在 <strong>Vue3</strong> 的话，我们会有更多的控制的自由度。</p>
-<p>举例，现在我们想在点击提交按钮时触发一个<code>login</code>的事件。</p>
-<p>在 <strong>Vue2</strong> 中我们会调用到<code>this.$emit</code>然后传入事件名和参数对象。</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js">login () &#123;<br>      <span class="hljs-built_in">this</span>.$emit(<span class="hljs-string">&#x27;login&#x27;</span>, &#123;<br>        username: <span class="hljs-built_in">this</span>.username,<br>        password: <span class="hljs-built_in">this</span>.password<br>      &#125;)<br> &#125;<br></code></pre></td></tr></table></figure>
-
-<p>但是在 <strong>Vue3</strong>中，我们刚刚说过<code>this</code>已经不是和vue2代表着这个组件了，所以我们需要不一样的自定义事件的方式。</p>
-<p>那怎么办呀？! ლಠ益ಠ)ლ</p>
-<p>不用慌，在<code>setup()</code>中的第二个参数<code>content</code>对象中就有<code>emit</code>，这个是和<code>this.$emit</code>是一样的。那么我们只要在<code>setup()</code>接收第二个参数中使用<strong>分解对象法</strong>取出<code>emit</code>就可以在setup方法中随意使用了。</p>
-<p>然后我们在<code>login</code>方法中编写登陆事件：</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js">setup (props, &#123; emit &#125;) &#123;<br>    <span class="hljs-comment">// ...</span><br><br>    <span class="hljs-keyword">const</span> login = <span class="hljs-function">() =&gt;</span> &#123;<br>      emit(<span class="hljs-string">&#x27;login&#x27;</span>, &#123;<br>        username: state.username,<br>        password: state.password<br>      &#125;)<br>    &#125;<br><br>    <span class="hljs-comment">// ...</span><br>&#125;<br></code></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="最终的vue2对比vue3代码"><a href="#最终的vue2对比vue3代码" class="headerlink" title="最终的vue2对比vue3代码"></a><strong>最终的vue2对比vue3代码</strong></h2></li>
-</ol>
-<p>  ![img](data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='2000' height='1250'></svg>)</p>
-<p>  真的是太棒了，能看到这里的童鞋们，你们现在基本都看到vue2与vue3其实概念与理念都是一样的。只是有一些属性获取方式和声名和定义方式稍微变了。一直在鬼哭狼嚎的小小前端开发猿人们，你们可以松一口气了吧。</p>
-<p>  总结一下，我觉得 <strong>Vue3</strong> 给我们前端开发者带来了全新的开发体验，更好的使用弹性，可控度也得到了大大的提升。如果你是一个学过或者接触过 <strong>React</strong> 然后现在想使用Vue的话，应该特别兴奋，因为很多使用方式都和React非常相近了 ！</p>
-<p>  全新的<code>合成式API（Composition API）</code>可以提升代码的解耦程度 —— 特别是大型的前端应用，效果会更加明显。还有就是按需引用的有了更细微的可控性，让项目的性能和打包大小有更好的控制。</p>
-<p>  最后我把完成的 <strong>Vue2</strong> 和 <strong>Vue3</strong> 的组件代码发出来给大家：</p>
-<p>  <strong>Vue2</strong></p>
-  <figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js">&lt;template&gt;<br>  &lt;div <span class="hljs-class"><span class="hljs-keyword">class</span></span>=<span class="hljs-string">&#x27;form-element&#x27;</span>&gt;<br>    &lt;h2&gt; &#123;&#123; title &#125;&#125; &lt;/h2&gt;<br>    &lt;input type=<span class="hljs-string">&#x27;text&#x27;</span> v-model=<span class="hljs-string">&#x27;username&#x27;</span> placeholder=<span class="hljs-string">&#x27;Username&#x27;</span> /&gt;<br>    <br>    &lt;input type=<span class="hljs-string">&#x27;password&#x27;</span> v-model=<span class="hljs-string">&#x27;password&#x27;</span> placeholder=<span class="hljs-string">&#x27;Password&#x27;</span> /&gt;<br><br>    &lt;button @click=<span class="hljs-string">&#x27;login&#x27;</span>&gt;<br>      Submit<br>    &lt;/button&gt;<br>    &lt;p&gt; <br>      Values: &#123;&#123; username + <span class="hljs-string">&#x27; &#x27;</span> + password &#125;&#125;<br>    &lt;/p&gt;<br>  &lt;/div&gt;<br>&lt;/template&gt;<br>&lt;script&gt;<br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;<br>  props: &#123;<br>    title: <span class="hljs-built_in">String</span><br>  &#125;,<br>  data () &#123;<br>    <span class="hljs-keyword">return</span> &#123;<br>      username: <span class="hljs-string">&#x27;&#x27;</span>,<br>      password: <span class="hljs-string">&#x27;&#x27;</span><br>    &#125;<br>  &#125;,<br>  mounted () &#123;<br>    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&#x27;title: &#x27;</span> + <span class="hljs-built_in">this</span>.title)<br>  &#125;,<br>  computed: &#123;<br>    lowerCaseUsername () &#123;<br>      <span class="hljs-keyword">return</span> <span class="hljs-built_in">this</span>.username.toLowerCase()<br>    &#125;<br>  &#125;,<br>  methods: &#123;<br>    login () &#123;<br>      <span class="hljs-built_in">this</span>.$emit(<span class="hljs-string">&#x27;login&#x27;</span>, &#123;<br>        username: <span class="hljs-built_in">this</span>.username,<br>        password: <span class="hljs-built_in">this</span>.password<br>      &#125;)<br>    &#125;<br>  &#125;<br>&#125;<br>&lt;/script&gt;<br></code></pre></td></tr></table></figure>
-
-<p>  <strong>Vue3</strong></p>
-  <figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js">&lt;template&gt;<br>  &lt;div <span class="hljs-class"><span class="hljs-keyword">class</span></span>=<span class="hljs-string">&#x27;form-element&#x27;</span>&gt;<br>    &lt;h2&gt; &#123;&#123; state.title &#125;&#125; &lt;/h2&gt;<br>    &lt;input type=<span class="hljs-string">&#x27;text&#x27;</span> v-model=<span class="hljs-string">&#x27;state.username&#x27;</span> placeholder=<span class="hljs-string">&#x27;Username&#x27;</span> /&gt;<br>    <br>    &lt;input type=<span class="hljs-string">&#x27;password&#x27;</span> v-model=<span class="hljs-string">&#x27;state.password&#x27;</span> placeholder=<span class="hljs-string">&#x27;Password&#x27;</span> /&gt;<br><br>    &lt;button @click=<span class="hljs-string">&#x27;login&#x27;</span>&gt;<br>      Submit<br>    &lt;/button&gt;<br>    &lt;p&gt; <br>      Values: &#123;&#123; state.username + <span class="hljs-string">&#x27; &#x27;</span> + state.password &#125;&#125;<br>    &lt;/p&gt;<br>  &lt;/div&gt;<br>&lt;/template&gt;<br>&lt;script&gt;<br><span class="hljs-keyword">import</span> &#123; reactive, onMounted, computed &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;vue&#x27;</span><br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;<br>  props: &#123;<br>    title: <span class="hljs-built_in">String</span><br>  &#125;,<br>  setup (props, &#123; emit &#125;) &#123;<br>    <span class="hljs-keyword">const</span> state = reactive(&#123;<br>      username: <span class="hljs-string">&#x27;&#x27;</span>,<br>      password: <span class="hljs-string">&#x27;&#x27;</span>,<br>      lowerCaseUsername: computed(<span class="hljs-function">() =&gt;</span> state.username.toLowerCase())<br>    &#125;)<br><br>    onMounted(<span class="hljs-function">() =&gt;</span> &#123;<br>      <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&#x27;title: &#x27;</span> + props.title)<br>    &#125;)<br><br>    <span class="hljs-keyword">const</span> login = <span class="hljs-function">() =&gt;</span> &#123;<br>      emit(<span class="hljs-string">&#x27;login&#x27;</span>, &#123;<br>        username: state.username,<br>        password: state.password<br>      &#125;)<br>    &#125;<br><br>    <span class="hljs-keyword">return</span> &#123; <br>      login,<br>      state<br>    &#125;<br>  &#125;<br>&#125;<br>&lt;/script&gt;<br></code></pre></td></tr></table></figure>
-
-]]></content>
-      <tags>
-        <tag>Vue3</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>vue源码理解——生命周期篇</title>
     <url>/2021/03/18/vue%E6%BA%90%E7%A0%81%E7%90%86%E8%A7%A34/</url>
     <content><![CDATA[<h4 id="生命周期："><a href="#生命周期：" class="headerlink" title="生命周期："></a>生命周期：</h4><p>在<code>Vue</code>中，每个<code>Vue</code>实例从被创建出来到最终被销毁都会经历一个过程，就像人一样，从出生到死亡。在这一过程里会发生许许多多的事，例如设置数据监听，编译模板，组件挂载等。在<code>Vue</code>中，把<code>Vue</code>实例从被创建出来到最终被销毁的这一过程称为<code>Vue</code>实例的生命周期，同时，在<code>Vue</code>实例生命周期的不同阶段<code>Vue</code>还提供了不同的钩子函数，以方便用户在不同的生命周期阶段做一些额外的事情。那么，接下来的几篇文章我们就从源码角度深入剖析一下一个<code>Vue</code>实例在从生到死的生命周期里到底都经历了些什么，每个阶段都做了哪些事情。</p>
@@ -1396,16 +1396,6 @@
       </tags>
   </entry>
   <entry>
-    <title>vue源码理解——过滤器篇</title>
-    <url>/2021/03/18/vue%E6%BA%90%E7%A0%81%E7%90%86%E8%A7%A37/</url>
-    <content><![CDATA[<h4 id="过虑器"><a href="#过虑器" class="headerlink" title="过虑器"></a>过虑器</h4><p>过滤器在我们日常开发中应该算是一个非常常用的功能了，它经常会被用来格式化模板中的文本。过滤器可以单个使用，也可以多个串联一起使用，还可以传参数使用。那么在<code>Vue</code>中过滤器是如何工作的呢？其内部原理是怎样的？<code>Vue</code>又是如何识别出我们所写的过滤器的？接下来，我们将从源码角度出发，探究过滤器内部的工作原理，分析其工作流程，揭开它神秘的面纱。</p>
-<p>撸码一时爽，一直撸码一直爽！！！</p>
-]]></content>
-      <tags>
-        <tag>vue源码理解——过滤器篇</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>vue源码理解——指令篇</title>
     <url>/2021/03/18/vue%E6%BA%90%E7%A0%81%E7%90%86%E8%A7%A38/</url>
     <content><![CDATA[<h4 id="指令"><a href="#指令" class="headerlink" title="指令"></a>指令</h4><p>在<code>Vue</code>中，除了<code>Vue</code>本身为我们提供的一些内置指令之外，<code>Vue</code>还支持用户自定义指令。并且用户有两种定义指令的方式：一种是使用全局API——<code>Vue.directive</code>来定义全局指令，这种方式定义的指令会被存放在<code>Vue.options[&#39;directives&#39;]</code>中；另一种是在组件内的<code>directive</code>选项中定义专为该组件使用的局部指令，这种方式定义的指令会被存放在<code>vm.$options[&#39;directives&#39;]</code>中。</p>
@@ -1414,6 +1404,16 @@
 ]]></content>
       <tags>
         <tag>vue源码理解——指令篇</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>vue源码理解——过滤器篇</title>
+    <url>/2021/03/18/vue%E6%BA%90%E7%A0%81%E7%90%86%E8%A7%A37/</url>
+    <content><![CDATA[<h4 id="过虑器"><a href="#过虑器" class="headerlink" title="过虑器"></a>过虑器</h4><p>过滤器在我们日常开发中应该算是一个非常常用的功能了，它经常会被用来格式化模板中的文本。过滤器可以单个使用，也可以多个串联一起使用，还可以传参数使用。那么在<code>Vue</code>中过滤器是如何工作的呢？其内部原理是怎样的？<code>Vue</code>又是如何识别出我们所写的过滤器的？接下来，我们将从源码角度出发，探究过滤器内部的工作原理，分析其工作流程，揭开它神秘的面纱。</p>
+<p>撸码一时爽，一直撸码一直爽！！！</p>
+]]></content>
+      <tags>
+        <tag>vue源码理解——过滤器篇</tag>
       </tags>
   </entry>
   <entry>
