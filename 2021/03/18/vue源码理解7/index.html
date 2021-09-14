@@ -14,7 +14,8 @@
 
   
   
-  <meta name="description" content="过虑器过滤器在我们日常开发中应该算是一个非常常用的功能..."> 
+  <meta name="description" content="
+过虑器过滤器在我们日常开发中应该算是一个非常常用的功..."> 
   
   <meta name="author" content="lc"> 
 
@@ -67,7 +68,7 @@
       fancybox: true,
       pjax: false,
       lazyload: {
-        enable: true,
+        enable: false,
         loadingImage: '',
       },
       donate: {
@@ -158,20 +159,21 @@
     <article class="article">
   <div class="wrap">
     <section class="head">
-  <img   class="lazyload" data-original="https://gitee.com/cocacolalc/imgs-hexo/raw/master/img/photo-1624976501514-8934589cc3e8.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
+  <img src="https://gitee.com/cocacolalc/imgs-hexo/raw/master/img/photo-1624867775503-3e2cc6d3e48f.jpg" draggable="false">
   <div class="head-mask">
     <h1 class="head-title">vue源码理解——过滤器篇</h1>
     <div class="head-info">
       <span class="post-info-item"><i class="iconfont iconcalendar"></i>March 18, 2021</span
         class="post-info-item">
       
-      <span class="post-info-item"><i class="iconfont iconfont-size"></i>188</span>
+      <span class="post-info-item"><i class="iconfont iconfont-size"></i>189</span>
     </div>
   </div>
 </section>
     <section class="main">
       <section class="content">
-        <h4 id="过虑器"><a href="#过虑器" class="headerlink" title="过虑器"></a>过虑器</h4><p>过滤器在我们日常开发中应该算是一个非常常用的功能了，它经常会被用来格式化模板中的文本。过滤器可以单个使用，也可以多个串联一起使用，还可以传参数使用。那么在<code>Vue</code>中过滤器是如何工作的呢？其内部原理是怎样的？<code>Vue</code>又是如何识别出我们所写的过滤器的？接下来，我们将从源码角度出发，探究过滤器内部的工作原理，分析其工作流程，揭开它神秘的面纱。</p>
+        <p><img src="https://images.unsplash.com/photo-1631260947893-1e29516d5183?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw0Mjh8fHxlbnwwfHx8fA==&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="img"></p>
+<h4 id="过虑器"><a href="#过虑器" class="headerlink" title="过虑器"></a>过虑器</h4><p>过滤器在我们日常开发中应该算是一个非常常用的功能了，它经常会被用来格式化模板中的文本。过滤器可以单个使用，也可以多个串联一起使用，还可以传参数使用。那么在<code>Vue</code>中过滤器是如何工作的呢？其内部原理是怎样的？<code>Vue</code>又是如何识别出我们所写的过滤器的？接下来，我们将从源码角度出发，探究过滤器内部的工作原理，分析其工作流程，揭开它神秘的面纱。</p>
 <p>撸码一时爽，一直撸码一直爽！！！</p>
 
       </section>
@@ -189,7 +191,7 @@
         
         <section class="donate">
   <div class="qrcode">
-    <img   class="lazyload" data-original="https://pic.izhaoo.com/alipay.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" >
+    <img src="https://pic.izhaoo.com/alipay.jpg">
   </div>
   <div class="icon">
     <a href="javascript:;" id="alipay"><i class="iconfont iconalipay"></i></a>
@@ -206,7 +208,7 @@
     <a href="/2021/03/18/vue%E6%BA%90%E7%A0%81%E7%90%86%E8%A7%A36/"><i class="iconfont iconleft"></i>vue源码理解——全局API篇</a>
   
   
-    <a href="/2021/03/18/vue%E6%BA%90%E7%A0%81%E7%90%86%E8%A7%A38/">vue源码理解——指令篇<i class="iconfont iconright"></i></a>
+    <a href="/2021/03/18/vue%E6%BA%90%E7%A0%81%E7%90%86%E8%A7%A39/">vue源码理解——内置组件篇<i class="iconfont iconright"></i></a>
   
 </nav>
 

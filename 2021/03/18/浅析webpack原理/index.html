@@ -68,7 +68,7 @@
       fancybox: true,
       pjax: false,
       lazyload: {
-        enable: true,
+        enable: false,
         loadingImage: '',
       },
       donate: {
@@ -159,7 +159,7 @@
     <article class="article">
   <div class="wrap">
     <section class="head">
-  <img   class="lazyload" data-original="https://gitee.com/cocacolalc/imgs-hexo/raw/master/img/photo-1624444637943-134bd7ccf574.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
+  <img src="https://gitee.com/cocacolalc/imgs-hexo/raw/master/img/photo-1621940022939-67cbe6a348d8.jpg" draggable="false">
   <div class="head-mask">
     <h1 class="head-title">浅析webpack原理</h1>
     <div class="head-info">
@@ -172,7 +172,7 @@
 </section>
     <section class="main">
       <section class="content">
-        <p><img   class="lazyload" data-original="https://images.weserv.nl/?url=https://gitee.com/cocacolalc/imgs-hexo/raw/master/img/photo-1624457798984-be18a7212fad.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="img"></p>
+        <p><img src="https://images.weserv.nl/?url=https://gitee.com/cocacolalc/imgs-hexo/raw/master/img/photo-1624457798984-be18a7212fad.jpg" alt="img"></p>
 <p>现在随着前端开发的复杂度和规模越来越大，鹰不能抛开工程化来独立开发，比如：react的jsx代码必须编译后才能在浏览器中使用，比如sass和less代码浏览器是不支持的。如果摒弃这些开发框架，开发效率会大幅下降。</p>
 <p>在众多前端工程化工具中，webpack脱颖而出成为了当今最流行的前端构建工具。</p>
 <h4 id="webpack的原理"><a href="#webpack的原理" class="headerlink" title="webpack的原理"></a>webpack的原理</h4><h5 id="1、核心概念"><a href="#1、核心概念" class="headerlink" title="1、核心概念"></a>1、核心概念</h5><p>（1）entry：一个可执行模块或者库的入口</p>
@@ -307,7 +307,7 @@
 <p><strong>8、webpack的热更新是如何做到的？说明其原理？</strong></p>
 <p>webpack的热更新又称热替换（Hot Module Replacement），缩写为HMR。 这个机制可以做到<strong>不用刷新浏览器而将新变更的模块替换掉旧的模块</strong>。</p>
 <p>原理：</p>
-<p><img   class="lazyload" data-original="https://www.mwcxs.top/static/upload/pics/2019/2/28FRQimjwzfPAJnjuwHaXYHTyO.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="img"></p>
+<p><img src="https://www.mwcxs.top/static/upload/pics/2019/2/28FRQimjwzfPAJnjuwHaXYHTyO.png" alt="img"></p>
 <p>分析：</p>
 <p>（1）第一步，在 webpack 的 watch 模式下，文件系统中某一个文件发生修改，webpack 监听到文件变化，根据配置文件对模块重新编译打包，并将打包后的代码通过简单的 JavaScript 对象保存在内存中。</p>
 <p>（2）第二步是 webpack-dev-server 和 webpack 之间的接口交互，而在这一步，主要是 dev-server 的中间件 webpack-dev-middleware 和 webpack 之间的交互，webpack-dev-middleware 调用 webpack 暴露的 API对代码变化进行监控，并且告诉 webpack，将代码打包到内存中。</p>
@@ -347,11 +347,11 @@
 <p>（3）Npm包大小尽量小的解决方案：Babel 在把 ES6 代码转换成 ES5 代码时会注入一些辅助函数，最终导致每个输出的文件中都包含这段辅助函数的代码，造成了代码的冗余。解决方法是<strong>修改.babelrc文件，为其加入transform-runtime插件</strong></p>
 <p>（4）不能将依赖模块打包到NPM模块中的解决方案：<strong>使用externals配置项来告诉webpack哪些模块不需要打包</strong>。</p>
 <p>（5）对于依赖的资源文件打包的解决方案：通过css-loader和extract-text-webpack-plugin来实现，配置如下：</p>
-<p><img   class="lazyload" data-original="https://www.mwcxs.top/static/upload/pics/2019/2/28IN5rUsvjZdD-j1y65yZ0zpOz.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="img"></p>
+<p><img src="https://www.mwcxs.top/static/upload/pics/2019/2/28IN5rUsvjZdD-j1y65yZ0zpOz.png" alt="img"></p>
 <p><strong>13、如何在vue项目中实现按需加载？</strong></p>
 <p>经常会引入现成的UI组件库如ElementUI、iView等，但是他们的体积和他们所提供的功能一样，是很庞大的。</p>
 <p>不过很多组件库已经提供了现成的解决方案，如Element出品的babel-plugin-component和AntDesign出品的babel-plugin-import 安装以上插件后，<strong>在.babelrc配置中或babel-loader的参数中进行设置，即可实现组件按需加载了</strong>。</p>
-<p><img   class="lazyload" data-original="https://www.mwcxs.top/static/upload/pics/2019/2/28ay2qKVM8pK9YUkX9Ccm7GT8U.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="img"></p>
+<p><img src="https://www.mwcxs.top/static/upload/pics/2019/2/28ay2qKVM8pK9YUkX9Ccm7GT8U.png" alt="img"></p>
 <p>单页应用的按需加载 现在很多前端项目都是通过单页应用的方式开发的，但是随着业务的不断扩展，会面临一个严峻的问题——首次加载的代码量会越来越多，影响用户的体验。</p>
 
       </section>
@@ -369,7 +369,7 @@
         
         <section class="donate">
   <div class="qrcode">
-    <img   class="lazyload" data-original="https://pic.izhaoo.com/alipay.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" >
+    <img src="https://pic.izhaoo.com/alipay.jpg">
   </div>
   <div class="icon">
     <a href="javascript:;" id="alipay"><i class="iconfont iconalipay"></i></a>

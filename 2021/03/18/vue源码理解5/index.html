@@ -14,7 +14,8 @@
 
   
   
-  <meta name="description" content="实例方法：与数据相关的实例方法有3个，分别是vm.$s..."> 
+  <meta name="description" content="
+实例方法：与数据相关的实例方法有3个，分别是vm.$..."> 
   
   <meta name="author" content="lc"> 
 
@@ -67,7 +68,7 @@
       fancybox: true,
       pjax: false,
       lazyload: {
-        enable: true,
+        enable: false,
         loadingImage: '',
       },
       donate: {
@@ -158,20 +159,21 @@
     <article class="article">
   <div class="wrap">
     <section class="head">
-  <img   class="lazyload" data-original="https://gitee.com/cocacolalc/imgs-hexo/raw/master/img/photo-1624234595056-84d46b56ccc4.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
+  <img src="https://gitee.com/cocacolalc/imgs-hexo/raw/master/img/photo-1625903443536-ec7e0e5fc341.jpg" draggable="false">
   <div class="head-mask">
     <h1 class="head-title">vue源码理解——实例方法篇</h1>
     <div class="head-info">
       <span class="post-info-item"><i class="iconfont iconcalendar"></i>March 18, 2021</span
         class="post-info-item">
       
-      <span class="post-info-item"><i class="iconfont iconfont-size"></i>2279</span>
+      <span class="post-info-item"><i class="iconfont iconfont-size"></i>2280</span>
     </div>
   </div>
 </section>
     <section class="main">
       <section class="content">
-        <h4 id="实例方法："><a href="#实例方法：" class="headerlink" title="实例方法："></a>实例方法：</h4><p>与数据相关的实例方法有3个，分别是<code>vm.$set</code>、<code>vm.$delete</code>和<code>vm.$watch</code>。它们是在<code>stateMixin</code>函数中挂载到<code>Vue</code>原型上的，代码如下：</p>
+        <p><img src="https://images.unsplash.com/photo-1631473130172-614478b2abd1?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwxNzZ8fHxlbnwwfHx8fA==&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="img"></p>
+<h4 id="实例方法："><a href="#实例方法：" class="headerlink" title="实例方法："></a>实例方法：</h4><p>与数据相关的实例方法有3个，分别是<code>vm.$set</code>、<code>vm.$delete</code>和<code>vm.$watch</code>。它们是在<code>stateMixin</code>函数中挂载到<code>Vue</code>原型上的，代码如下：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">import</span> &#123;set,del&#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;../observer/index&#x27;</span><br><br><span class="hljs-keyword">export</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">stateMixin</span> (<span class="hljs-params">Vue</span>) </span>&#123;<br>    Vue.prototype.$set = set<br>    Vue.prototype.$delete = del<br>    Vue.prototype.$watch = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">expOrFn,cb,options</span>) </span>&#123;&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <p>当执行<code>stateMixin</code>函数后，会向<code>Vue</code>原型上挂载上述3个实例方法。</p>
@@ -227,7 +229,7 @@
         
         <section class="donate">
   <div class="qrcode">
-    <img   class="lazyload" data-original="https://pic.izhaoo.com/alipay.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" >
+    <img src="https://pic.izhaoo.com/alipay.jpg">
   </div>
   <div class="icon">
     <a href="javascript:;" id="alipay"><i class="iconfont iconalipay"></i></a>

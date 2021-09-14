@@ -14,7 +14,8 @@
 
   
   
-  <meta name="description" content="TypeScript开发全局安装typescript，..."> 
+  <meta name="description" content="
+TypeScript开发全局安装typescript..."> 
   
   <meta name="author" content="lc"> 
 
@@ -67,7 +68,7 @@
       fancybox: true,
       pjax: false,
       lazyload: {
-        enable: true,
+        enable: false,
         loadingImage: '',
       },
       donate: {
@@ -158,20 +159,21 @@
     <article class="article">
   <div class="wrap">
     <section class="head">
-  <img   class="lazyload" data-original="https://gitee.com/cocacolalc/imgs-hexo/raw/master/img/photo-1626680183380-ce22cf03b448.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
+  <img src="https://gitee.com/cocacolalc/imgs-hexo/raw/master/img/photo-1626680183380-ce22cf03b448.jpg" draggable="false">
   <div class="head-mask">
     <h1 class="head-title">Ts</h1>
     <div class="head-info">
       <span class="post-info-item"><i class="iconfont iconcalendar"></i>March 18, 2021</span
         class="post-info-item">
       
-      <span class="post-info-item"><i class="iconfont iconfont-size"></i>33160</span>
+      <span class="post-info-item"><i class="iconfont iconfont-size"></i>33161</span>
     </div>
   </div>
 </section>
     <section class="main">
       <section class="content">
-        <h3 id="TypeScript开发"><a href="#TypeScript开发" class="headerlink" title="TypeScript开发"></a>TypeScript开发</h3><p>全局安装typescript，使用安装命令可以使用<code>npm</code>也可以使用<code>yarn</code>： </p>
+        <p><img src="https://images.unsplash.com/photo-1631360934174-f62d399183cd?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyM3x8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="img"></p>
+<h3 id="TypeScript开发"><a href="#TypeScript开发" class="headerlink" title="TypeScript开发"></a>TypeScript开发</h3><p>全局安装typescript，使用安装命令可以使用<code>npm</code>也可以使用<code>yarn</code>： </p>
 <p>命令：</p>
 <p>npm install typescript -g</p>
 <p>yarn global add typescript</p>
@@ -286,7 +288,7 @@
 <blockquote>
 <p>安装VsCode编辑器：</p>
 </blockquote>
-<p><img   class="lazyload" data-original="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="图片">image.png</p>
+<p><img src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="图片">image.png</p>
 <figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs ts"><span class="hljs-keyword">interface</span> Person &#123;<br> name: <span class="hljs-built_in">string</span><br>&#125;<br><span class="hljs-keyword">const</span> teacher: Person = &#123;<br> name: <span class="hljs-string">&#x27;jeskson&#x27;</span><br>&#125;<br></code></pre></td></tr></table></figure>
 
 <blockquote>
@@ -564,10 +566,10 @@
 
 <h3 id="对数组中的对象按对象的值进行去重"><a href="#对数组中的对象按对象的值进行去重" class="headerlink" title="对数组中的对象按对象的值进行去重"></a>对数组中的对象按对象的值进行去重</h3><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs ts"><span class="hljs-keyword">let</span> listData = [<br>  &#123; firstName: <span class="hljs-string">&quot;dada&quot;</span>, lastName: <span class="hljs-string">&quot;abc&quot;</span>, size: <span class="hljs-number">18</span> &#125;<br>&#125;<br><span class="hljs-comment">//js</span><br><span class="hljs-keyword">let</span> obj = &#123;&#125;;<br>listData = listData.reduce(<span class="hljs-function">(<span class="hljs-params">item, next</span>) =&gt;</span> &#123;<br>  <span class="hljs-keyword">if</span> (!obj[next.lastName]) &#123;<br>    item.push(next);<br>    obj[next.lastName] = <span class="hljs-literal">true</span>;<br>  &#125;<br>  <span class="hljs-keyword">return</span> item;<br>&#125;, []);<br><span class="hljs-comment">//ts</span><br><span class="hljs-keyword">const</span> obj: &#123;[key: <span class="hljs-built_in">string</span>]: <span class="hljs-built_in">boolean</span>;&#125; = &#123;&#125;;<br>listData = listData.reduce&lt;ListDataItem[]&gt;(<span class="hljs-function">(<span class="hljs-params">item, next</span>) =&gt;</span> &#123;<br>  <span class="hljs-keyword">if</span> (!obj[next.lastName]) &#123;<br>    item.push(next);<br>    obj[next.lastName] = <span class="hljs-literal">true</span>;<br>  &#125;<br>  <span class="hljs-keyword">return</span> item;<br>&#125;,[]);<br></code></pre></td></tr></table></figure>
 
-<h3 id="在微信小程序开发中使用Typescript"><a href="#在微信小程序开发中使用Typescript" class="headerlink" title="在微信小程序开发中使用Typescript"></a>在微信小程序开发中使用<code>Typescript</code></h3><p><img   class="lazyload" data-original="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="图片">image.png</p>
-<p><img   class="lazyload" data-original="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="图片">image.png</p>
-<p><img   class="lazyload" data-original="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="图片">image.png</p>
-<p><img   class="lazyload" data-original="https://mmbiz.qpic.cn/mmbiz_png/3aPj0GhFQDC6bQkW63sHHticGmYfWw117KQ67xjc6cNxaby0fKic4yFcbADXHpMu1RpWoCo8TSu6KCTVAgR6DZicw/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="图片">image.png</p>
+<h3 id="在微信小程序开发中使用Typescript"><a href="#在微信小程序开发中使用Typescript" class="headerlink" title="在微信小程序开发中使用Typescript"></a>在微信小程序开发中使用<code>Typescript</code></h3><p><img src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="图片">image.png</p>
+<p><img src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="图片">image.png</p>
+<p><img src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="图片">image.png</p>
+<p><img src="https://mmbiz.qpic.cn/mmbiz_png/3aPj0GhFQDC6bQkW63sHHticGmYfWw117KQ67xjc6cNxaby0fKic4yFcbADXHpMu1RpWoCo8TSu6KCTVAgR6DZicw/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1" alt="图片">image.png</p>
 <h3 id="模块的概念"><a href="#模块的概念" class="headerlink" title="模块的概念"></a>模块的概念</h3><p>“内部模块”现在称为“命令空间”，“外部模块”现在简称为“模块”，模块字其自身的作用域里执行，而不是在全局作用域里。</p>
 <p>这意味着定义在一个模块里的变量，函数，类等等在模块外部是不可见的，除非你明确地使用export形式之一导出它们。</p>
 <p>相反，如果想使用其它模块导出的变量，函数，类，接口等的时候，你必须要导入它们，可以使用 <code>import</code> 形式之一。</p>
@@ -624,7 +626,7 @@
         
         <section class="donate">
   <div class="qrcode">
-    <img   class="lazyload" data-original="https://pic.izhaoo.com/alipay.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" >
+    <img src="https://pic.izhaoo.com/alipay.jpg">
   </div>
   <div class="icon">
     <a href="javascript:;" id="alipay"><i class="iconfont iconalipay"></i></a>

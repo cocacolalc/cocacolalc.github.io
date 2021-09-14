@@ -14,7 +14,8 @@
 
   
   
-  <meta name="description" content="1.使用记事本（或其他文本编辑器）创建一个protoc..."> 
+  <meta name="description" content="
+1.使用记事本（或其他文本编辑器）创建一个proto..."> 
   
   <meta name="author" content="lc"> 
 
@@ -67,7 +68,7 @@
       fancybox: true,
       pjax: false,
       lazyload: {
-        enable: true,
+        enable: false,
         loadingImage: '',
       },
       donate: {
@@ -158,20 +159,21 @@
     <article class="article">
   <div class="wrap">
     <section class="head">
-  <img   class="lazyload" data-original="https://gitee.com/cocacolalc/imgs-hexo/raw/master/img/photo-1626257435667-5d942b1bd7d3.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
+  <img src="https://gitee.com/cocacolalc/imgs-hexo/raw/master/img/photo-1624941806657-981cf1ea3154.jpg" draggable="false">
   <div class="head-mask">
     <h1 class="head-title">js调用exe</h1>
     <div class="head-info">
       <span class="post-info-item"><i class="iconfont iconcalendar"></i>March 18, 2021</span
         class="post-info-item">
       
-      <span class="post-info-item"><i class="iconfont iconfont-size"></i>707</span>
+      <span class="post-info-item"><i class="iconfont iconfont-size"></i>708</span>
     </div>
   </div>
 </section>
     <section class="main">
       <section class="content">
-        <h5 id="1-使用记事本（或其他文本编辑器）创建一个protocal-reg文件，并写入以下内容"><a href="#1-使用记事本（或其他文本编辑器）创建一个protocal-reg文件，并写入以下内容" class="headerlink" title="1.使用记事本（或其他文本编辑器）创建一个protocal.reg文件，并写入以下内容"></a>1.使用记事本（或其他文本编辑器）创建一个protocal.reg文件，并写入以下内容</h5><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs js">Windows Registry Editor Version <span class="hljs-number">5.00</span><br>[HKEY_CLASSES_ROOT\Webshell]<br>@=<span class="hljs-string">&quot;URL:Webshell Protocol Handler&quot;</span><br><span class="hljs-string">&quot;URL Protocol&quot;</span>=<span class="hljs-string">&quot;&quot;</span><br>[HKEY_CLASSES_ROOT\Webshell\DefaultIcon]<br>@=<span class="hljs-string">&quot;C:\\Program Files (x86)\\Tencent\\WeChat\\WeChat.exe&quot;</span><br>[HKEY_CLASSES_ROOT\Webshell\shell]<br>[HKEY_CLASSES_ROOT\Webshell\shell\open]<br>[HKEY_CLASSES_ROOT\Webshell\shell\open\command]<br>@=<span class="hljs-string">&quot;\&quot;C:\\Program Files (x86)\\Tencent\\WeChat\\WeChat.exe\&quot; \&quot;%1\&quot;&quot;</span><br></code></pre></td></tr></table></figure>
+        <p><img src="https://images.weserv.nl/?url=https://gitee.com/cocacolalc/imgs-hexo/raw/master/img/photo-1625903443536-ec7e0e5fc341.jpg" alt="img"></p>
+<h5 id="1-使用记事本（或其他文本编辑器）创建一个protocal-reg文件，并写入以下内容"><a href="#1-使用记事本（或其他文本编辑器）创建一个protocal-reg文件，并写入以下内容" class="headerlink" title="1.使用记事本（或其他文本编辑器）创建一个protocal.reg文件，并写入以下内容"></a>1.使用记事本（或其他文本编辑器）创建一个protocal.reg文件，并写入以下内容</h5><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs js">Windows Registry Editor Version <span class="hljs-number">5.00</span><br>[HKEY_CLASSES_ROOT\Webshell]<br>@=<span class="hljs-string">&quot;URL:Webshell Protocol Handler&quot;</span><br><span class="hljs-string">&quot;URL Protocol&quot;</span>=<span class="hljs-string">&quot;&quot;</span><br>[HKEY_CLASSES_ROOT\Webshell\DefaultIcon]<br>@=<span class="hljs-string">&quot;C:\\Program Files (x86)\\Tencent\\WeChat\\WeChat.exe&quot;</span><br>[HKEY_CLASSES_ROOT\Webshell\shell]<br>[HKEY_CLASSES_ROOT\Webshell\shell\open]<br>[HKEY_CLASSES_ROOT\Webshell\shell\open\command]<br>@=<span class="hljs-string">&quot;\&quot;C:\\Program Files (x86)\\Tencent\\WeChat\\WeChat.exe\&quot; \&quot;%1\&quot;&quot;</span><br></code></pre></td></tr></table></figure>
 
 <h3 id="2-修改参数"><a href="#2-修改参数" class="headerlink" title="2.修改参数"></a>2.<strong>修改参数</strong></h3><p>使用记事本打开文件后，按照下图说明修改相关参数</p>
 <p>修改红框内名称自定义即可，全部使用英文字符（该名称即为调用时的href），共六处</p>
@@ -200,7 +202,7 @@
         
         <section class="donate">
   <div class="qrcode">
-    <img   class="lazyload" data-original="https://pic.izhaoo.com/alipay.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" >
+    <img src="https://pic.izhaoo.com/alipay.jpg">
   </div>
   <div class="icon">
     <a href="javascript:;" id="alipay"><i class="iconfont iconalipay"></i></a>

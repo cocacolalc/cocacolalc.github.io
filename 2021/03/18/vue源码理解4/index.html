@@ -14,7 +14,8 @@
 
   
   
-  <meta name="description" content="生命周期：在Vue中，每个Vue实例从被创建出来到最终..."> 
+  <meta name="description" content="
+生命周期：在Vue中，每个Vue实例从被创建出来到最..."> 
   
   <meta name="author" content="lc"> 
 
@@ -67,7 +68,7 @@
       fancybox: true,
       pjax: false,
       lazyload: {
-        enable: true,
+        enable: false,
         loadingImage: '',
       },
       donate: {
@@ -158,22 +159,23 @@
     <article class="article">
   <div class="wrap">
     <section class="head">
-  <img   class="lazyload" data-original="https://gitee.com/cocacolalc/imgs-hexo/raw/master/img/photo-1625903443536-ec7e0e5fc341.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
+  <img src="https://gitee.com/cocacolalc/imgs-hexo/raw/master/img/photo-1452933006409-19b87dc327b7.jpg" draggable="false">
   <div class="head-mask">
     <h1 class="head-title">vue源码理解——生命周期篇</h1>
     <div class="head-info">
       <span class="post-info-item"><i class="iconfont iconcalendar"></i>March 18, 2021</span
         class="post-info-item">
       
-      <span class="post-info-item"><i class="iconfont iconfont-size"></i>2741</span>
+      <span class="post-info-item"><i class="iconfont iconfont-size"></i>2742</span>
     </div>
   </div>
 </section>
     <section class="main">
       <section class="content">
-        <h4 id="生命周期："><a href="#生命周期：" class="headerlink" title="生命周期："></a>生命周期：</h4><p>在<code>Vue</code>中，每个<code>Vue</code>实例从被创建出来到最终被销毁都会经历一个过程，就像人一样，从出生到死亡。在这一过程里会发生许许多多的事，例如设置数据监听，编译模板，组件挂载等。在<code>Vue</code>中，把<code>Vue</code>实例从被创建出来到最终被销毁的这一过程称为<code>Vue</code>实例的生命周期，同时，在<code>Vue</code>实例生命周期的不同阶段<code>Vue</code>还提供了不同的钩子函数，以方便用户在不同的生命周期阶段做一些额外的事情。那么，接下来的几篇文章我们就从源码角度深入剖析一下一个<code>Vue</code>实例在从生到死的生命周期里到底都经历了些什么，每个阶段都做了哪些事情。</p>
+        <p><img src="https://images.unsplash.com/photo-1631410717426-205dffe528c5?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwxMTh8fHxlbnwwfHx8fA==&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="img"></p>
+<h4 id="生命周期："><a href="#生命周期：" class="headerlink" title="生命周期："></a>生命周期：</h4><p>在<code>Vue</code>中，每个<code>Vue</code>实例从被创建出来到最终被销毁都会经历一个过程，就像人一样，从出生到死亡。在这一过程里会发生许许多多的事，例如设置数据监听，编译模板，组件挂载等。在<code>Vue</code>中，把<code>Vue</code>实例从被创建出来到最终被销毁的这一过程称为<code>Vue</code>实例的生命周期，同时，在<code>Vue</code>实例生命周期的不同阶段<code>Vue</code>还提供了不同的钩子函数，以方便用户在不同的生命周期阶段做一些额外的事情。那么，接下来的几篇文章我们就从源码角度深入剖析一下一个<code>Vue</code>实例在从生到死的生命周期里到底都经历了些什么，每个阶段都做了哪些事情。</p>
 <h5 id="生命周期流程图"><a href="#生命周期流程图" class="headerlink" title="生命周期流程图"></a>生命周期流程图</h5><p>下图是<code>Vue</code>官网给出的<code>Vue</code>实例的生命周期流程图，如下：</p>
-<p><img   class="lazyload" data-original="C:\Users\梁超\AppData\Roaming\Typora\typora-user-images\image-20210425145156115.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20210425145156115"></p>
+<p><img src="C:\Users\梁超\AppData\Roaming\Typora\typora-user-images\image-20210425145156115.png" alt="image-20210425145156115"></p>
 <p>从图中我们可以看到，<code>Vue</code>实例的生命周期大致可分为4个阶段：</p>
 <ul>
 <li>初始化阶段：为<code>Vue</code>实例上初始化一些属性，事件以及响应式数据；</li>
@@ -215,7 +217,7 @@
         
         <section class="donate">
   <div class="qrcode">
-    <img   class="lazyload" data-original="https://pic.izhaoo.com/alipay.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" >
+    <img src="https://pic.izhaoo.com/alipay.jpg">
   </div>
   <div class="icon">
     <a href="javascript:;" id="alipay"><i class="iconfont iconalipay"></i></a>

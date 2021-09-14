@@ -14,7 +14,8 @@
 
   
   
-  <meta name="description" content="模板编译：在前几篇文章中，我们介绍了Vue中的虚拟DO..."> 
+  <meta name="description" content="
+模板编译：在前几篇文章中，我们介绍了Vue中的虚拟D..."> 
   
   <meta name="author" content="lc"> 
 
@@ -67,7 +68,7 @@
       fancybox: true,
       pjax: false,
       lazyload: {
-        enable: true,
+        enable: false,
         loadingImage: '',
       },
       donate: {
@@ -158,31 +159,32 @@
     <article class="article">
   <div class="wrap">
     <section class="head">
-  <img   class="lazyload" data-original="https://gitee.com/cocacolalc/imgs-hexo/raw/master/img/photo-1625838144804-300f3907c110.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
+  <img src="https://gitee.com/cocacolalc/imgs-hexo/raw/master/img/photo-1623944889288-cd147dbb517c.jpg" draggable="false">
   <div class="head-mask">
     <h1 class="head-title">vue源码理解——模板编译篇</h1>
     <div class="head-info">
       <span class="post-info-item"><i class="iconfont iconcalendar"></i>March 18, 2021</span
         class="post-info-item">
       
-      <span class="post-info-item"><i class="iconfont iconfont-size"></i>25758</span>
+      <span class="post-info-item"><i class="iconfont iconfont-size"></i>25759</span>
     </div>
   </div>
 </section>
     <section class="main">
       <section class="content">
-        <h4 id="模板编译："><a href="#模板编译：" class="headerlink" title="模板编译："></a>模板编译：</h4><p>在前几篇文章中，我们介绍了<code>Vue</code>中的虚拟<code>DOM</code>以及虚拟<code>DOM</code>的<code>patch</code>(DOM-Diff)过程，而虚拟<code>DOM</code>存在的必要条件是得先有<code>VNode</code>，那么<code>VNode</code>又是从哪儿来的呢？这就是接下来几篇文章要说的模板编译。你可以这么理解：把用户写的模板进行编译，就会产生<code>VNode</code>。</p>
+        <p><img src="https://images.unsplash.com/photo-1631476767348-5c7b63a29993?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw4NHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="img"></p>
+<h4 id="模板编译："><a href="#模板编译：" class="headerlink" title="模板编译："></a>模板编译：</h4><p>在前几篇文章中，我们介绍了<code>Vue</code>中的虚拟<code>DOM</code>以及虚拟<code>DOM</code>的<code>patch</code>(DOM-Diff)过程，而虚拟<code>DOM</code>存在的必要条件是得先有<code>VNode</code>，那么<code>VNode</code>又是从哪儿来的呢？这就是接下来几篇文章要说的模板编译。你可以这么理解：把用户写的模板进行编译，就会产生<code>VNode</code>。</p>
 <h5 id="什么是模板编译"><a href="#什么是模板编译" class="headerlink" title="什么是模板编译"></a>什么是模板编译</h5><p>我们知道，在日常开发中，我们把写在<code>&lt;template&gt;&lt;/template&gt;</code>标签中的类似于原生<code>HTML</code>的内容称之为模板。这时你可能会问了，为什么说是“类似于原生<code>HTML</code>的内容”而不是“就是<code>HTML</code>的内容”？因为我们在开发中，在<code>&lt;template&gt;&lt;/template&gt;</code>标签中除了写一些原生<code>HTML</code>的标签，我们还会写一些变量插值，如，或者写一些<code>Vue</code>指令，如<code>v-on</code>、<code>v-if</code>等。而这些东西都是在原生<code>HTML</code>语法中不存在的，不被接受的。但是事实上我们确实这么写了，也被正确识别了，页面也正常显示了，这又是为什么呢？</p>
 <p>这就归功于<code>Vue</code>的模板编译了，<code>Vue</code>会把用户在<code>&lt;template&gt;&lt;/template&gt;</code>标签中写的类似于原生<code>HTML</code>的内容进行编译，把原生<code>HTML</code>的内容找出来，再把非原生<code>HTML</code>找出来，经过一系列的逻辑处理生成渲染函数，也就是<code>render</code>函数，而<code>render</code>函数会将模板内容生成对应的<code>VNode</code>，而<code>VNode</code>再经过前几篇文章介绍的<code>patch</code>过程从而得到将要渲染的视图中的<code>VNode</code>，最后根据<code>VNode</code>创建真实的<code>DOM</code>节点并插入到视图中， 最终完成视图的渲染更新。</p>
 <p>而把用户在<code>&lt;template&gt;&lt;/template&gt;</code>标签中写的类似于原生<code>HTML</code>的内容进行编译，把原生<code>HTML</code>的内容找出来，再把非原生<code>HTML</code>找出来，经过一系列的逻辑处理生成渲染函数，也就是<code>render</code>函数的这一段过程称之为模板编译过程。</p>
 <h6 id="整体渲染流程"><a href="#整体渲染流程" class="headerlink" title="整体渲染流程"></a>整体渲染流程</h6><p>所谓渲染流程，就是把用户写的类似于原生<code>HTML</code>的模板经过一系列处理最终反应到视图中称之为整个渲染流程。这个流程在上文中其实已经说到了，下面我们以流程图的形式宏观的了解一下，流程图如下：</p>
-<p><img   class="lazyload" data-original="C:\Users\梁超\AppData\Roaming\Typora\typora-user-images\image-20210425144813349.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20210425144813349"></p>
+<p><img src="C:\Users\梁超\AppData\Roaming\Typora\typora-user-images\image-20210425144813349.png" alt="image-20210425144813349"></p>
 <p>从图中我们也可以看到，模板编译过程就是把用户写的模板经过一系列处理最终生成<code>render</code>函数的过程。</p>
 <h6 id="模板编译内部流程"><a href="#模板编译内部流程" class="headerlink" title="模板编译内部流程"></a>模板编译内部流程</h6><p>那么模板编译内部是怎么把用户写的模板经过处理最终生成<code>render</code>函数的呢？这内部的过程是怎样的呢？</p>
 <h6 id="抽象语法树AST"><a href="#抽象语法树AST" class="headerlink" title="抽象语法树AST"></a>抽象语法树AST</h6><p>我们知道，用户在<code>&lt;template&gt;&lt;/template&gt;</code>标签中写的模板对<code>Vue</code>来说就是一堆字符串，那么如何解析这一堆字符串并且从中提取出元素的标签、属性、变量插值等有效信息呢？这就需要借助一个叫做抽象语法树的东西。</p>
 <p>所谓抽象语法树，在计算机科学中，<strong>抽象语法树</strong>（<strong>A</strong>bstract<strong>S</strong>yntax<strong>T</strong>ree，AST），或简称<strong>语法树</strong>（Syntax tree），是源代码语法结构的一种抽象表示。它以树状的形式表现编程语言的语法结构，树上的每个节点都表示源代码中的一种结构。之所以说语法是“抽象”的，是因为这里的语法并不会表示出真实语法中出现的每个细节。比如，嵌套括号被隐含在树的结构中，并没有以节点的形式呈现；而类似于if-condition-then这样的条件跳转语句，可以使用带有两个分支的节点来表示。——来自百度百科</p>
 <p>我就知道，这段话贴出来也是白贴，因为看了也看不懂，哈哈。那么我们就以最直观的例子来理解什么是抽象语法树。请看下图：</p>
-<p><img   class="lazyload" data-original="C:\Users\梁超\AppData\Roaming\Typora\typora-user-images\image-20210425144910621.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20210425144910621"></p>
+<p><img src="C:\Users\梁超\AppData\Roaming\Typora\typora-user-images\image-20210425144910621.png" alt="image-20210425144910621"></p>
 <p>从图中我们可以看到，一个简单的<code>HTML</code>标签的代码被转换成了一个<code>JS</code>对象，而这个对象中的属性代表了这个标签中一些关键有效信息。如图中标识。 有兴趣的同学可以在这个网站在线转换试试：<a target="_blank" rel="noopener" href="https://astexplorer.net/">https://astexplorer.net/</a></p>
 <h6 id="具体流程"><a href="#具体流程" class="headerlink" title="具体流程:"></a>具体流程:</h6><p>将一堆字符串模板解析成抽象语法树<code>AST</code>后，我们就可以对其进行各种操作处理了，处理完后用处理后的<code>AST</code>来生成<code>render</code>函数。其具体流程可大致分为三个阶段：</p>
 <ol>
@@ -208,12 +210,12 @@
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs js">&#123;<br> 	ast: ast,<br> 	render: code.render,<br> 	staticRenderFns: code.staticRenderFns<br> &#125;<br></code></pre></td></tr></table></figure>
 
 <p>最终返回了抽象语法树( ast )，渲染函数( render )，静态渲染函数( staticRenderFns )，且<code>render</code> 的值为<code>code.render</code>，<code>staticRenderFns</code> 的值为<code>code.staticRenderFns</code>，也就是说通过 <code>generate</code>处理 <code>ast</code>之后得到的返回值 <code>code</code> 是一个对象。</p>
-<p>下面再给出模板编译内部具体流程图，便于理解。流程图如下： <img   class="lazyload" data-original="https://vue-js.com/learn-vue/assets/img/3.15d9566b.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="img"></p>
+<p>下面再给出模板编译内部具体流程图，便于理解。流程图如下： <img src="https://vue-js.com/learn-vue/assets/img/3.15d9566b.png" alt="img"></p>
 <h5 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h5><p>本篇文章首先引出了为什么会有模板编译，因为有了模板编译，才有了虚拟<code>DOM</code>，才有了后续的视图更新。接着介绍了什么是模板编译，以及介绍了把用户所写的模板经过层层处理直到最终渲染的视图中这个整体的渲染流程；最后介绍了模板编译过程中所需要使用的抽象语法树的概念以及分析了模板编译的具体实施流程，其流程大致分为三个阶段，分别是模板解析阶段、优化阶段和代码生成阶段。那么接下来的几篇文章将会把这三个阶段逐一进行分析介绍。</p>
 <h5 id="1-整体流程"><a href="#1-整体流程" class="headerlink" title="1. 整体流程"></a>1. 整体流程</h5><p>上篇文章中我们说了，在模板解析阶段主要做的工作是把用户在<code>&lt;template&gt;&lt;/template&gt;</code>标签内写的模板使用正则等方式解析成抽象语法树（<code>AST</code>）。而这一阶段在源码中对应解析器（<code>parser</code>）模块。</p>
 <p>解析器，顾名思义，就是把用户所写的模板根据一定的解析规则解析出有效的信息，最后用这些信息形成<code>AST</code>。我们知道在<code>&lt;template&gt;&lt;/template&gt;</code>模板内，除了有常规的<code>HTML</code>标签外，用户还会一些文本信息以及在文本信息中包含过滤器。而这些不同的内容在解析起来肯定需要不同的解析规则，所以解析器不可能只有一个，它应该除了有解析常规<code>HTML</code>的HTML解析器，还应该有解析文本的文本解析器以及解析文本中如果包含过滤器的过滤器解析器。</p>
 <p>另外，文本信息和标签属性信息却又是存在于HTML标签之内的，所以在解析整个模板的时候它的流程应该是这样子的：HTML解析器是主线，先用HTML解析器进行解析整个模板，在解析过程中如果碰到文本内容，那就调用文本解析器来解析文本，如果碰到文本中包含过滤器那就调用过滤器解析器来解析。如下图所示：</p>
-<p><img   class="lazyload" data-original="C:\Users\梁超\AppData\Roaming\Typora\typora-user-images\image-20210428165451685.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20210428165451685"></p>
+<p><img src="C:\Users\梁超\AppData\Roaming\Typora\typora-user-images\image-20210428165451685.png" alt="image-20210428165451685"></p>
 <h5 id="2-回到源码"><a href="#2-回到源码" class="headerlink" title="2. 回到源码"></a>2. 回到源码</h5><p>解析器的源码位于<code>/src/complier/parser</code>文件夹下，其主线代码如下：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">// 代码位置：/src/complier/parser/index.js</span><br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * Convert HTML string to AST.</span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">export</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">parse</span>(<span class="hljs-params">template, options</span>) </span>&#123;<br>   <span class="hljs-comment">// ...</span><br>  parseHTML(template, &#123;<br>    warn,<br>    expectHTML: options.expectHTML,<br>    isUnaryTag: options.isUnaryTag,<br>    canBeLeftOpenTag: options.canBeLeftOpenTag,<br>    shouldDecodeNewlines: options.shouldDecodeNewlines,<br>    shouldDecodeNewlinesForHref: options.shouldDecodeNewlinesForHref,<br>    shouldKeepComment: options.comments,<br>    start (tag, attrs, unary) &#123;<br><br>    &#125;,<br>    end () &#123;<br><br>    &#125;,<br>    chars (text: string) &#123;<br><br>    &#125;,<br>    comment (text: string) &#123;<br><br>    &#125;<br>  &#125;)<br>  <span class="hljs-keyword">return</span> root<br>&#125;<br></code></pre></td></tr></table></figure>
 
@@ -271,11 +273,11 @@
 <p><code>advance</code>函数是用来移动解析游标的，解析完一部分就把游标向后移动一部分，确保不会重复解析，其代码如下：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">advance</span> (<span class="hljs-params">n</span>) </span>&#123;<br>  index += n   <span class="hljs-comment">// index为解析游标</span><br>  html = html.substring(n)<br>&#125;<br></code></pre></td></tr></table></figure>
 
-<p><img   class="lazyload" data-original="C:\Users\梁超\AppData\Roaming\Typora\typora-user-images\image-20210428171551449.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20210428171551449"></p>
+<p><img src="C:\Users\梁超\AppData\Roaming\Typora\typora-user-images\image-20210428171551449.png" alt="image-20210428171551449"></p>
 <p>调用 <code>advance</code> 函数：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js">advance(<span class="hljs-number">3</span>)<br></code></pre></td></tr></table></figure>
 
-<p><img   class="lazyload" data-original="C:\Users\梁超\AppData\Roaming\Typora\typora-user-images\image-20210428171638566.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20210428171638566"></p>
+<p><img src="C:\Users\梁超\AppData\Roaming\Typora\typora-user-images\image-20210428171638566.png" alt="image-20210428171638566"></p>
 <p>从图中可以看到，解析游标<code>index</code>最开始在模板字符串的位置0处，当调用了<code>advance(3)</code>之后，解析游标到了位置3处，每次解析完一段内容就将游标向后移动一段，接着再从解析游标往后解析，这样就保证了解析过的内容不会被重复解析。</p>
 <h5 id="3-2-解析条件注释"><a href="#3-2-解析条件注释" class="headerlink" title="3.2 解析条件注释"></a>3.2 解析条件注释</h5><p>解析条件注释也比较简单，其原理跟解析注释相同，都是先用正则判断是否是以条件注释特有的开头标识开始，然后寻找其特有的结束标识，若找到，则说明是条件注释，将其截取出来即可，由于条件注释不存在于真正的<code>DOM</code>树中，所以不需要调用钩子函数创建<code>AST</code>节点。代码如下：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">// 解析是否是条件注释</span><br><span class="hljs-keyword">const</span> conditionalComment = <span class="hljs-regexp">/^&lt;!\[/</span><br><span class="hljs-keyword">if</span> (conditionalComment.test(html)) &#123;<br>  <span class="hljs-comment">// 若为条件注释，则继续查找是否存在&#x27;]&gt;&#x27;</span><br>  <span class="hljs-keyword">const</span> conditionalEnd = html.indexOf(<span class="hljs-string">&#x27;]&gt;&#x27;</span>)<br><br>  <span class="hljs-keyword">if</span> (conditionalEnd &gt;= <span class="hljs-number">0</span>) &#123;<br>    <span class="hljs-comment">// 若存在 &#x27;]&gt;&#x27;,则从原本的html字符串中把条件注释截掉，</span><br>    <span class="hljs-comment">// 把剩下的内容重新赋给html，继续向后匹配</span><br>    advance(conditionalEnd + <span class="hljs-number">2</span>)<br>    <span class="hljs-keyword">continue</span><br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
@@ -326,7 +328,7 @@
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">span</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br></code></pre></td></tr></table></figure>
 
 <p>当解析到开始标签<code>&lt;div&gt;</code>时，就把<code>div</code>推入栈中，然后继续解析，当解析到<code>&lt;p&gt;</code>时，再把<code>p</code>推入栈中，同理，再把<code>span</code>推入栈中，当解析到结束标签<code>&lt;/span&gt;</code>时，此时栈顶的标签刚好是<code>span</code>的开始标签，那么就用<code>span</code>的开始标签和结束标签构建<code>AST</code>节点，并且从栈中把<code>span</code>的开始标签弹出，那么此时栈中的栈顶标签<code>p</code>就是构建好的<code>span</code>的<code>AST</code>节点的父节点，如下图：</p>
-<p><img   class="lazyload" data-original="C:\Users\梁超\AppData\Roaming\Typora\typora-user-images\image-20210428173344529.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20210428173344529"></p>
+<p><img src="C:\Users\梁超\AppData\Roaming\Typora\typora-user-images\image-20210428173344529.png" alt="image-20210428173344529"></p>
 <p>这样我们就找到了当前被构建节点的父节点。这只是栈的一个用途，它还有另外一个用途，我们再看如下模板字符串：</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">span</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br></code></pre></td></tr></table></figure>
 
@@ -415,7 +417,7 @@
         
         <section class="donate">
   <div class="qrcode">
-    <img   class="lazyload" data-original="https://pic.izhaoo.com/alipay.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" >
+    <img src="https://pic.izhaoo.com/alipay.jpg">
   </div>
   <div class="icon">
     <a href="javascript:;" id="alipay"><i class="iconfont iconalipay"></i></a>

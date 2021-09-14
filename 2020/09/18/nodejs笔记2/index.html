@@ -14,7 +14,8 @@
 
   
   
-  <meta name="description" content="nodejs笔记2web应用架构client-客户端，..."> 
+  <meta name="description" content="
+nodejs笔记2web应用架构client-客户端..."> 
   
   <meta name="author" content="lc"> 
 
@@ -67,7 +68,7 @@
       fancybox: true,
       pjax: false,
       lazyload: {
-        enable: true,
+        enable: false,
         loadingImage: '',
       },
       donate: {
@@ -158,20 +159,21 @@
     <article class="article">
   <div class="wrap">
     <section class="head">
-  <img   class="lazyload" data-original="https://gitee.com/cocacolalc/imgs-hexo/raw/master/img/photo-1624444637943-134bd7ccf574.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
+  <img src="https://gitee.com/cocacolalc/imgs-hexo/raw/master/img/photo-1624867775503-3e2cc6d3e48f.jpg" draggable="false">
   <div class="head-mask">
     <h1 class="head-title">nodejs-2</h1>
     <div class="head-info">
       <span class="post-info-item"><i class="iconfont iconcalendar"></i>September 18, 2020</span
         class="post-info-item">
       
-      <span class="post-info-item"><i class="iconfont iconfont-size"></i>4965</span>
+      <span class="post-info-item"><i class="iconfont iconfont-size"></i>4966</span>
     </div>
   </div>
 </section>
     <section class="main">
       <section class="content">
-        <h1 id="nodejs笔记2"><a href="#nodejs笔记2" class="headerlink" title="nodejs笔记2"></a>nodejs笔记2</h1><h2 id="web应用架构"><a href="#web应用架构" class="headerlink" title="web应用架构"></a>web应用架构</h2><p>client-客户端，一般指浏览器，浏览器可以通过http协议向服务器请求数据。</p>
+        <p><img src="https://images.weserv.nl/?url=https://gitee.com/cocacolalc/imgs-hexo/raw/master/img/photo-1625038316392-528b4761a362.jpg" alt="img"></p>
+<h1 id="nodejs笔记2"><a href="#nodejs笔记2" class="headerlink" title="nodejs笔记2"></a>nodejs笔记2</h1><h2 id="web应用架构"><a href="#web应用架构" class="headerlink" title="web应用架构"></a>web应用架构</h2><p>client-客户端，一般指浏览器，浏览器可以通过http协议向服务器请求数据。</p>
 <p>server-服务端，一般指web服务器，可以接收客户请求，并向客户端发送响应数据。</p>
 <h5 id="http-server"><a href="#http-server" class="headerlink" title="http server"></a>http server</h5><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-comment">//支持web服务的http</span><br><br>*<span class="hljs-keyword">const</span>* http=<span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;http&#x27;</span>)<br><br>*<span class="hljs-keyword">let</span>* count=<span class="hljs-number">0</span><br><br><span class="hljs-comment">//创建一个服务,如果有url访问到了这个服务，回调函数执行</span><br><br><span class="hljs-comment">// 回调函数中，第一个形参request代表的是请求对象，里面存放了请求信息</span><br><br><span class="hljs-comment">// 第二个参数response：响应对象</span><br><br>*<span class="hljs-keyword">var</span>* serve=http.createServer((*request*,*response*)*=&gt;*&#123;<br><br>  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&#x27;有人访问&#x27;</span>+(++count))<br><br>  <span class="hljs-comment">//设置响应头；200是成功 编码 类型</span><br><br>  *response*.writeHead(<span class="hljs-number">200</span>,&#123;<span class="hljs-string">&#x27;Content-Type&#x27;</span>:<span class="hljs-string">&#x27;text/html;charset=utf-8&#x27;</span>&#125;)<br><br>  <span class="hljs-comment">// 响应对象中添加数据</span><br><br>  *response*.write(<span class="hljs-string">&#x27;我是相应内容&#x27;</span>,<span class="hljs-string">&#x27;utf-8&#x27;</span>)<br><br>  <span class="hljs-comment">// 结束</span><br><br>  *response*.end()<br><br>&#125;)<br><br><span class="hljs-comment">// 把服务监听3000端口</span><br><br>serve.listen(<span class="hljs-string">&#x27;3000&#x27;</span>,(*err*)*=&gt;*&#123;<br><br>  <span class="hljs-keyword">if</span>(*err*) <span class="hljs-keyword">return</span> <span class="hljs-built_in">console</span>.log(*err*)<br><br>  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&#x27;serve listen at 3000&#x27;</span>)<br><br>&#125;)<br><br><span class="hljs-comment">// url ：http：协议</span><br><br><span class="hljs-comment">// 域名：或者 ip DFS服务器</span><br><br><span class="hljs-comment">// 端口：80默认</span><br><br></code></pre></td></tr></table></figure>
 
@@ -476,7 +478,7 @@
         
         <section class="donate">
   <div class="qrcode">
-    <img   class="lazyload" data-original="https://pic.izhaoo.com/alipay.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" >
+    <img src="https://pic.izhaoo.com/alipay.jpg">
   </div>
   <div class="icon">
     <a href="javascript:;" id="alipay"><i class="iconfont iconalipay"></i></a>

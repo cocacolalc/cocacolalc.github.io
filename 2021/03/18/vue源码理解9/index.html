@@ -14,7 +14,8 @@
 
   
   
-  <meta name="description" content="内置组件&amp;lt;keep-alive&amp;gt; 是 Vu..."> 
+  <meta name="description" content="
+内置组件&amp;lt;keep-alive&amp;gt; 是 V..."> 
   
   <meta name="author" content="lc"> 
 
@@ -67,7 +68,7 @@
       fancybox: true,
       pjax: false,
       lazyload: {
-        enable: true,
+        enable: false,
         loadingImage: '',
       },
       donate: {
@@ -158,20 +159,21 @@
     <article class="article">
   <div class="wrap">
     <section class="head">
-  <img   class="lazyload" data-original="https://gitee.com/cocacolalc/imgs-hexo/raw/master/img/photo-1626642937092-4c696079bd41.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
+  <img src="https://gitee.com/cocacolalc/imgs-hexo/raw/master/img/photo-1624941806657-981cf1ea3154.jpg" draggable="false">
   <div class="head-mask">
     <h1 class="head-title">vue源码理解——内置组件篇</h1>
     <div class="head-info">
       <span class="post-info-item"><i class="iconfont iconcalendar"></i>March 18, 2021</span
         class="post-info-item">
       
-      <span class="post-info-item"><i class="iconfont iconfont-size"></i>353</span>
+      <span class="post-info-item"><i class="iconfont iconfont-size"></i>354</span>
     </div>
   </div>
 </section>
     <section class="main">
       <section class="content">
-        <h4 id="内置组件"><a href="#内置组件" class="headerlink" title="内置组件"></a>内置组件</h4><p><code>&lt;keep-alive&gt;</code> 是 <code>Vue</code> 实现的一个内置组件，也就是说 <code>Vue</code> 源码不仅实现了一套组件化的机制，也实现了一些内置组件，关于<code>&lt;keep-alive&gt;</code>组件，官网如下介绍：</p>
+        <p><img src="https://images.unsplash.com/photo-1631510511110-15ae092e1b2c?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwxMjV8fHxlbnwwfHx8fA==&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="img"></p>
+<h4 id="内置组件"><a href="#内置组件" class="headerlink" title="内置组件"></a>内置组件</h4><p><code>&lt;keep-alive&gt;</code> 是 <code>Vue</code> 实现的一个内置组件，也就是说 <code>Vue</code> 源码不仅实现了一套组件化的机制，也实现了一些内置组件，关于<code>&lt;keep-alive&gt;</code>组件，官网如下介绍：</p>
 <blockquote>
 <p><code>&lt;keep-alive&gt;</code>是<code>Vue</code>中内置的一个抽象组件，它自身不会渲染一个 <code>DOM</code> 元素，也不会出现在父组件链中。当它包裹动态组件时，会缓存不活动的组件实例，而不是销毁它们。</p>
 </blockquote>
@@ -193,7 +195,7 @@
         
         <section class="donate">
   <div class="qrcode">
-    <img   class="lazyload" data-original="https://pic.izhaoo.com/alipay.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" >
+    <img src="https://pic.izhaoo.com/alipay.jpg">
   </div>
   <div class="icon">
     <a href="javascript:;" id="alipay"><i class="iconfont iconalipay"></i></a>
@@ -207,10 +209,10 @@
         
 <nav class="nav">
   
-    <a href="/2021/03/18/vue%E6%BA%90%E7%A0%81%E7%90%86%E8%A7%A38/"><i class="iconfont iconleft"></i>vue源码理解——指令篇</a>
+    <a href="/2021/03/18/vue%E6%BA%90%E7%A0%81%E7%90%86%E8%A7%A37/"><i class="iconfont iconleft"></i>vue源码理解——过滤器篇</a>
   
   
-    <a href="/2021/03/18/vue%E6%BA%90%E7%A0%81%E7%90%86%E8%A7%A31/">vue源码理解——变化侦测篇<i class="iconfont iconright"></i></a>
+    <a href="/2021/03/18/vue%E6%BA%90%E7%A0%81%E7%90%86%E8%A7%A38/">vue源码理解——指令篇<i class="iconfont iconright"></i></a>
   
 </nav>
 

@@ -1,324 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>js调用exe</title>
-    <url>/2021/03/18/js%E8%B0%83%E7%94%A8exe/</url>
-    <content><![CDATA[<h5 id="1-使用记事本（或其他文本编辑器）创建一个protocal-reg文件，并写入以下内容"><a href="#1-使用记事本（或其他文本编辑器）创建一个protocal-reg文件，并写入以下内容" class="headerlink" title="1.使用记事本（或其他文本编辑器）创建一个protocal.reg文件，并写入以下内容"></a>1.使用记事本（或其他文本编辑器）创建一个protocal.reg文件，并写入以下内容</h5><figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js">Windows Registry Editor Version <span class="hljs-number">5.00</span><br>[HKEY_CLASSES_ROOT\Webshell]<br>@=<span class="hljs-string">&quot;URL:Webshell Protocol Handler&quot;</span><br><span class="hljs-string">&quot;URL Protocol&quot;</span>=<span class="hljs-string">&quot;&quot;</span><br>[HKEY_CLASSES_ROOT\Webshell\DefaultIcon]<br>@=<span class="hljs-string">&quot;C:\\Program Files (x86)\\Tencent\\WeChat\\WeChat.exe&quot;</span><br>[HKEY_CLASSES_ROOT\Webshell\shell]<br>[HKEY_CLASSES_ROOT\Webshell\shell\open]<br>[HKEY_CLASSES_ROOT\Webshell\shell\open\command]<br>@=<span class="hljs-string">&quot;\&quot;C:\\Program Files (x86)\\Tencent\\WeChat\\WeChat.exe\&quot; \&quot;%1\&quot;&quot;</span><br></code></pre></td></tr></table></figure>
-
-<h3 id="2-修改参数"><a href="#2-修改参数" class="headerlink" title="2.修改参数"></a>2.<strong>修改参数</strong></h3><p>使用记事本打开文件后，按照下图说明修改相关参数</p>
-<p>修改红框内名称自定义即可，全部使用英文字符（该名称即为调用时的href），共六处</p>
-<!-- 
-![image-20210423132126316](C:\Users\梁超\AppData\Roaming\Typora\typora-user-images\image-20210423132126316.png) -->
-
-<p><strong>2.2修改可执行文件路径</strong></p>
-<p>需注意：文件路径中使用//分割（重要）</p>
-<!-- 
-![image-20210423132200180](C:\Users\梁超\AppData\Roaming\Typora\typora-user-images\image-20210423132200180.png) -->
-
-<h3 id="3-执行protocal-reg文件"><a href="#3-执行protocal-reg文件" class="headerlink" title="3.执行protocal.reg文件"></a>3.<strong>执行protocal.reg文件</strong></h3><h3 id="4-创建调用连接"><a href="#4-创建调用连接" class="headerlink" title="4.创建调用连接"></a>4.<strong>创建调用连接</strong></h3><p>连接地址为 步骤1中所命名的链接名称，后面加://hello，（hello为传递参数，可任意添加）</p>
-<!-- ![image-20210423132233779](C:\Users\梁超\AppData\Roaming\Typora\typora-user-images\image-20210423132233779.png) -->]]></content>
-      <tags>
-        <tag>js调用exe</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>nodejs-2</title>
-    <url>/2020/09/18/nodejs%E7%AC%94%E8%AE%B02/</url>
-    <content><![CDATA[<h1 id="nodejs笔记2"><a href="#nodejs笔记2" class="headerlink" title="nodejs笔记2"></a>nodejs笔记2</h1><h2 id="web应用架构"><a href="#web应用架构" class="headerlink" title="web应用架构"></a>web应用架构</h2><p>client-客户端，一般指浏览器，浏览器可以通过http协议向服务器请求数据。</p>
-<p>server-服务端，一般指web服务器，可以接收客户请求，并向客户端发送响应数据。</p>
-<h5 id="http-server"><a href="#http-server" class="headerlink" title="http server"></a>http server</h5><figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-comment">//支持web服务的http</span><br><br>*<span class="hljs-keyword">const</span>* http=<span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;http&#x27;</span>)<br><br>*<span class="hljs-keyword">let</span>* count=<span class="hljs-number">0</span><br><br><span class="hljs-comment">//创建一个服务,如果有url访问到了这个服务，回调函数执行</span><br><br><span class="hljs-comment">// 回调函数中，第一个形参request代表的是请求对象，里面存放了请求信息</span><br><br><span class="hljs-comment">// 第二个参数response：响应对象</span><br><br>*<span class="hljs-keyword">var</span>* serve=http.createServer((*request*,*response*)*=&gt;*&#123;<br><br>  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&#x27;有人访问&#x27;</span>+(++count))<br><br>  <span class="hljs-comment">//设置响应头；200是成功 编码 类型</span><br><br>  *response*.writeHead(<span class="hljs-number">200</span>,&#123;<span class="hljs-string">&#x27;Content-Type&#x27;</span>:<span class="hljs-string">&#x27;text/html;charset=utf-8&#x27;</span>&#125;)<br><br>  <span class="hljs-comment">// 响应对象中添加数据</span><br><br>  *response*.write(<span class="hljs-string">&#x27;我是相应内容&#x27;</span>,<span class="hljs-string">&#x27;utf-8&#x27;</span>)<br><br>  <span class="hljs-comment">// 结束</span><br><br>  *response*.end()<br><br>&#125;)<br><br><span class="hljs-comment">// 把服务监听3000端口</span><br><br>serve.listen(<span class="hljs-string">&#x27;3000&#x27;</span>,(*err*)*=&gt;*&#123;<br><br>  <span class="hljs-keyword">if</span>(*err*) <span class="hljs-keyword">return</span> <span class="hljs-built_in">console</span>.log(*err*)<br><br>  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&#x27;serve listen at 3000&#x27;</span>)<br><br>&#125;)<br><br><span class="hljs-comment">// url ：http：协议</span><br><br><span class="hljs-comment">// 域名：或者 ip DFS服务器</span><br><br><span class="hljs-comment">// 端口：80默认</span><br><br></code></pre></td></tr></table></figure>
-
-<h5 id="http"><a href="#http" class="headerlink" title="http"></a>http</h5><p>http域名或者IP</p>
-<p>端口号</p>
-<p>相对路径</p>
-<h5 id="nodejs-http-server"><a href="#nodejs-http-server" class="headerlink" title="nodejs http server"></a>nodejs http server</h5><p>加载http包</p>
-<p>http.createServer((request,response)=&gt;{</p>
-<p>回调函数</p>
-<p>request：请求对象</p>
-<p>response：响应对象</p>
-<p>server.listen(‘3000’)</p>
-<p>})</p>
-<h5 id="http工作原理-过程"><a href="#http工作原理-过程" class="headerlink" title="http工作原理  (过程)"></a>http工作原理  (过程)</h5><ul>
-<li><p>1  客户端连接到web服务器</p>
-</li>
-<li><p>2  发送http请求</p>
-</li>
-<li><p>3   服务器接收解释请求并返回http响应</p>
-</li>
-<li><p>4  释放连接tcp连接</p>
-</li>
-</ul>
-<h5 id="path"><a href="#path" class="headerlink" title="path"></a>path</h5><ul>
-<li>专注于文件路径</li>
-</ul>
-<h5 id="url"><a href="#url" class="headerlink" title="url"></a>url</h5><ul>
-<li>专注于处理url地址</li>
-</ul>
-<h5 id="querystring"><a href="#querystring" class="headerlink" title="querystring"></a>querystring</h5><ul>
-<li>专注于url中使用get请求后面解析参数</li>
-</ul>
-<h5 id="解析url"><a href="#解析url" class="headerlink" title="解析url"></a>解析url</h5><blockquote>
-<p>new  URL(request.url,’http://${request.headers.host}’)</p>
-</blockquote>
-<h5 id="get-set"><a href="#get-set" class="headerlink" title="get   set"></a>get   set</h5><ul>
-<li>get 参数，是拼接在url后面；post参数body</li>
-<li>浏览器地址栏中访问的url</li>
-</ul>
-<h5 id="nodejs区分get-post"><a href="#nodejs区分get-post" class="headerlink" title="nodejs区分get post"></a>nodejs区分get post</h5><p>request.method</p>
-<p>nodejs 从get  post  获取参数数据</p>
-<ul>
-<li>get  获取参数  分析url  </li>
-<li>post获取参数</li>
-</ul>
-<h5 id="创建express项目"><a href="#创建express项目" class="headerlink" title="创建express项目"></a>创建express项目</h5><ul>
-<li>安装一个创建express项目的工具（express生成器）–express-generator</li>
-</ul>
-<p>安装命令：</p>
-<blockquote>
-<p>npm install express-generator -g</p>
-</blockquote>
-<p>全局安装：</p>
-<ul>
-<li>使用这个工具生成一个express项目</li>
-</ul>
-<p>命令是：</p>
-<blockquote>
-<p>express –view=ejs myprogramName </p>
-</blockquote>
-<ul>
-<li><p>myprogramName是项目的名字</p>
-</li>
-<li><p>–view=ejs 设置项目的页面使用的模板引擎；设置模版引擎为ejs pug</p>
-</li>
-<li><p>创建完成项目文件之后； </p>
-</li>
-<li><p>cd myprogramName 命令窗口前面的路径定位到项目文件</p>
-</li>
-<li><p>D:\work\Lesson\202002\2-165\Day08\my1</p>
-</li>
-</ul>
-<blockquote>
-<p>npm i </p>
-</blockquote>
-<p>会在my1这个文件夹下寻找package.json，获取dependencies里面的包；并且全部安装；</p>
-<ul>
-<li>启动项目</li>
-</ul>
-<blockquote>
-<p>SET DEBUG=my1:* &amp; npm start</p>
-</blockquote>
-<ul>
-<li>默认是在3000端口号： localhost:3000 127.0.0.1:3000</li>
-</ul>
-<h5 id="项目文件："><a href="#项目文件：" class="headerlink" title="项目文件："></a>项目文件：</h5><ul>
-<li><p>bin/www 可以修改服务的端口号：</p>
-</li>
-<li><p>node_modules 所有局部安装的包</p>
-</li>
-<li><p>pulic 存放静态文件的；</p>
-</li>
-<li><p>routes 路由</p>
-</li>
-<li><p>views 页面</p>
-</li>
-<li><p>app.js 启动js</p>
-</li>
-<li><p>package.json npm配置文件</p>
-</li>
-</ul>
-<p>npm i 就是安装的dependencies下的包</p>
-<p>npm start 就是运行的scripts下面start命令</p>
-<h5 id="app-js-文件"><a href="#app-js-文件" class="headerlink" title="app.js 文件"></a>app.js 文件</h5><h5 id="路由："><a href="#路由：" class="headerlink" title="路由："></a>路由：</h5><ul>
-<li><p>在routes文件夹下 写路由文件</p>
-</li>
-<li><p>app.js中启用路由：</p>
-</li>
-</ul>
-<h5 id="响应返回页面"><a href="#响应返回页面" class="headerlink" title="响应返回页面"></a>响应返回页面</h5><p>在路由中，使用res.render(“list”)；</p>
-<p>-页面必须放在views下；而且后缀名必须是.ejs</p>
-<h5 id="怎么获取url传递的数据："><a href="#怎么获取url传递的数据：" class="headerlink" title="怎么获取url传递的数据："></a>怎么获取url传递的数据：</h5><ul>
-<li><p>get 参数: 在路由 req.query 属性，存放了所有get请求的参数：</p>
-</li>
-<li><p>post 数据 req.body 存储</p>
-</li>
-</ul>
-<h5 id="动态路由"><a href="#动态路由" class="headerlink" title="动态路由"></a>动态路由</h5><p>req.params</p>
-<h5 id="路由的路径是可以用正则表达式"><a href="#路由的路径是可以用正则表达式" class="headerlink" title="路由的路径是可以用正则表达式"></a>路由的路径是可以用正则表达式</h5><h5 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h5><ul>
-<li><p>npm i express-generator -g 如果安装过了，不用再安装</p>
-</li>
-<li><p>生成一个项目</p>
-</li>
-</ul>
-<blockquote>
-<p>express –view=ejs xiaou</p>
-</blockquote>
-<blockquote>
-<p>cd xiaou</p>
-</blockquote>
-<blockquote>
-<p>npm i </p>
-</blockquote>
-<blockquote>
-<p>npm start</p>
-</blockquote>
-<ul>
-<li><p>把index.html复制到views，并且要ejs后缀；</p>
-</li>
-<li><p>设计一个路由： 设计url地址；访问这个url，</p>
-</li>
-<li><p>routes文件夹下创建一个新的路由文件index.js</p>
-</li>
-</ul>
-<h5 id="node-js"><a href="#node-js" class="headerlink" title="node.js"></a>node.js</h5><ul>
-<li>单线程</li>
-<li>非阻塞</li>
-<li>事件驱动</li>
-</ul>
-<h5 id="模块化commonJS"><a href="#模块化commonJS" class="headerlink" title="模块化commonJS"></a>模块化commonJS</h5><ul>
-<li>定义模块：</li>
-</ul>
-<p>modules.exporys{}</p>
-<p>modules.exporys.xxx=xx</p>
-<p>exports.xxx=xx</p>
-<ul>
-<li>加载模块：</li>
-</ul>
-<p>通过js（模块）的加载路径：</p>
-<p>const mymoudule=require(‘模块’)</p>
-<p>通过js（模块）的标识：核心模块（nodejs自带的    ）</p>
-<p>const http=require(‘http’)</p>
-<h5 id="事件"><a href="#事件" class="headerlink" title="事件"></a>事件</h5><ul>
-<li>初始化</li>
-<li>绑定事件</li>
-<li>触发事件</li>
-<li>传值：</li>
-</ul>
-<h5 id="npm"><a href="#npm" class="headerlink" title="npm"></a>npm</h5><ul>
-<li>包：</li>
-<li>全局安装    -g   本地安装</li>
-<li>依赖   和   开发依赖：</li>
-</ul>
-<p>依赖：express   简写–save    -S</p>
-<p>开发依赖：less  简写  –save-dev   -D</p>
-<h5 id="文件系统"><a href="#文件系统" class="headerlink" title="文件系统"></a>文件系统</h5><h5 id="nodejs-http"><a href="#nodejs-http" class="headerlink" title="nodejs  http"></a>nodejs  http</h5><ul>
-<li><p><a href="http://www.ddd.com/">http://www.ddd.com:80</a>   默认是80</p>
-<h5 id="http四个步骤："><a href="#http四个步骤：" class="headerlink" title="http四个步骤："></a>http四个步骤：</h5><ul>
-<li>客户端向服务端发起的连接</li>
-<li>客户端向服务器发送的数据</li>
-<li>服务器响应客户端</li>
-<li>客户端结束连接</li>
-</ul>
-<h5 id="nodejs下的一些小模块"><a href="#nodejs下的一些小模块" class="headerlink" title="nodejs下的一些小模块"></a>nodejs下的一些小模块</h5><ul>
-<li>path</li>
-<li>url</li>
-<li>queryString</li>
-</ul>
-<h5 id="express"><a href="#express" class="headerlink" title="express"></a>express</h5><p>基于nodejs的一个web开发框架：</p>
-<h5 id="创建esperss项目的步骤"><a href="#创建esperss项目的步骤" class="headerlink" title="创建esperss项目的步骤"></a>创建esperss项目的步骤</h5><ul>
-<li>全局安装espress项目生成器</li>
-</ul>
-</li>
-</ul>
-<p>命令：npm i express-generator -g</p>
-<p>创建express项目的基础框架</p>
-<blockquote>
-<p>express –view=ejs xiaou</p>
-</blockquote>
-<blockquote>
-<p>cd xiaou</p>
-</blockquote>
-<blockquote>
-<p>npm i </p>
-</blockquote>
-<blockquote>
-<p>npm start</p>
-</blockquote>
-<h5 id="路由"><a href="#路由" class="headerlink" title="路由"></a>路由</h5><p>在routes创建新的路由文件product.js</p>
-<p>路由地址的匹配</p>
-<p>正则</p>
-<p>动态路由</p>
-<h5 id="路由返回数据"><a href="#路由返回数据" class="headerlink" title="路由返回数据"></a>路由返回数据</h5><ul>
-<li>字符串：res.send()</li>
-<li>页面：res.render(‘文件路径’)；文件夹是是固定的views文件夹</li>
-<li>json  res.json({})</li>
-</ul>
-<h5 id="中间件："><a href="#中间件：" class="headerlink" title="中间件："></a>中间件：</h5><p>每个请求都会经过中间件的检查过滤</p>
-<p>1、中间件就是一种功能的封装方式，就是封装在程序中处理http请求的功能，  </p>
-<p>2、中间件是在管道中执行</p>
-<p>3、中间件有一个next()函数，如果不调用next函数，请求就在这个中间件中终止了，</p>
-<p>4、中间件和路由处理器的参数中都有回调函数，这个函数有2,3,4个参数</p>
-<p>如果有两个参数就是req和res；</p>
-<p>如果有三个参数就是req,res和next</p>
-<p>如果有四个参数就是err，req，res，next</p>
-<p>5、如果不调用next ，管道就会终止，不会再有处理器做后续响应，应该向客户端发送一个响应</p>
-<p>6、如果调用了next，不应该发送响应到客户端，如果发送了，则后面发送的响应都会被忽略</p>
-<p>7、中间件的第一个参数可以是路径，如果忽略则全部都匹配</p>
-<h5 id="ejs"><a href="#ejs" class="headerlink" title="ejs"></a>ejs</h5><p>res.render(‘页面的相对路径‘，data)  第二个参数是数据。传递给页面    的数据</p>
-<p>第二个参数是传递给页面中的模板引擎数据</p>
-<p>模板引擎中的语法</p>
-<p>&lt;%# 注释%&gt;</p>
-<h5 id="art-template-模板引擎"><a href="#art-template-模板引擎" class="headerlink" title="art -template  模板引擎"></a>art -template  模板引擎</h5><ul>
-<li><p>espress项目中，使用arttemplate模板引擎</p>
-</li>
-<li><p>安装arttemplate包和express下的支持包</p>
-</li>
-<li><p>npm  i art - template  -S</p>
-</li>
-<li><p>npm  i express-art - template  -S</p>
-</li>
-</ul>
-<h2 id="MySql"><a href="#MySql" class="headerlink" title="MySql"></a>MySql</h2><ul>
-<li>数据库：存储文件：</li>
-<li>MySQl:服务类的程序：</li>
-</ul>
-<h3 id="常见数据库"><a href="#常见数据库" class="headerlink" title="常见数据库"></a>常见数据库</h3><ul>
-<li>Oracle</li>
-<li>mysql</li>
-<li>ms sql server</li>
-<li>mongodb</li>
-</ul>
-<h3 id="分类："><a href="#分类：" class="headerlink" title="分类："></a>分类：</h3><ul>
-<li>关系数据库</li>
-<li>非关系数据库</li>
-</ul>
-<h3 id="mysql"><a href="#mysql" class="headerlink" title="mysql"></a>mysql</h3><ul>
-<li>第一范式（1NF）：要求数据库表的每一列都是不可分割的原子数据项</li>
-<li>第二范式（2NF）：在1NF的基础上，非主键属性必须完全依赖于主键</li>
-<li>第三范式（3NF）：在2NF基础上，任何非主键属性不依赖于其它非主键属性（在2NF基础上消除传递依赖）</li>
-<li>反范式：</li>
-</ul>
-<h3 id="mysql-语法：sql语法"><a href="#mysql-语法：sql语法" class="headerlink" title="mysql 语法：sql语法"></a>mysql 语法：sql语法</h3><ul>
-<li>DDL  DML</li>
-</ul>
-<h3 id="数据库：database"><a href="#数据库：database" class="headerlink" title="数据库：database"></a>数据库：database</h3><pre><code>-   创建数据库：
-&gt;create database if not exists xiaou ;</code></pre>
-<h3 id="表：table"><a href="#表：table" class="headerlink" title="表：table"></a>表：table</h3><ul>
-<li>创建表：</li>
-</ul>
-<figure class="highlight sql"><table><tr><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> <span class="hljs-string">`xiaou`</span>.<span class="hljs-string">`user`</span> (<br>  <span class="hljs-string">`cardid`</span> <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">45</span>) <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,<br>  <span class="hljs-string">`name`</span> <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">45</span>) <span class="hljs-literal">NULL</span>,<br>  <span class="hljs-string">`age`</span> <span class="hljs-built_in">INT</span> <span class="hljs-literal">NULL</span>,<br>  <span class="hljs-string">`address`</span> <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">45</span>) <span class="hljs-literal">NULL</span>,<br>  <span class="hljs-string">`height`</span> <span class="hljs-built_in">FLOAT</span> <span class="hljs-literal">NULL</span>,<br>  <span class="hljs-string">`createby`</span> <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">45</span>) <span class="hljs-literal">NULL</span>,<br>  <span class="hljs-string">`createtime`</span> <span class="hljs-built_in">DATE</span> <span class="hljs-literal">NULL</span>,<br>  <span class="hljs-string">`updateby`</span> <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">45</span>) <span class="hljs-literal">NULL</span>,<br>  <span class="hljs-string">`updatetime`</span> <span class="hljs-built_in">DATE</span> <span class="hljs-literal">NULL</span>,<br>  PRIMARY <span class="hljs-keyword">KEY</span> (<span class="hljs-string">`cardid`</span>));<br><br><br></code></pre></td></tr></table></figure>
-
-<ul>
-<li>修改表：</li>
-</ul>
-<figure class="highlight sql"><table><tr><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">TABLE</span> <span class="hljs-string">`xiaou`</span>.<span class="hljs-string">`user`</span> <br><span class="hljs-keyword">ADD</span> <span class="hljs-keyword">COLUMN</span> <span class="hljs-string">`disc`</span> <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">45</span>) <span class="hljs-literal">NULL</span> <span class="hljs-keyword">AFTER</span> <span class="hljs-string">`tel`</span>;<br><br><span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">TABLE</span> <span class="hljs-string">`xiaou`</span>.<span class="hljs-string">`user`</span> <br><span class="hljs-keyword">DROP</span> <span class="hljs-keyword">COLUMN</span> <span class="hljs-string">`disc`</span>;<br><br><br></code></pre></td></tr></table></figure>
-
-<h3 id="删除表、删除数据库"><a href="#删除表、删除数据库" class="headerlink" title="删除表、删除数据库"></a>删除表、删除数据库</h3><figure class="highlight sql"><table><tr><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">drop</span> <span class="hljs-keyword">table</span> stud;<br><span class="hljs-keyword">drop</span> <span class="hljs-keyword">database</span> ujiuye;<br><br><br></code></pre></td></tr></table></figure>
-
-<h3 id="中文："><a href="#中文：" class="headerlink" title="中文："></a>中文：</h3><p>修改字段编码为urf8  ;utf8-general-ci;</p>
-<h3 id="插入数据："><a href="#插入数据：" class="headerlink" title="插入数据："></a>插入数据：</h3><ul>
-<li><p>insert into </p>
-</li>
-<li><p>格式<br><strong>全部列添加数据：</strong><br>insert into table_name (id,name,age,<code>drop</code>) values(10,’zs’,100,’eer’);<br>如果对所有的列添加数据： 前面的（列名、）是可以省略的；<br>insert into table_name values(10,’zs’,100,’eer’);</p>
-</li>
-</ul>
-<p><strong>部分列添加数据：</strong><br>insert into table_name (id,name) values(10,’zs’);</p>
-<h3 id="修改数据："><a href="#修改数据：" class="headerlink" title="修改数据："></a>修改数据：</h3><figure class="highlight sql"><table><tr><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">update</span> xiaou.user <span class="hljs-keyword">set</span> <span class="hljs-keyword">name</span>=<span class="hljs-string">&#x27;zs2000&#x27;</span>,age=<span class="hljs-number">2000</span> <span class="hljs-keyword">where</span> address=<span class="hljs-string">&#x27;上海&#x27;</span>;<br></code></pre></td></tr></table></figure>
-]]></content>
-  </entry>
-  <entry>
     <title>nodejs-1</title>
     <url>/2020/09/18/nodejs%E7%AC%94%E8%AE%B0/</url>
-    <content><![CDATA[<h1 id="node-js"><a href="#node-js" class="headerlink" title="node js"></a>node js</h1><p>nodejs是基于google v8引擎，在服务器端支持javascript的一种运行环境。</p>
+    <content><![CDATA[<p><img src="https://images.weserv.nl/?url=https://gitee.com/cocacolalc/imgs-hexo/raw/master/img/photo-1625051939433-b1291104952c.jpg" alt="img"></p>
+<h1 id="node-js"><a href="#node-js" class="headerlink" title="node js"></a>node js</h1><p>nodejs是基于google v8引擎，在服务器端支持javascript的一种运行环境。</p>
 <p>特点：单线程、非阻塞I/O、事件驱动</p>
 <h4 id="node运行js文件的路径："><a href="#node运行js文件的路径：" class="headerlink" title="node运行js文件的路径："></a>node运行js文件的路径：</h4><p>相对路径：node命令前面的路径（运行路径）</p>
 <p>绝对路径        </p>
@@ -684,9 +370,327 @@
 ]]></content>
   </entry>
   <entry>
+    <title>nodejs-2</title>
+    <url>/2020/09/18/nodejs%E7%AC%94%E8%AE%B02/</url>
+    <content><![CDATA[<p><img src="https://images.weserv.nl/?url=https://gitee.com/cocacolalc/imgs-hexo/raw/master/img/photo-1625038316392-528b4761a362.jpg" alt="img"></p>
+<h1 id="nodejs笔记2"><a href="#nodejs笔记2" class="headerlink" title="nodejs笔记2"></a>nodejs笔记2</h1><h2 id="web应用架构"><a href="#web应用架构" class="headerlink" title="web应用架构"></a>web应用架构</h2><p>client-客户端，一般指浏览器，浏览器可以通过http协议向服务器请求数据。</p>
+<p>server-服务端，一般指web服务器，可以接收客户请求，并向客户端发送响应数据。</p>
+<h5 id="http-server"><a href="#http-server" class="headerlink" title="http server"></a>http server</h5><figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-comment">//支持web服务的http</span><br><br>*<span class="hljs-keyword">const</span>* http=<span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;http&#x27;</span>)<br><br>*<span class="hljs-keyword">let</span>* count=<span class="hljs-number">0</span><br><br><span class="hljs-comment">//创建一个服务,如果有url访问到了这个服务，回调函数执行</span><br><br><span class="hljs-comment">// 回调函数中，第一个形参request代表的是请求对象，里面存放了请求信息</span><br><br><span class="hljs-comment">// 第二个参数response：响应对象</span><br><br>*<span class="hljs-keyword">var</span>* serve=http.createServer((*request*,*response*)*=&gt;*&#123;<br><br>  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&#x27;有人访问&#x27;</span>+(++count))<br><br>  <span class="hljs-comment">//设置响应头；200是成功 编码 类型</span><br><br>  *response*.writeHead(<span class="hljs-number">200</span>,&#123;<span class="hljs-string">&#x27;Content-Type&#x27;</span>:<span class="hljs-string">&#x27;text/html;charset=utf-8&#x27;</span>&#125;)<br><br>  <span class="hljs-comment">// 响应对象中添加数据</span><br><br>  *response*.write(<span class="hljs-string">&#x27;我是相应内容&#x27;</span>,<span class="hljs-string">&#x27;utf-8&#x27;</span>)<br><br>  <span class="hljs-comment">// 结束</span><br><br>  *response*.end()<br><br>&#125;)<br><br><span class="hljs-comment">// 把服务监听3000端口</span><br><br>serve.listen(<span class="hljs-string">&#x27;3000&#x27;</span>,(*err*)*=&gt;*&#123;<br><br>  <span class="hljs-keyword">if</span>(*err*) <span class="hljs-keyword">return</span> <span class="hljs-built_in">console</span>.log(*err*)<br><br>  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&#x27;serve listen at 3000&#x27;</span>)<br><br>&#125;)<br><br><span class="hljs-comment">// url ：http：协议</span><br><br><span class="hljs-comment">// 域名：或者 ip DFS服务器</span><br><br><span class="hljs-comment">// 端口：80默认</span><br><br></code></pre></td></tr></table></figure>
+
+<h5 id="http"><a href="#http" class="headerlink" title="http"></a>http</h5><p>http域名或者IP</p>
+<p>端口号</p>
+<p>相对路径</p>
+<h5 id="nodejs-http-server"><a href="#nodejs-http-server" class="headerlink" title="nodejs http server"></a>nodejs http server</h5><p>加载http包</p>
+<p>http.createServer((request,response)=&gt;{</p>
+<p>回调函数</p>
+<p>request：请求对象</p>
+<p>response：响应对象</p>
+<p>server.listen(‘3000’)</p>
+<p>})</p>
+<h5 id="http工作原理-过程"><a href="#http工作原理-过程" class="headerlink" title="http工作原理  (过程)"></a>http工作原理  (过程)</h5><ul>
+<li><p>1  客户端连接到web服务器</p>
+</li>
+<li><p>2  发送http请求</p>
+</li>
+<li><p>3   服务器接收解释请求并返回http响应</p>
+</li>
+<li><p>4  释放连接tcp连接</p>
+</li>
+</ul>
+<h5 id="path"><a href="#path" class="headerlink" title="path"></a>path</h5><ul>
+<li>专注于文件路径</li>
+</ul>
+<h5 id="url"><a href="#url" class="headerlink" title="url"></a>url</h5><ul>
+<li>专注于处理url地址</li>
+</ul>
+<h5 id="querystring"><a href="#querystring" class="headerlink" title="querystring"></a>querystring</h5><ul>
+<li>专注于url中使用get请求后面解析参数</li>
+</ul>
+<h5 id="解析url"><a href="#解析url" class="headerlink" title="解析url"></a>解析url</h5><blockquote>
+<p>new  URL(request.url,’http://${request.headers.host}’)</p>
+</blockquote>
+<h5 id="get-set"><a href="#get-set" class="headerlink" title="get   set"></a>get   set</h5><ul>
+<li>get 参数，是拼接在url后面；post参数body</li>
+<li>浏览器地址栏中访问的url</li>
+</ul>
+<h5 id="nodejs区分get-post"><a href="#nodejs区分get-post" class="headerlink" title="nodejs区分get post"></a>nodejs区分get post</h5><p>request.method</p>
+<p>nodejs 从get  post  获取参数数据</p>
+<ul>
+<li>get  获取参数  分析url  </li>
+<li>post获取参数</li>
+</ul>
+<h5 id="创建express项目"><a href="#创建express项目" class="headerlink" title="创建express项目"></a>创建express项目</h5><ul>
+<li>安装一个创建express项目的工具（express生成器）–express-generator</li>
+</ul>
+<p>安装命令：</p>
+<blockquote>
+<p>npm install express-generator -g</p>
+</blockquote>
+<p>全局安装：</p>
+<ul>
+<li>使用这个工具生成一个express项目</li>
+</ul>
+<p>命令是：</p>
+<blockquote>
+<p>express –view=ejs myprogramName </p>
+</blockquote>
+<ul>
+<li><p>myprogramName是项目的名字</p>
+</li>
+<li><p>–view=ejs 设置项目的页面使用的模板引擎；设置模版引擎为ejs pug</p>
+</li>
+<li><p>创建完成项目文件之后； </p>
+</li>
+<li><p>cd myprogramName 命令窗口前面的路径定位到项目文件</p>
+</li>
+<li><p>D:\work\Lesson\202002\2-165\Day08\my1</p>
+</li>
+</ul>
+<blockquote>
+<p>npm i </p>
+</blockquote>
+<p>会在my1这个文件夹下寻找package.json，获取dependencies里面的包；并且全部安装；</p>
+<ul>
+<li>启动项目</li>
+</ul>
+<blockquote>
+<p>SET DEBUG=my1:* &amp; npm start</p>
+</blockquote>
+<ul>
+<li>默认是在3000端口号： localhost:3000 127.0.0.1:3000</li>
+</ul>
+<h5 id="项目文件："><a href="#项目文件：" class="headerlink" title="项目文件："></a>项目文件：</h5><ul>
+<li><p>bin/www 可以修改服务的端口号：</p>
+</li>
+<li><p>node_modules 所有局部安装的包</p>
+</li>
+<li><p>pulic 存放静态文件的；</p>
+</li>
+<li><p>routes 路由</p>
+</li>
+<li><p>views 页面</p>
+</li>
+<li><p>app.js 启动js</p>
+</li>
+<li><p>package.json npm配置文件</p>
+</li>
+</ul>
+<p>npm i 就是安装的dependencies下的包</p>
+<p>npm start 就是运行的scripts下面start命令</p>
+<h5 id="app-js-文件"><a href="#app-js-文件" class="headerlink" title="app.js 文件"></a>app.js 文件</h5><h5 id="路由："><a href="#路由：" class="headerlink" title="路由："></a>路由：</h5><ul>
+<li><p>在routes文件夹下 写路由文件</p>
+</li>
+<li><p>app.js中启用路由：</p>
+</li>
+</ul>
+<h5 id="响应返回页面"><a href="#响应返回页面" class="headerlink" title="响应返回页面"></a>响应返回页面</h5><p>在路由中，使用res.render(“list”)；</p>
+<p>-页面必须放在views下；而且后缀名必须是.ejs</p>
+<h5 id="怎么获取url传递的数据："><a href="#怎么获取url传递的数据：" class="headerlink" title="怎么获取url传递的数据："></a>怎么获取url传递的数据：</h5><ul>
+<li><p>get 参数: 在路由 req.query 属性，存放了所有get请求的参数：</p>
+</li>
+<li><p>post 数据 req.body 存储</p>
+</li>
+</ul>
+<h5 id="动态路由"><a href="#动态路由" class="headerlink" title="动态路由"></a>动态路由</h5><p>req.params</p>
+<h5 id="路由的路径是可以用正则表达式"><a href="#路由的路径是可以用正则表达式" class="headerlink" title="路由的路径是可以用正则表达式"></a>路由的路径是可以用正则表达式</h5><h5 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h5><ul>
+<li><p>npm i express-generator -g 如果安装过了，不用再安装</p>
+</li>
+<li><p>生成一个项目</p>
+</li>
+</ul>
+<blockquote>
+<p>express –view=ejs xiaou</p>
+</blockquote>
+<blockquote>
+<p>cd xiaou</p>
+</blockquote>
+<blockquote>
+<p>npm i </p>
+</blockquote>
+<blockquote>
+<p>npm start</p>
+</blockquote>
+<ul>
+<li><p>把index.html复制到views，并且要ejs后缀；</p>
+</li>
+<li><p>设计一个路由： 设计url地址；访问这个url，</p>
+</li>
+<li><p>routes文件夹下创建一个新的路由文件index.js</p>
+</li>
+</ul>
+<h5 id="node-js"><a href="#node-js" class="headerlink" title="node.js"></a>node.js</h5><ul>
+<li>单线程</li>
+<li>非阻塞</li>
+<li>事件驱动</li>
+</ul>
+<h5 id="模块化commonJS"><a href="#模块化commonJS" class="headerlink" title="模块化commonJS"></a>模块化commonJS</h5><ul>
+<li>定义模块：</li>
+</ul>
+<p>modules.exporys{}</p>
+<p>modules.exporys.xxx=xx</p>
+<p>exports.xxx=xx</p>
+<ul>
+<li>加载模块：</li>
+</ul>
+<p>通过js（模块）的加载路径：</p>
+<p>const mymoudule=require(‘模块’)</p>
+<p>通过js（模块）的标识：核心模块（nodejs自带的    ）</p>
+<p>const http=require(‘http’)</p>
+<h5 id="事件"><a href="#事件" class="headerlink" title="事件"></a>事件</h5><ul>
+<li>初始化</li>
+<li>绑定事件</li>
+<li>触发事件</li>
+<li>传值：</li>
+</ul>
+<h5 id="npm"><a href="#npm" class="headerlink" title="npm"></a>npm</h5><ul>
+<li>包：</li>
+<li>全局安装    -g   本地安装</li>
+<li>依赖   和   开发依赖：</li>
+</ul>
+<p>依赖：express   简写–save    -S</p>
+<p>开发依赖：less  简写  –save-dev   -D</p>
+<h5 id="文件系统"><a href="#文件系统" class="headerlink" title="文件系统"></a>文件系统</h5><h5 id="nodejs-http"><a href="#nodejs-http" class="headerlink" title="nodejs  http"></a>nodejs  http</h5><ul>
+<li><p><a href="http://www.ddd.com/">http://www.ddd.com:80</a>   默认是80</p>
+<h5 id="http四个步骤："><a href="#http四个步骤：" class="headerlink" title="http四个步骤："></a>http四个步骤：</h5><ul>
+<li>客户端向服务端发起的连接</li>
+<li>客户端向服务器发送的数据</li>
+<li>服务器响应客户端</li>
+<li>客户端结束连接</li>
+</ul>
+<h5 id="nodejs下的一些小模块"><a href="#nodejs下的一些小模块" class="headerlink" title="nodejs下的一些小模块"></a>nodejs下的一些小模块</h5><ul>
+<li>path</li>
+<li>url</li>
+<li>queryString</li>
+</ul>
+<h5 id="express"><a href="#express" class="headerlink" title="express"></a>express</h5><p>基于nodejs的一个web开发框架：</p>
+<h5 id="创建esperss项目的步骤"><a href="#创建esperss项目的步骤" class="headerlink" title="创建esperss项目的步骤"></a>创建esperss项目的步骤</h5><ul>
+<li>全局安装espress项目生成器</li>
+</ul>
+</li>
+</ul>
+<p>命令：npm i express-generator -g</p>
+<p>创建express项目的基础框架</p>
+<blockquote>
+<p>express –view=ejs xiaou</p>
+</blockquote>
+<blockquote>
+<p>cd xiaou</p>
+</blockquote>
+<blockquote>
+<p>npm i </p>
+</blockquote>
+<blockquote>
+<p>npm start</p>
+</blockquote>
+<h5 id="路由"><a href="#路由" class="headerlink" title="路由"></a>路由</h5><p>在routes创建新的路由文件product.js</p>
+<p>路由地址的匹配</p>
+<p>正则</p>
+<p>动态路由</p>
+<h5 id="路由返回数据"><a href="#路由返回数据" class="headerlink" title="路由返回数据"></a>路由返回数据</h5><ul>
+<li>字符串：res.send()</li>
+<li>页面：res.render(‘文件路径’)；文件夹是是固定的views文件夹</li>
+<li>json  res.json({})</li>
+</ul>
+<h5 id="中间件："><a href="#中间件：" class="headerlink" title="中间件："></a>中间件：</h5><p>每个请求都会经过中间件的检查过滤</p>
+<p>1、中间件就是一种功能的封装方式，就是封装在程序中处理http请求的功能，  </p>
+<p>2、中间件是在管道中执行</p>
+<p>3、中间件有一个next()函数，如果不调用next函数，请求就在这个中间件中终止了，</p>
+<p>4、中间件和路由处理器的参数中都有回调函数，这个函数有2,3,4个参数</p>
+<p>如果有两个参数就是req和res；</p>
+<p>如果有三个参数就是req,res和next</p>
+<p>如果有四个参数就是err，req，res，next</p>
+<p>5、如果不调用next ，管道就会终止，不会再有处理器做后续响应，应该向客户端发送一个响应</p>
+<p>6、如果调用了next，不应该发送响应到客户端，如果发送了，则后面发送的响应都会被忽略</p>
+<p>7、中间件的第一个参数可以是路径，如果忽略则全部都匹配</p>
+<h5 id="ejs"><a href="#ejs" class="headerlink" title="ejs"></a>ejs</h5><p>res.render(‘页面的相对路径‘，data)  第二个参数是数据。传递给页面    的数据</p>
+<p>第二个参数是传递给页面中的模板引擎数据</p>
+<p>模板引擎中的语法</p>
+<p>&lt;%# 注释%&gt;</p>
+<h5 id="art-template-模板引擎"><a href="#art-template-模板引擎" class="headerlink" title="art -template  模板引擎"></a>art -template  模板引擎</h5><ul>
+<li><p>espress项目中，使用arttemplate模板引擎</p>
+</li>
+<li><p>安装arttemplate包和express下的支持包</p>
+</li>
+<li><p>npm  i art - template  -S</p>
+</li>
+<li><p>npm  i express-art - template  -S</p>
+</li>
+</ul>
+<h2 id="MySql"><a href="#MySql" class="headerlink" title="MySql"></a>MySql</h2><ul>
+<li>数据库：存储文件：</li>
+<li>MySQl:服务类的程序：</li>
+</ul>
+<h3 id="常见数据库"><a href="#常见数据库" class="headerlink" title="常见数据库"></a>常见数据库</h3><ul>
+<li>Oracle</li>
+<li>mysql</li>
+<li>ms sql server</li>
+<li>mongodb</li>
+</ul>
+<h3 id="分类："><a href="#分类：" class="headerlink" title="分类："></a>分类：</h3><ul>
+<li>关系数据库</li>
+<li>非关系数据库</li>
+</ul>
+<h3 id="mysql"><a href="#mysql" class="headerlink" title="mysql"></a>mysql</h3><ul>
+<li>第一范式（1NF）：要求数据库表的每一列都是不可分割的原子数据项</li>
+<li>第二范式（2NF）：在1NF的基础上，非主键属性必须完全依赖于主键</li>
+<li>第三范式（3NF）：在2NF基础上，任何非主键属性不依赖于其它非主键属性（在2NF基础上消除传递依赖）</li>
+<li>反范式：</li>
+</ul>
+<h3 id="mysql-语法：sql语法"><a href="#mysql-语法：sql语法" class="headerlink" title="mysql 语法：sql语法"></a>mysql 语法：sql语法</h3><ul>
+<li>DDL  DML</li>
+</ul>
+<h3 id="数据库：database"><a href="#数据库：database" class="headerlink" title="数据库：database"></a>数据库：database</h3><pre><code>-   创建数据库：
+&gt;create database if not exists xiaou ;</code></pre>
+<h3 id="表：table"><a href="#表：table" class="headerlink" title="表：table"></a>表：table</h3><ul>
+<li>创建表：</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> <span class="hljs-string">`xiaou`</span>.<span class="hljs-string">`user`</span> (<br>  <span class="hljs-string">`cardid`</span> <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">45</span>) <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,<br>  <span class="hljs-string">`name`</span> <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">45</span>) <span class="hljs-literal">NULL</span>,<br>  <span class="hljs-string">`age`</span> <span class="hljs-built_in">INT</span> <span class="hljs-literal">NULL</span>,<br>  <span class="hljs-string">`address`</span> <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">45</span>) <span class="hljs-literal">NULL</span>,<br>  <span class="hljs-string">`height`</span> <span class="hljs-built_in">FLOAT</span> <span class="hljs-literal">NULL</span>,<br>  <span class="hljs-string">`createby`</span> <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">45</span>) <span class="hljs-literal">NULL</span>,<br>  <span class="hljs-string">`createtime`</span> <span class="hljs-built_in">DATE</span> <span class="hljs-literal">NULL</span>,<br>  <span class="hljs-string">`updateby`</span> <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">45</span>) <span class="hljs-literal">NULL</span>,<br>  <span class="hljs-string">`updatetime`</span> <span class="hljs-built_in">DATE</span> <span class="hljs-literal">NULL</span>,<br>  PRIMARY <span class="hljs-keyword">KEY</span> (<span class="hljs-string">`cardid`</span>));<br><br><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>修改表：</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">TABLE</span> <span class="hljs-string">`xiaou`</span>.<span class="hljs-string">`user`</span> <br><span class="hljs-keyword">ADD</span> <span class="hljs-keyword">COLUMN</span> <span class="hljs-string">`disc`</span> <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">45</span>) <span class="hljs-literal">NULL</span> <span class="hljs-keyword">AFTER</span> <span class="hljs-string">`tel`</span>;<br><br><span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">TABLE</span> <span class="hljs-string">`xiaou`</span>.<span class="hljs-string">`user`</span> <br><span class="hljs-keyword">DROP</span> <span class="hljs-keyword">COLUMN</span> <span class="hljs-string">`disc`</span>;<br><br><br></code></pre></td></tr></table></figure>
+
+<h3 id="删除表、删除数据库"><a href="#删除表、删除数据库" class="headerlink" title="删除表、删除数据库"></a>删除表、删除数据库</h3><figure class="highlight sql"><table><tr><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">drop</span> <span class="hljs-keyword">table</span> stud;<br><span class="hljs-keyword">drop</span> <span class="hljs-keyword">database</span> ujiuye;<br><br><br></code></pre></td></tr></table></figure>
+
+<h3 id="中文："><a href="#中文：" class="headerlink" title="中文："></a>中文：</h3><p>修改字段编码为urf8  ;utf8-general-ci;</p>
+<h3 id="插入数据："><a href="#插入数据：" class="headerlink" title="插入数据："></a>插入数据：</h3><ul>
+<li><p>insert into </p>
+</li>
+<li><p>格式<br><strong>全部列添加数据：</strong><br>insert into table_name (id,name,age,<code>drop</code>) values(10,’zs’,100,’eer’);<br>如果对所有的列添加数据： 前面的（列名、）是可以省略的；<br>insert into table_name values(10,’zs’,100,’eer’);</p>
+</li>
+</ul>
+<p><strong>部分列添加数据：</strong><br>insert into table_name (id,name) values(10,’zs’);</p>
+<h3 id="修改数据："><a href="#修改数据：" class="headerlink" title="修改数据："></a>修改数据：</h3><figure class="highlight sql"><table><tr><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">update</span> xiaou.user <span class="hljs-keyword">set</span> <span class="hljs-keyword">name</span>=<span class="hljs-string">&#x27;zs2000&#x27;</span>,age=<span class="hljs-number">2000</span> <span class="hljs-keyword">where</span> address=<span class="hljs-string">&#x27;上海&#x27;</span>;<br></code></pre></td></tr></table></figure>
+]]></content>
+  </entry>
+  <entry>
+    <title>js调用exe</title>
+    <url>/2021/03/18/js%E8%B0%83%E7%94%A8exe/</url>
+    <content><![CDATA[<p><img src="https://images.weserv.nl/?url=https://gitee.com/cocacolalc/imgs-hexo/raw/master/img/photo-1625903443536-ec7e0e5fc341.jpg" alt="img"></p>
+<h5 id="1-使用记事本（或其他文本编辑器）创建一个protocal-reg文件，并写入以下内容"><a href="#1-使用记事本（或其他文本编辑器）创建一个protocal-reg文件，并写入以下内容" class="headerlink" title="1.使用记事本（或其他文本编辑器）创建一个protocal.reg文件，并写入以下内容"></a>1.使用记事本（或其他文本编辑器）创建一个protocal.reg文件，并写入以下内容</h5><figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js">Windows Registry Editor Version <span class="hljs-number">5.00</span><br>[HKEY_CLASSES_ROOT\Webshell]<br>@=<span class="hljs-string">&quot;URL:Webshell Protocol Handler&quot;</span><br><span class="hljs-string">&quot;URL Protocol&quot;</span>=<span class="hljs-string">&quot;&quot;</span><br>[HKEY_CLASSES_ROOT\Webshell\DefaultIcon]<br>@=<span class="hljs-string">&quot;C:\\Program Files (x86)\\Tencent\\WeChat\\WeChat.exe&quot;</span><br>[HKEY_CLASSES_ROOT\Webshell\shell]<br>[HKEY_CLASSES_ROOT\Webshell\shell\open]<br>[HKEY_CLASSES_ROOT\Webshell\shell\open\command]<br>@=<span class="hljs-string">&quot;\&quot;C:\\Program Files (x86)\\Tencent\\WeChat\\WeChat.exe\&quot; \&quot;%1\&quot;&quot;</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="2-修改参数"><a href="#2-修改参数" class="headerlink" title="2.修改参数"></a>2.<strong>修改参数</strong></h3><p>使用记事本打开文件后，按照下图说明修改相关参数</p>
+<p>修改红框内名称自定义即可，全部使用英文字符（该名称即为调用时的href），共六处</p>
+<!-- 
+![image-20210423132126316](C:\Users\梁超\AppData\Roaming\Typora\typora-user-images\image-20210423132126316.png) -->
+
+<p><strong>2.2修改可执行文件路径</strong></p>
+<p>需注意：文件路径中使用//分割（重要）</p>
+<!-- 
+![image-20210423132200180](C:\Users\梁超\AppData\Roaming\Typora\typora-user-images\image-20210423132200180.png) -->
+
+<h3 id="3-执行protocal-reg文件"><a href="#3-执行protocal-reg文件" class="headerlink" title="3.执行protocal.reg文件"></a>3.<strong>执行protocal.reg文件</strong></h3><h3 id="4-创建调用连接"><a href="#4-创建调用连接" class="headerlink" title="4.创建调用连接"></a>4.<strong>创建调用连接</strong></h3><p>连接地址为 步骤1中所命名的链接名称，后面加://hello，（hello为传递参数，可任意添加）</p>
+<!-- ![image-20210423132233779](C:\Users\梁超\AppData\Roaming\Typora\typora-user-images\image-20210423132233779.png) -->]]></content>
+      <tags>
+        <tag>js调用exe</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Python基础</title>
     <url>/2021/03/18/python/</url>
-    <content><![CDATA[<h5 id="Python-中文编码"><a href="#Python-中文编码" class="headerlink" title="Python 中文编码"></a>Python 中文编码</h5><figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-comment">#!/usr/bin/python</span><br><span class="hljs-comment"># -*- coding: UTF-8 -*-</span><br><br>文件开头加入 <span class="hljs-comment"># -*- coding: UTF-8 -*- 或者 # coding=utf-8</span><br><br>print(<span class="hljs-string">&#x27;你好&#x27;</span>) <span class="hljs-comment">#输出你好</span><br><br><span class="hljs-comment"># #号键即是注释</span><br></code></pre></td></tr></table></figure>
+    <content><![CDATA[<p><img src="https://images.weserv.nl/?url=https://gitee.com/cocacolalc/imgs-hexo/raw/master/img/photo-1618335829737-2228915674e0.jpg" alt="img"></p>
+<h5 id="Python-中文编码"><a href="#Python-中文编码" class="headerlink" title="Python 中文编码"></a>Python 中文编码</h5><figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-comment">#!/usr/bin/python</span><br><span class="hljs-comment"># -*- coding: UTF-8 -*-</span><br><br>文件开头加入 <span class="hljs-comment"># -*- coding: UTF-8 -*- 或者 # coding=utf-8</span><br><br>print(<span class="hljs-string">&#x27;你好&#x27;</span>) <span class="hljs-comment">#输出你好</span><br><br><span class="hljs-comment"># #号键即是注释</span><br></code></pre></td></tr></table></figure>
 
 <h5 id="变量类型和运算符"><a href="#变量类型和运算符" class="headerlink" title="变量类型和运算符"></a>变量类型和运算符</h5><figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python">name = value<br><span class="hljs-comment"># Python 使用等号=作为赋值运算符</span><br><span class="hljs-comment"># name 表示变量名；value 表示值，也就是要存储的数据</span><br><span class="hljs-comment"># Python 是弱类型的语言</span><br></code></pre></td></tr></table></figure>
 
@@ -782,7 +786,8 @@
   <entry>
     <title>Vue3源码-Set、Map、WeakSet、WeakMap</title>
     <url>/2021/03/18/vu3%E6%BA%90%E7%A0%812/</url>
-    <content><![CDATA[<h3 id="Set、Map、WeakSet、WeakMap"><a href="#Set、Map、WeakSet、WeakMap" class="headerlink" title="Set、Map、WeakSet、WeakMap"></a>Set、Map、WeakSet、WeakMap</h3><p>如果要用一句来描述，我们可以说 <strong>Set是一种叫做集合的数据结构，Map是一种叫做字典的数据结构</strong></p>
+    <content><![CDATA[<p><img src="https://images.unsplash.com/photo-1631341183338-0b6f5f9d0d99?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwzMXx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="img"></p>
+<h3 id="Set、Map、WeakSet、WeakMap"><a href="#Set、Map、WeakSet、WeakMap" class="headerlink" title="Set、Map、WeakSet、WeakMap"></a>Set、Map、WeakSet、WeakMap</h3><p>如果要用一句来描述，我们可以说 <strong>Set是一种叫做集合的数据结构，Map是一种叫做字典的数据结构</strong></p>
 <p>那什么是集合？什么又是字典呢？</p>
 <ul>
 <li>集合</li>
@@ -927,7 +932,8 @@
   <entry>
     <title>Vue3</title>
     <url>/2021/03/18/vue3/</url>
-    <content><![CDATA[<p>学习Vue3最快的方式：就是对比veu2它有什么变化，那么对比Vue2</p>
+    <content><![CDATA[<p><img src="https://images.unsplash.com/photo-1631347532125-25bd49ea792d?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwzOHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="img"></p>
+<p>学习Vue3最快的方式：就是对比veu2它有什么变化，那么对比Vue2</p>
 <p>Vue3有什么不同呢？</p>
 <h3 id="1-vue2和vue3双向数据绑定原理发生了改变"><a href="#1-vue2和vue3双向数据绑定原理发生了改变" class="headerlink" title="1. vue2和vue3双向数据绑定原理发生了改变"></a>1. vue2和vue3双向数据绑定原理发生了改变</h3><p><strong>vue2</strong> 的双向数据绑定是利用ES5 的一个 API <code>Object.definePropert()</code>对数据进行劫持 结合 发布订阅模式的方式来实现的。</p>
 <p><strong>vue3</strong> 中使用了 es6 的 <code>Proxy</code>API 对数据代理。</p>
@@ -941,7 +947,7 @@
 <ol start="3">
 <li><p>更精准的变更通知。<br>比例来说：2.x 版本中，使用 Vue.set 来给对象新增一个属性时，这个对象的所有 watcher 都会重新运行；3.x 版本中，只有依赖那个属性的 watcher 才会重新运行。</p>
 </li>
-<li><p>3.0 新加入了 TypeScript 以及 PWA 的支持<br>5.vue2和vue3组件发送改变<strong>创建一个 <code>template</code></strong></p>
+<li><p>3.0 新加入了 TypeScript 以及 PWA 的支持<br> 5.vue2和vue3组件发送改变<strong>创建一个 <code>template</code></strong></p>
 <p>组件来说，大多代码在Vue2和Vue3都<strong>非常相似</strong>。Vue3支持<code>碎片(Fragments)</code>，就是说在组件可以拥有多个根节点。</p>
 <p>这种新特性可以减少很多组件之间的<code>div</code>包裹元素。在开发vue的时候，我们会发现每一个组件都会有个<code>div</code>元素包裹着。就会出现很多层多余的<code>div</code>元素。<code>碎片(Fragments)</code>解决了这个问题。对于有完美强迫症的童鞋“真的时太棒了”。我们这里的例子里就不展示了，用简单的单根节点的组件。</p>
 <p><strong>Vue2 表格template</strong></p>
@@ -950,82 +956,87 @@
 <p>在Vue3的唯一真正的不同在于数据获取。Vue3中的<code>反应数据（Reactive Data）</code>是包含在一个<code>反应状态（Reactive State）</code>变量中。— 所以我们需要访问这个反应状态来获取数据值。</p>
 <figure class="highlight html"><table><tr><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">template</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&#x27;form-element&#x27;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span> &#123;&#123; state.title &#125;&#125; <span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">input</span></span><br><span class="hljs-tag">     <span class="hljs-attr">type</span>=<span class="hljs-string">&#x27;text&#x27;</span></span><br><span class="hljs-tag">     <span class="hljs-attr">v-model</span>=<span class="hljs-string">&#x27;state.username&#x27;</span></span><br><span class="hljs-tag">     <span class="hljs-attr">placeholder</span>=<span class="hljs-string">&#x27;Username&#x27;</span></span><br><span class="hljs-tag">    /&gt;</span><br>    <br>    <span class="hljs-tag">&lt;<span class="hljs-name">input</span></span><br><span class="hljs-tag">     <span class="hljs-attr">type</span>=<span class="hljs-string">&#x27;password&#x27;</span></span><br><span class="hljs-tag">     <span class="hljs-attr">v-model</span>=<span class="hljs-string">&#x27;state.password&#x27;</span></span><br><span class="hljs-tag">     <span class="hljs-attr">placeholder</span>=<span class="hljs-string">&#x27;Password&#x27;</span></span><br><span class="hljs-tag">    /&gt;</span><br><br>    <span class="hljs-tag">&lt;<span class="hljs-name">button</span> @<span class="hljs-attr">click</span>=<span class="hljs-string">&#x27;login&#x27;</span>&gt;</span><br>      Submit<br>    <span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span> <br>      Values: &#123;&#123; state.username + &#x27; &#x27; + state.password &#125;&#125;<br>    <span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">template</span>&gt;</span><br></code></pre></td></tr></table></figure>
 
+</li>
+</ol>
 <hr>
-<h2 id="建立数据-data"><a href="#建立数据-data" class="headerlink" title="建立数据 data"></a><strong>建立数据 <code>data</code></strong></h2><p><strong>这里就是Vue2与Vue3 最大的区别 — Vue2使用<code>选项类型API（Options API）</code>对比Vue3<code>合成型API（Composition API）</code></strong></p>
-<p>旧的选项型API在代码里分割了不同的属性（properties）：data，computed属性，methods，等等。新的合成型API能让我们用方法（function）来分割，相比于旧的API使用属性来分组，这样代码会更加简便和整洁。</p>
+<h2 id="建立数据-data"><a href="#建立数据-data" class="headerlink" title="建立数据 data"></a><strong>建立数据 <code>data</code></strong></h2><p>  <strong>这里就是Vue2与Vue3 最大的区别 — Vue2使用<code>选项类型API（Options API）</code>对比Vue3<code>合成型API（Composition API）</code></strong></p>
+<p>  旧的选项型API在代码里分割了不同的属性（properties）：data，computed属性，methods，等等。新的合成型API能让我们用方法（function）来分割，相比于旧的API使用属性来分组，这样代码会更加简便和整洁。</p>
 <blockquote>
 <p>现在我们来对比一下Vue2写法和Vue3写法在代码里面的区别。</p>
 </blockquote>
-<p><strong>Vue2</strong> - 这里把两个数据放入data属性中</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;<br>  props: &#123;<br>    title: <span class="hljs-built_in">String</span><br>  &#125;,<br>  data () &#123;<br>    <span class="hljs-keyword">return</span> &#123;<br>      username: <span class="hljs-string">&#x27;&#x27;</span>,<br>      password: <span class="hljs-string">&#x27;&#x27;</span><br>    &#125;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>  <strong>Vue2</strong> - 这里把两个数据放入data属性中</p>
+  <figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;<br>  props: &#123;<br>    title: <span class="hljs-built_in">String</span><br>  &#125;,<br>  data () &#123;<br>    <span class="hljs-keyword">return</span> &#123;<br>      username: <span class="hljs-string">&#x27;&#x27;</span>,<br>      password: <span class="hljs-string">&#x27;&#x27;</span><br>    &#125;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
-<p>在<strong>Vue3.0</strong>，我们就需要使用一个新的<code>setup()</code>方法，此方法在组件初始化构造的时候触发。</p>
-<p>为了可以让开发者对反应型数据有更多的控制，我们可以直接使用到 Vue3 的<code>反应API（reactivity API）</code>。</p>
-<p>使用以下三步来建立<code>反应性数据</code>:</p>
+<p>  在<strong>Vue3.0</strong>，我们就需要使用一个新的<code>setup()</code>方法，此方法在组件初始化构造的时候触发。</p>
+<p>  为了可以让开发者对反应型数据有更多的控制，我们可以直接使用到 Vue3 的<code>反应API（reactivity API）</code>。</p>
+<p>  使用以下三步来建立<code>反应性数据</code>:</p>
 <ol>
-<li>从vue引入<code>reactive</code></li>
-<li>使用<code>reactive()</code>方法来声名我们的数据为反应性数据</li>
-<li>使用<code>setup()</code>方法来返回我们的反应性数据，从而我们的template可以获取这些反应性数据</li>
-</ol>
+<li><p>从vue引入<code>reactive</code></p>
+</li>
+<li><p>使用<code>reactive()</code>方法来声名我们的数据为反应性数据</p>
+</li>
+<li><p>使用<code>setup()</code>方法来返回我们的反应性数据，从而我们的template可以获取这些反应性数据</p>
 <p>上一波代码，让大家更容易理解是怎么实现的。</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">import</span> &#123; reactive &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;vue&#x27;</span><br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;<br>  props: &#123;<br>    title: <span class="hljs-built_in">String</span><br>  &#125;,<br>  setup () &#123;<br>    <span class="hljs-keyword">const</span> state = reactive(&#123;<br>      username: <span class="hljs-string">&#x27;&#x27;</span>,<br>      password: <span class="hljs-string">&#x27;&#x27;</span><br>    &#125;)<br><br>    <span class="hljs-keyword">return</span> &#123; state &#125;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <p>这里构造的反应性数据就可以被<code>template</code>使用，可以通过<code>state.username</code>和<code>state.password</code>获得数据的值。</p>
-<hr>
-<h2 id="Vue2-对比-Vue3的-methods-编写"><a href="#Vue2-对比-Vue3的-methods-编写" class="headerlink" title="Vue2 对比 Vue3的 methods 编写"></a><strong>Vue2 对比 Vue3的 <code>methods</code> 编写</strong></h2><p><strong>Vue2</strong> 的选项型API是把methods分割到独立的属性区域的。我们可以直接在这个属性里面添加方法来处理各种前端逻辑。</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;<br>  props: &#123;<br>    title: <span class="hljs-built_in">String</span><br>  &#125;,<br>  data () &#123;<br>    <span class="hljs-keyword">return</span> &#123;<br>      username: <span class="hljs-string">&#x27;&#x27;</span>,<br>      password: <span class="hljs-string">&#x27;&#x27;</span><br>    &#125;<br>  &#125;,<br>  methods: &#123;<br>    login () &#123;<br>      <span class="hljs-comment">// 登陆方法</span><br>    &#125;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p><strong>Vue3</strong> 的合成型API里面的<code>setup()</code>方法也是可以用来操控methods的。创建声名方法其实和声名数据状态是一样的。— 我们需要先声名一个方法然后在<code>setup()</code>方法中<code>返回(return)</code>， 这样我们的组件内就可以调用这个方法了。</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;<br>  props: &#123;<br>    title: <span class="hljs-built_in">String</span><br>  &#125;,<br>  setup () &#123;<br>    <span class="hljs-keyword">const</span> state = reactive(&#123;<br>      username: <span class="hljs-string">&#x27;&#x27;</span>,<br>      password: <span class="hljs-string">&#x27;&#x27;</span><br>    &#125;)<br><br>    <span class="hljs-keyword">const</span> login = <span class="hljs-function">() =&gt;</span> &#123;<br>      <span class="hljs-comment">// 登陆方法</span><br>    &#125;<br>    <span class="hljs-keyword">return</span> &#123; <br>      login,<br>      state<br>    &#125;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="生命周期钩子-—-Lifecyle-Hooks"><a href="#生命周期钩子-—-Lifecyle-Hooks" class="headerlink" title="生命周期钩子 — Lifecyle Hooks"></a><strong>生命周期钩子 — <code>Lifecyle Hooks</code></strong></h2><p>在 <strong>Vue2</strong>，我们可以直接在组件属性中调用Vue的生命周期的钩子。以下使用一个<code>组件已挂载（mounted）</code>生命周期触发钩子。</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;<br>  props: &#123;<br>    title: <span class="hljs-built_in">String</span><br>  &#125;,<br>  data () &#123;<br>    <span class="hljs-keyword">return</span> &#123;<br>      username: <span class="hljs-string">&#x27;&#x27;</span>,<br>      password: <span class="hljs-string">&#x27;&#x27;</span><br>    &#125;<br>  &#125;,<br>  mounted () &#123;<br>    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&#x27;组件已挂载&#x27;</span>)<br>  &#125;,<br>  methods: &#123;<br>    login () &#123;<br>      <span class="hljs-comment">// login method</span><br>    &#125;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p>现在 <strong>Vue3</strong> 的合成型API里面的<code>setup()</code>方法可以包含了基本所有东西。生命周期的钩子就是其中之一！</p>
-<p>但是在 Vue3 生周期钩子不是全局可调用的了，需要另外从vue中引入。和刚刚引入<code>reactive</code>一样，生命周期的挂载钩子叫<code>onMounted</code>。</p>
-<p>引入后我们就可以在<code>setup()</code>方法里面使用<code>onMounted</code>挂载的钩子了。</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">import</span> &#123; reactive, onMounted &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;vue&#x27;</span><br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;<br>  props: &#123;<br>    title: <span class="hljs-built_in">String</span><br>  &#125;,<br>  setup () &#123;<br>    <span class="hljs-comment">// ..</span><br><br>    onMounted(<span class="hljs-function">() =&gt;</span> &#123;<br>      <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&#x27;组件已挂载&#x27;</span>)<br>    &#125;)<br><br>    <span class="hljs-comment">// ...</span><br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="计算属性-Computed-Properties"><a href="#计算属性-Computed-Properties" class="headerlink" title="计算属性 - Computed Properties"></a><strong>计算属性 - <code>Computed Properties</code></strong></h2><p>我们一起试试添加一个计算属性来转换<code>username</code>成小写字母。</p>
-<p>在 <strong>Vue2</strong> 中实现，我们只需要在组件内的选项属性中添加即可</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;<br>  <span class="hljs-comment">// .. </span><br>  computed: &#123;<br>    lowerCaseUsername () &#123;<br>      <span class="hljs-keyword">return</span> <span class="hljs-built_in">this</span>.username.toLowerCase()<br>    &#125;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p><strong>Vue3</strong> 的设计模式给予开发者们按需引入需要使用的依赖包。这样一来就不需要多余的引用导致性能或者打包后太大的问题。Vue2就是有这个一直存在的问题。</p>
-<p>所以在 Vue3 使用计算属性，我们先需要在组件内引入<code>computed</code>。</p>
-<p>使用方式就和<code>反应性数据（reactive data）</code>一样，在<code>state</code>中加入一个计算属性:</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">import</span> &#123; reactive, onMounted, computed &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;vue&#x27;</span><br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;<br>  props: &#123;<br>    title: <span class="hljs-built_in">String</span><br>  &#125;,<br>  setup () &#123;<br>    <span class="hljs-keyword">const</span> state = reactive(&#123;<br>      username: <span class="hljs-string">&#x27;&#x27;</span>,<br>      password: <span class="hljs-string">&#x27;&#x27;</span>,<br>      lowerCaseUsername: computed(<span class="hljs-function">() =&gt;</span> state.username.toLowerCase())<br>    &#125;)<br><br>    <span class="hljs-comment">// ...</span><br>  &#125;<br></code></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="接收-Props"><a href="#接收-Props" class="headerlink" title="接收 Props"></a><strong>接收 <code>Props</code></strong></h2><p>接收组件<code>props</code>参数传递这一块为我们带来了Vue2和Vue3之间最大的区别。<strong>—<code>this</code>在vue3中与vue2代表着完全不一样的东西。</strong></p>
-<p>在 <strong>Vue2</strong>，<code>this</code>代表的是当前组件，不是某一个特定的属性。所以我们可以直接使用<code>this</code>访问prop属性值。就比如下面的例子在挂载完成后打印处当前传入组件的参数<code>title</code>。</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js">mounted () &#123;<br>    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&#x27;title: &#x27;</span> + <span class="hljs-built_in">this</span>.title)<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p>但是在 <strong>Vue3</strong> 中，<code>this</code>无法直接拿到props属性，emit events（触发事件）和组件内的其他属性。不过全新的<code>setup()</code>方法可以接收两个参数：</p>
-<ol>
-<li><code>props</code> - 不可变的组件参数</li>
-<li><code>context</code> - Vue3 暴露出来的属性（emit，slots，attrs）</li>
+</li>
 </ol>
+<hr>
+<h2 id="Vue2-对比-Vue3的-methods-编写"><a href="#Vue2-对比-Vue3的-methods-编写" class="headerlink" title="Vue2 对比 Vue3的 methods 编写"></a><strong>Vue2 对比 Vue3的 <code>methods</code> 编写</strong></h2><p>  <strong>Vue2</strong> 的选项型API是把methods分割到独立的属性区域的。我们可以直接在这个属性里面添加方法来处理各种前端逻辑。</p>
+  <figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;<br>  props: &#123;<br>    title: <span class="hljs-built_in">String</span><br>  &#125;,<br>  data () &#123;<br>    <span class="hljs-keyword">return</span> &#123;<br>      username: <span class="hljs-string">&#x27;&#x27;</span>,<br>      password: <span class="hljs-string">&#x27;&#x27;</span><br>    &#125;<br>  &#125;,<br>  methods: &#123;<br>    login () &#123;<br>      <span class="hljs-comment">// 登陆方法</span><br>    &#125;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>  <strong>Vue3</strong> 的合成型API里面的<code>setup()</code>方法也是可以用来操控methods的。创建声名方法其实和声名数据状态是一样的。— 我们需要先声名一个方法然后在<code>setup()</code>方法中<code>返回(return)</code>， 这样我们的组件内就可以调用这个方法了。</p>
+  <figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;<br>  props: &#123;<br>    title: <span class="hljs-built_in">String</span><br>  &#125;,<br>  setup () &#123;<br>    <span class="hljs-keyword">const</span> state = reactive(&#123;<br>      username: <span class="hljs-string">&#x27;&#x27;</span>,<br>      password: <span class="hljs-string">&#x27;&#x27;</span><br>    &#125;)<br><br>    <span class="hljs-keyword">const</span> login = <span class="hljs-function">() =&gt;</span> &#123;<br>      <span class="hljs-comment">// 登陆方法</span><br>    &#125;<br>    <span class="hljs-keyword">return</span> &#123; <br>      login,<br>      state<br>    &#125;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="生命周期钩子-—-Lifecyle-Hooks"><a href="#生命周期钩子-—-Lifecyle-Hooks" class="headerlink" title="生命周期钩子 — Lifecyle Hooks"></a><strong>生命周期钩子 — <code>Lifecyle Hooks</code></strong></h2><p>  在 <strong>Vue2</strong>，我们可以直接在组件属性中调用Vue的生命周期的钩子。以下使用一个<code>组件已挂载（mounted）</code>生命周期触发钩子。</p>
+  <figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;<br>  props: &#123;<br>    title: <span class="hljs-built_in">String</span><br>  &#125;,<br>  data () &#123;<br>    <span class="hljs-keyword">return</span> &#123;<br>      username: <span class="hljs-string">&#x27;&#x27;</span>,<br>      password: <span class="hljs-string">&#x27;&#x27;</span><br>    &#125;<br>  &#125;,<br>  mounted () &#123;<br>    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&#x27;组件已挂载&#x27;</span>)<br>  &#125;,<br>  methods: &#123;<br>    login () &#123;<br>      <span class="hljs-comment">// login method</span><br>    &#125;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>  现在 <strong>Vue3</strong> 的合成型API里面的<code>setup()</code>方法可以包含了基本所有东西。生命周期的钩子就是其中之一！</p>
+<p>  但是在 Vue3 生周期钩子不是全局可调用的了，需要另外从vue中引入。和刚刚引入<code>reactive</code>一样，生命周期的挂载钩子叫<code>onMounted</code>。</p>
+<p>  引入后我们就可以在<code>setup()</code>方法里面使用<code>onMounted</code>挂载的钩子了。</p>
+  <figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">import</span> &#123; reactive, onMounted &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;vue&#x27;</span><br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;<br>  props: &#123;<br>    title: <span class="hljs-built_in">String</span><br>  &#125;,<br>  setup () &#123;<br>    <span class="hljs-comment">// ..</span><br><br>    onMounted(<span class="hljs-function">() =&gt;</span> &#123;<br>      <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&#x27;组件已挂载&#x27;</span>)<br>    &#125;)<br><br>    <span class="hljs-comment">// ...</span><br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="计算属性-Computed-Properties"><a href="#计算属性-Computed-Properties" class="headerlink" title="计算属性 - Computed Properties"></a><strong>计算属性 - <code>Computed Properties</code></strong></h2><p>  我们一起试试添加一个计算属性来转换<code>username</code>成小写字母。</p>
+<p>  在 <strong>Vue2</strong> 中实现，我们只需要在组件内的选项属性中添加即可</p>
+  <figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;<br>  <span class="hljs-comment">// .. </span><br>  computed: &#123;<br>    lowerCaseUsername () &#123;<br>      <span class="hljs-keyword">return</span> <span class="hljs-built_in">this</span>.username.toLowerCase()<br>    &#125;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>  <strong>Vue3</strong> 的设计模式给予开发者们按需引入需要使用的依赖包。这样一来就不需要多余的引用导致性能或者打包后太大的问题。Vue2就是有这个一直存在的问题。</p>
+<p>  所以在 Vue3 使用计算属性，我们先需要在组件内引入<code>computed</code>。</p>
+<p>  使用方式就和<code>反应性数据（reactive data）</code>一样，在<code>state</code>中加入一个计算属性:</p>
+  <figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">import</span> &#123; reactive, onMounted, computed &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;vue&#x27;</span><br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;<br>  props: &#123;<br>    title: <span class="hljs-built_in">String</span><br>  &#125;,<br>  setup () &#123;<br>    <span class="hljs-keyword">const</span> state = reactive(&#123;<br>      username: <span class="hljs-string">&#x27;&#x27;</span>,<br>      password: <span class="hljs-string">&#x27;&#x27;</span>,<br>      lowerCaseUsername: computed(<span class="hljs-function">() =&gt;</span> state.username.toLowerCase())<br>    &#125;)<br><br>    <span class="hljs-comment">// ...</span><br>  &#125;<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="接收-Props"><a href="#接收-Props" class="headerlink" title="接收 Props"></a><strong>接收 <code>Props</code></strong></h2><p>  接收组件<code>props</code>参数传递这一块为我们带来了Vue2和Vue3之间最大的区别。<strong>—<code>this</code>在vue3中与vue2代表着完全不一样的东西。</strong></p>
+<p>  在 <strong>Vue2</strong>，<code>this</code>代表的是当前组件，不是某一个特定的属性。所以我们可以直接使用<code>this</code>访问prop属性值。就比如下面的例子在挂载完成后打印处当前传入组件的参数<code>title</code>。</p>
+  <figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js">mounted () &#123;<br>    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&#x27;title: &#x27;</span> + <span class="hljs-built_in">this</span>.title)<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>  但是在 <strong>Vue3</strong> 中，<code>this</code>无法直接拿到props属性，emit events（触发事件）和组件内的其他属性。不过全新的<code>setup()</code>方法可以接收两个参数：</p>
+<ol>
+<li><p><code>props</code> - 不可变的组件参数</p>
+</li>
+<li><p><code>context</code> - Vue3 暴露出来的属性（emit，slots，attrs）</p>
 <p>所以在 Vue3 接收与使用props就会变成这样：</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js">setup (props) &#123;<br>    <span class="hljs-comment">// ...</span><br><br>    onMounted(<span class="hljs-function">() =&gt;</span> &#123;<br>      <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&#x27;title: &#x27;</span> + props.title)<br>    &#125;)<br><br>    <span class="hljs-comment">// ...</span><br>&#125;<br></code></pre></td></tr></table></figure>
 
-<hr>
-<h2 id="事件-Emitting-Events"><a href="#事件-Emitting-Events" class="headerlink" title="事件 - Emitting Events"></a><strong>事件 - <code>Emitting Events</code></strong></h2><p>在 <strong>Vue2</strong> 中自定义事件是非常直接的，但是在 <strong>Vue3</strong> 的话，我们会有更多的控制的自由度。</p>
-<p>举例，现在我们想在点击提交按钮时触发一个<code>login</code>的事件。</p>
-<p>在 <strong>Vue2</strong> 中我们会调用到<code>this.$emit</code>然后传入事件名和参数对象。</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js">login () &#123;<br>      <span class="hljs-built_in">this</span>.$emit(<span class="hljs-string">&#x27;login&#x27;</span>, &#123;<br>        username: <span class="hljs-built_in">this</span>.username,<br>        password: <span class="hljs-built_in">this</span>.password<br>      &#125;)<br> &#125;<br></code></pre></td></tr></table></figure>
-
-<p>但是在 <strong>Vue3</strong>中，我们刚刚说过<code>this</code>已经不是和vue2代表着这个组件了，所以我们需要不一样的自定义事件的方式。</p>
-<p>那怎么办呀？! ლಠ益ಠ)ლ</p>
-<p>不用慌，在<code>setup()</code>中的第二个参数<code>content</code>对象中就有<code>emit</code>，这个是和<code>this.$emit</code>是一样的。那么我们只要在<code>setup()</code>接收第二个参数中使用<strong>分解对象法</strong>取出<code>emit</code>就可以在setup方法中随意使用了。</p>
-<p>然后我们在<code>login</code>方法中编写登陆事件：</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js">setup (props, &#123; emit &#125;) &#123;<br>    <span class="hljs-comment">// ...</span><br><br>    <span class="hljs-keyword">const</span> login = <span class="hljs-function">() =&gt;</span> &#123;<br>      emit(<span class="hljs-string">&#x27;login&#x27;</span>, &#123;<br>        username: state.username,<br>        password: state.password<br>      &#125;)<br>    &#125;<br><br>    <span class="hljs-comment">// ...</span><br>&#125;<br></code></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="最终的vue2对比vue3代码"><a href="#最终的vue2对比vue3代码" class="headerlink" title="最终的vue2对比vue3代码"></a><strong>最终的vue2对比vue3代码</strong></h2></li>
+</li>
 </ol>
-<p>  ![img](data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='2000' height='1250'></svg>)</p>
+<hr>
+<h2 id="事件-Emitting-Events"><a href="#事件-Emitting-Events" class="headerlink" title="事件 - Emitting Events"></a><strong>事件 - <code>Emitting Events</code></strong></h2><p>  在 <strong>Vue2</strong> 中自定义事件是非常直接的，但是在 <strong>Vue3</strong> 的话，我们会有更多的控制的自由度。</p>
+<p>  举例，现在我们想在点击提交按钮时触发一个<code>login</code>的事件。</p>
+<p>  在 <strong>Vue2</strong> 中我们会调用到<code>this.$emit</code>然后传入事件名和参数对象。</p>
+  <figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js">login () &#123;<br>      <span class="hljs-built_in">this</span>.$emit(<span class="hljs-string">&#x27;login&#x27;</span>, &#123;<br>        username: <span class="hljs-built_in">this</span>.username,<br>        password: <span class="hljs-built_in">this</span>.password<br>      &#125;)<br> &#125;<br></code></pre></td></tr></table></figure>
+
+<p>  但是在 <strong>Vue3</strong>中，我们刚刚说过<code>this</code>已经不是和vue2代表着这个组件了，所以我们需要不一样的自定义事件的方式。</p>
+<p>  那怎么办呀？! ლಠ益ಠ)ლ</p>
+<p>  不用慌，在<code>setup()</code>中的第二个参数<code>content</code>对象中就有<code>emit</code>，这个是和<code>this.$emit</code>是一样的。那么我们只要在<code>setup()</code>接收第二个参数中使用<strong>分解对象法</strong>取出<code>emit</code>就可以在setup方法中随意使用了。</p>
+<p>  然后我们在<code>login</code>方法中编写登陆事件：</p>
+  <figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js">setup (props, &#123; emit &#125;) &#123;<br>    <span class="hljs-comment">// ...</span><br><br>    <span class="hljs-keyword">const</span> login = <span class="hljs-function">() =&gt;</span> &#123;<br>      emit(<span class="hljs-string">&#x27;login&#x27;</span>, &#123;<br>        username: state.username,<br>        password: state.password<br>      &#125;)<br>    &#125;<br><br>    <span class="hljs-comment">// ...</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="最终的vue2对比vue3代码"><a href="#最终的vue2对比vue3代码" class="headerlink" title="最终的vue2对比vue3代码"></a><strong>最终的vue2对比vue3代码</strong></h2><p>  ![img](data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='2000' height='1250'></svg>)</p>
 <p>  真的是太棒了，能看到这里的童鞋们，你们现在基本都看到vue2与vue3其实概念与理念都是一样的。只是有一些属性获取方式和声名和定义方式稍微变了。一直在鬼哭狼嚎的小小前端开发猿人们，你们可以松一口气了吧。</p>
 <p>  总结一下，我觉得 <strong>Vue3</strong> 给我们前端开发者带来了全新的开发体验，更好的使用弹性，可控度也得到了大大的提升。如果你是一个学过或者接触过 <strong>React</strong> 然后现在想使用Vue的话，应该特别兴奋，因为很多使用方式都和React非常相近了 ！</p>
 <p>  全新的<code>合成式API（Composition API）</code>可以提升代码的解耦程度 —— 特别是大型的前端应用，效果会更加明显。还有就是按需引用的有了更细微的可控性，让项目的性能和打包大小有更好的控制。</p>
@@ -1044,7 +1055,8 @@
   <entry>
     <title>Vue3源码-Proxy</title>
     <url>/2021/03/18/vue3%E6%BA%90%E7%A0%81/</url>
-    <content><![CDATA[<h5 id="语法："><a href="#语法：" class="headerlink" title="语法："></a>语法：</h5><figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> proxy = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Proxy</span>(target, handle)<br></code></pre></td></tr></table></figure>
+    <content><![CDATA[<p><img src="https://images.unsplash.com/photo-1631345288967-dad5dce64717?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw1MHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="img"></p>
+<h5 id="语法："><a href="#语法：" class="headerlink" title="语法："></a>语法：</h5><figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> proxy = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Proxy</span>(target, handle)<br></code></pre></td></tr></table></figure>
 
 <ul>
 <li>target 要使用 Proxy 包装的目标对象（可以是任何类型的对象，包括原生数组，函数，甚至另一个代理</li>
@@ -1231,7 +1243,8 @@
   <entry>
     <title>vue源码理解——生命周期篇</title>
     <url>/2021/03/18/vue%E6%BA%90%E7%A0%81%E7%90%86%E8%A7%A34/</url>
-    <content><![CDATA[<h4 id="生命周期："><a href="#生命周期：" class="headerlink" title="生命周期："></a>生命周期：</h4><p>在<code>Vue</code>中，每个<code>Vue</code>实例从被创建出来到最终被销毁都会经历一个过程，就像人一样，从出生到死亡。在这一过程里会发生许许多多的事，例如设置数据监听，编译模板，组件挂载等。在<code>Vue</code>中，把<code>Vue</code>实例从被创建出来到最终被销毁的这一过程称为<code>Vue</code>实例的生命周期，同时，在<code>Vue</code>实例生命周期的不同阶段<code>Vue</code>还提供了不同的钩子函数，以方便用户在不同的生命周期阶段做一些额外的事情。那么，接下来的几篇文章我们就从源码角度深入剖析一下一个<code>Vue</code>实例在从生到死的生命周期里到底都经历了些什么，每个阶段都做了哪些事情。</p>
+    <content><![CDATA[<p><img src="https://images.unsplash.com/photo-1631410717426-205dffe528c5?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwxMTh8fHxlbnwwfHx8fA==&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="img"></p>
+<h4 id="生命周期："><a href="#生命周期：" class="headerlink" title="生命周期："></a>生命周期：</h4><p>在<code>Vue</code>中，每个<code>Vue</code>实例从被创建出来到最终被销毁都会经历一个过程，就像人一样，从出生到死亡。在这一过程里会发生许许多多的事，例如设置数据监听，编译模板，组件挂载等。在<code>Vue</code>中，把<code>Vue</code>实例从被创建出来到最终被销毁的这一过程称为<code>Vue</code>实例的生命周期，同时，在<code>Vue</code>实例生命周期的不同阶段<code>Vue</code>还提供了不同的钩子函数，以方便用户在不同的生命周期阶段做一些额外的事情。那么，接下来的几篇文章我们就从源码角度深入剖析一下一个<code>Vue</code>实例在从生到死的生命周期里到底都经历了些什么，每个阶段都做了哪些事情。</p>
 <h5 id="生命周期流程图"><a href="#生命周期流程图" class="headerlink" title="生命周期流程图"></a>生命周期流程图</h5><p>下图是<code>Vue</code>官网给出的<code>Vue</code>实例的生命周期流程图，如下：</p>
 <p><img src="C:\Users\梁超\AppData\Roaming\Typora\typora-user-images\image-20210425145156115.png" alt="image-20210425145156115"></p>
 <p>从图中我们可以看到，<code>Vue</code>实例的生命周期大致可分为4个阶段：</p>
@@ -1267,7 +1280,8 @@
   <entry>
     <title>vue源码理解——实例方法篇</title>
     <url>/2021/03/18/vue%E6%BA%90%E7%A0%81%E7%90%86%E8%A7%A35/</url>
-    <content><![CDATA[<h4 id="实例方法："><a href="#实例方法：" class="headerlink" title="实例方法："></a>实例方法：</h4><p>与数据相关的实例方法有3个，分别是<code>vm.$set</code>、<code>vm.$delete</code>和<code>vm.$watch</code>。它们是在<code>stateMixin</code>函数中挂载到<code>Vue</code>原型上的，代码如下：</p>
+    <content><![CDATA[<p><img src="https://images.unsplash.com/photo-1631473130172-614478b2abd1?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwxNzZ8fHxlbnwwfHx8fA==&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="img"></p>
+<h4 id="实例方法："><a href="#实例方法：" class="headerlink" title="实例方法："></a>实例方法：</h4><p>与数据相关的实例方法有3个，分别是<code>vm.$set</code>、<code>vm.$delete</code>和<code>vm.$watch</code>。它们是在<code>stateMixin</code>函数中挂载到<code>Vue</code>原型上的，代码如下：</p>
 <figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">import</span> &#123;set,del&#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;../observer/index&#x27;</span><br><br><span class="hljs-keyword">export</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">stateMixin</span> (<span class="hljs-params">Vue</span>) </span>&#123;<br>    Vue.prototype.$set = set<br>    Vue.prototype.$delete = del<br>    Vue.prototype.$watch = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">expOrFn,cb,options</span>) </span>&#123;&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <p>当执行<code>stateMixin</code>函数后，会向<code>Vue</code>原型上挂载上述3个实例方法。</p>
@@ -1315,7 +1329,8 @@
   <entry>
     <title>vue源码理解——全局API篇</title>
     <url>/2021/03/18/vue%E6%BA%90%E7%A0%81%E7%90%86%E8%A7%A36/</url>
-    <content><![CDATA[<h4 id="全局API"><a href="#全局API" class="headerlink" title="全局API"></a>全局API</h4><p>与实例方法不同，实例方法是将方法挂载到<code>Vue</code>的原型上，而全局API是直接在<code>Vue</code>上挂载方法。在<code>Vue</code>中，全局API一共有12个，分别是<code>Vue.extend</code>、<code>Vue.nextTick</code>、<code>Vue.set</code>、<code>Vue.delete</code>、<code>Vue.directive</code>、<code>Vue.filter</code>、<code>Vue.component</code>、<code>Vue.use</code>、<code>Vue.mixin</code>、<code>Vue.observable</code>、<code>Vue.version</code>。这12个API中有的是我们在日常业务开发中经常会用到的，有的是对<code>Vue</code>内部或外部插件提供的，我们在日常业务开发中几乎用不到。接下来我们就对这12个API逐个进行分析，看看其内部原理都是怎样的。</p>
+    <content><![CDATA[<p><img src="https://images.unsplash.com/photo-1631453577393-461cff89e0f7?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyMTl8fHxlbnwwfHx8fA==&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="img"></p>
+<h4 id="全局API"><a href="#全局API" class="headerlink" title="全局API"></a>全局API</h4><p>与实例方法不同，实例方法是将方法挂载到<code>Vue</code>的原型上，而全局API是直接在<code>Vue</code>上挂载方法。在<code>Vue</code>中，全局API一共有12个，分别是<code>Vue.extend</code>、<code>Vue.nextTick</code>、<code>Vue.set</code>、<code>Vue.delete</code>、<code>Vue.directive</code>、<code>Vue.filter</code>、<code>Vue.component</code>、<code>Vue.use</code>、<code>Vue.mixin</code>、<code>Vue.observable</code>、<code>Vue.version</code>。这12个API中有的是我们在日常业务开发中经常会用到的，有的是对<code>Vue</code>内部或外部插件提供的，我们在日常业务开发中几乎用不到。接下来我们就对这12个API逐个进行分析，看看其内部原理都是怎样的。</p>
 <h5 id="Vue-extend"><a href="#Vue-extend" class="headerlink" title="Vue.extend"></a>Vue.extend</h5><h6 id="用法回顾"><a href="#用法回顾" class="headerlink" title="用法回顾"></a>用法回顾</h6><p>其用法如下：</p>
 <figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript">Vue.extend( options )<br></code></pre></td></tr></table></figure>
 
@@ -1396,6 +1411,44 @@
       </tags>
   </entry>
   <entry>
+    <title>vue源码理解——过滤器篇</title>
+    <url>/2021/03/18/vue%E6%BA%90%E7%A0%81%E7%90%86%E8%A7%A37/</url>
+    <content><![CDATA[<p><img src="https://images.unsplash.com/photo-1631260947893-1e29516d5183?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw0Mjh8fHxlbnwwfHx8fA==&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="img"></p>
+<h4 id="过虑器"><a href="#过虑器" class="headerlink" title="过虑器"></a>过虑器</h4><p>过滤器在我们日常开发中应该算是一个非常常用的功能了，它经常会被用来格式化模板中的文本。过滤器可以单个使用，也可以多个串联一起使用，还可以传参数使用。那么在<code>Vue</code>中过滤器是如何工作的呢？其内部原理是怎样的？<code>Vue</code>又是如何识别出我们所写的过滤器的？接下来，我们将从源码角度出发，探究过滤器内部的工作原理，分析其工作流程，揭开它神秘的面纱。</p>
+<p>撸码一时爽，一直撸码一直爽！！！</p>
+]]></content>
+      <tags>
+        <tag>vue源码理解——过滤器篇</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>vue源码理解——内置组件篇</title>
+    <url>/2021/03/18/vue%E6%BA%90%E7%A0%81%E7%90%86%E8%A7%A39/</url>
+    <content><![CDATA[<p><img src="https://images.unsplash.com/photo-1631510511110-15ae092e1b2c?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwxMjV8fHxlbnwwfHx8fA==&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="img"></p>
+<h4 id="内置组件"><a href="#内置组件" class="headerlink" title="内置组件"></a>内置组件</h4><p><code>&lt;keep-alive&gt;</code> 是 <code>Vue</code> 实现的一个内置组件，也就是说 <code>Vue</code> 源码不仅实现了一套组件化的机制，也实现了一些内置组件，关于<code>&lt;keep-alive&gt;</code>组件，官网如下介绍：</p>
+<blockquote>
+<p><code>&lt;keep-alive&gt;</code>是<code>Vue</code>中内置的一个抽象组件，它自身不会渲染一个 <code>DOM</code> 元素，也不会出现在父组件链中。当它包裹动态组件时，会缓存不活动的组件实例，而不是销毁它们。</p>
+</blockquote>
+<p>这句话的意思简单来说：就是我们可以把一些不常变动的组件或者需要缓存的组件用<code>&lt;keep-alive&gt;</code>包裹起来，这样<code>&lt;keep-alive&gt;</code>就会帮我们把组件保存在内存中，而不是直接的销毁，这样做可以保留组件的状态或避免多次重新渲染，以提高页面性能。</p>
+<p>撸码一时爽，一直撸码一直爽！！！</p>
+]]></content>
+      <tags>
+        <tag>vue源码理解——内置组件篇</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>vue源码理解——指令篇</title>
+    <url>/2021/03/18/vue%E6%BA%90%E7%A0%81%E7%90%86%E8%A7%A38/</url>
+    <content><![CDATA[<p><img src="https://images.unsplash.com/photo-1587135991058-8816b028691f?ixid=MnwxMjA3fDB8MHx0b3BpYy1mZWVkfDMwfDIxYXBjM1RVRVZvfHxlbnwwfHx8fA==&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="img"></p>
+<h4 id="指令"><a href="#指令" class="headerlink" title="指令"></a>指令</h4><p>在<code>Vue</code>中，除了<code>Vue</code>本身为我们提供的一些内置指令之外，<code>Vue</code>还支持用户自定义指令。并且用户有两种定义指令的方式：一种是使用全局API——<code>Vue.directive</code>来定义全局指令，这种方式定义的指令会被存放在<code>Vue.options[&#39;directives&#39;]</code>中；另一种是在组件内的<code>directive</code>选项中定义专为该组件使用的局部指令，这种方式定义的指令会被存放在<code>vm.$options[&#39;directives&#39;]</code>中。</p>
+<p>可以看到，无论是使用哪一种方式定义的指令它都是将定义好的指令存放在指定的地方，而并不能让指令生效。那么定义的指令什么时候才会生效呢？或者说它是如何生效的呢？本篇文章就来带你探究自定义指令如何生效的内部原理。</p>
+<p>撸码一时爽，一直撸码一直爽！！！</p>
+]]></content>
+      <tags>
+        <tag>vue源码理解——指令篇</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>小程序</title>
     <url>/2020/09/18/%E5%B0%8F%E7%A8%8B%E5%BA%8F/</url>
     <content><![CDATA[<p><img src="https://images.weserv.nl/?url=https://gitee.com/cocacolalc/imgs-hexo/raw/master/img/photo-1620680741158-48410cc39150.jpg" alt="img"></p>
@@ -1424,16 +1477,6 @@
 ]]></content>
   </entry>
   <entry>
-    <title>vue源码理解——过滤器篇</title>
-    <url>/2021/03/18/vue%E6%BA%90%E7%A0%81%E7%90%86%E8%A7%A37/</url>
-    <content><![CDATA[<h4 id="过虑器"><a href="#过虑器" class="headerlink" title="过虑器"></a>过虑器</h4><p>过滤器在我们日常开发中应该算是一个非常常用的功能了，它经常会被用来格式化模板中的文本。过滤器可以单个使用，也可以多个串联一起使用，还可以传参数使用。那么在<code>Vue</code>中过滤器是如何工作的呢？其内部原理是怎样的？<code>Vue</code>又是如何识别出我们所写的过滤器的？接下来，我们将从源码角度出发，探究过滤器内部的工作原理，分析其工作流程，揭开它神秘的面纱。</p>
-<p>撸码一时爽，一直撸码一直爽！！！</p>
-]]></content>
-      <tags>
-        <tag>vue源码理解——过滤器篇</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>算法理解</title>
     <url>/2020/09/18/%E7%AE%97%E6%B3%95%E7%90%86%E8%A7%A3/</url>
     <content><![CDATA[<p><img src="https://images.weserv.nl/?url=https://gitee.com/cocacolalc/imgs-hexo/raw/master/img/photo-1621940022939-67cbe6a348d8.jpg" alt="img"></p>
@@ -1457,34 +1500,9 @@
       </tags>
   </entry>
   <entry>
-    <title>vue源码理解——指令篇</title>
-    <url>/2021/03/18/vue%E6%BA%90%E7%A0%81%E7%90%86%E8%A7%A38/</url>
-    <content><![CDATA[<h4 id="指令"><a href="#指令" class="headerlink" title="指令"></a>指令</h4><p>在<code>Vue</code>中，除了<code>Vue</code>本身为我们提供的一些内置指令之外，<code>Vue</code>还支持用户自定义指令。并且用户有两种定义指令的方式：一种是使用全局API——<code>Vue.directive</code>来定义全局指令，这种方式定义的指令会被存放在<code>Vue.options[&#39;directives&#39;]</code>中；另一种是在组件内的<code>directive</code>选项中定义专为该组件使用的局部指令，这种方式定义的指令会被存放在<code>vm.$options[&#39;directives&#39;]</code>中。</p>
-<p>可以看到，无论是使用哪一种方式定义的指令它都是将定义好的指令存放在指定的地方，而并不能让指令生效。那么定义的指令什么时候才会生效呢？或者说它是如何生效的呢？本篇文章就来带你探究自定义指令如何生效的内部原理。</p>
-<p>撸码一时爽，一直撸码一直爽！！！</p>
-]]></content>
-      <tags>
-        <tag>vue源码理解——指令篇</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>vue源码理解——内置组件篇</title>
-    <url>/2021/03/18/vue%E6%BA%90%E7%A0%81%E7%90%86%E8%A7%A39/</url>
-    <content><![CDATA[<h4 id="内置组件"><a href="#内置组件" class="headerlink" title="内置组件"></a>内置组件</h4><p><code>&lt;keep-alive&gt;</code> 是 <code>Vue</code> 实现的一个内置组件，也就是说 <code>Vue</code> 源码不仅实现了一套组件化的机制，也实现了一些内置组件，关于<code>&lt;keep-alive&gt;</code>组件，官网如下介绍：</p>
-<blockquote>
-<p><code>&lt;keep-alive&gt;</code>是<code>Vue</code>中内置的一个抽象组件，它自身不会渲染一个 <code>DOM</code> 元素，也不会出现在父组件链中。当它包裹动态组件时，会缓存不活动的组件实例，而不是销毁它们。</p>
-</blockquote>
-<p>这句话的意思简单来说：就是我们可以把一些不常变动的组件或者需要缓存的组件用<code>&lt;keep-alive&gt;</code>包裹起来，这样<code>&lt;keep-alive&gt;</code>就会帮我们把组件保存在内存中，而不是直接的销毁，这样做可以保留组件的状态或避免多次重新渲染，以提高页面性能。</p>
-<p>撸码一时爽，一直撸码一直爽！！！</p>
-]]></content>
-      <tags>
-        <tag>vue源码理解——内置组件篇</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>javascript 1</title>
     <url>/2020/09/22/javascript/</url>
-    <content><![CDATA[<p><img src="https://images.weserv.nl/?url=https://gitee.com/cocacolalc/imgs-hexo/raw/master/img/photo-1625903443536-ec7e0e5fc341.jpg" alt="img"></p>
+    <content><![CDATA[<p><img src="https://images.weserv.nl/?url=https://gitee.com/cocacolalc/imgs-hexo/raw/master/img/photo-1439789186071-f54573629ae2.jpg" alt="img"></p>
 <h1 id="javascript"><a href="#javascript" class="headerlink" title="javascript"></a>javascript</h1><h3 id="1-JavaScript-是什么"><a href="#1-JavaScript-是什么" class="headerlink" title="1 JavaScript 是什么"></a>1 JavaScript 是什么</h3><p><img src="C:/Users/梁超/Desktop/二阶笔记/笔记/笔记/笔记1/images/图片7.png"></p>
 <ul>
 <li><p>JavaScript 是世界上最流行的语言之一，是一种运行在客户端的脚本语言 （Script 是脚本的意思）</p>
@@ -1822,7 +1840,8 @@
   <entry>
     <title>vue2</title>
     <url>/2020/09/18/vue/</url>
-    <content><![CDATA[<h4 id="vue-介绍"><a href="#vue-介绍" class="headerlink" title="vue 介绍"></a>vue 介绍</h4><ul>
+    <content><![CDATA[<p><img src="https://images.unsplash.com/photo-1610384467831-4b1e0cd08336?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwzNXx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="img"></p>
+<h4 id="vue-介绍"><a href="#vue-介绍" class="headerlink" title="vue 介绍"></a>vue 介绍</h4><ul>
 <li>渐进式javascript框架</li>
 </ul>
 <p>渐进式：主张最少</p>
@@ -2086,7 +2105,8 @@
   <entry>
     <title>vue源码理解——变化侦测篇</title>
     <url>/2021/03/18/vue%E6%BA%90%E7%A0%81%E7%90%86%E8%A7%A31/</url>
-    <content><![CDATA[<h3 id="1-变化侦测篇"><a href="#1-变化侦测篇" class="headerlink" title="1.变化侦测篇"></a>1.变化侦测篇</h3><p><code>Vue</code>中如何实现数据的响应式系统，从而达到数据驱动视图。</p>
+    <content><![CDATA[<p><img src="https://images.unsplash.com/photo-1631521316445-f044306e6d1a?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw2MHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="img"></p>
+<h3 id="1-变化侦测篇"><a href="#1-变化侦测篇" class="headerlink" title="1.变化侦测篇"></a>1.变化侦测篇</h3><p><code>Vue</code>中如何实现数据的响应式系统，从而达到数据驱动视图。</p>
 <h5 id="变化侦测"><a href="#变化侦测" class="headerlink" title="变化侦测"></a>变化侦测</h5><p>vue最大的特点之一就是数据驱动视图</p>
 <p>什么是数据驱动视图？我们可以把数据理解成状态，而视图就是用户可以直观看到的，页面不是一层不变的，它是动态变化的，它可能是用户操作引起变化，也可能因为后台数据引起变化的，不管它尤什么引起的，我们统称状态变了由前一个状态变到了后一个状态，页面也就应该随之而变化，所以我们就可以得到如下一个公式：**<em>UI = render(state)**</em></p>
 <p>公式中：状态<code>state</code>是输入，页面<code>UI</code>输出，状态输入一旦变化了，页面输出也随之而变化。我们把这种特性称之为数据驱动视图。</p>
@@ -2411,7 +2431,8 @@
   <entry>
     <title>React</title>
     <url>/2021/03/18/recat/</url>
-    <content><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="$ 前言"></a>$ 前言</h3><p>  最近在考虑框架转型，鉴于作为一名JSer，要时时刻刻保持对新技术和流行技术的敏感性，而 React、Vue、Angular 已基本占领现前端市场，React作为领头大哥，建议年轻的JSer们都要学习使用或至少了解这门技术。</p>
+    <content><![CDATA[<p><img src="https://images.weserv.nl/?url=https://gitee.com/cocacolalc/imgs-hexo/raw/master/img/photo-1626257435667-5d942b1bd7d3.jpg" alt="img"></p>
+<h3 id="前言"><a href="#前言" class="headerlink" title="$ 前言"></a>$ 前言</h3><p>  最近在考虑框架转型，鉴于作为一名JSer，要时时刻刻保持对新技术和流行技术的敏感性，而 React、Vue、Angular 已基本占领现前端市场，React作为领头大哥，建议年轻的JSer们都要学习使用或至少了解这门技术。</p>
 <p><img src="https://upload-images.jianshu.io/upload_images/8646214-f35c42e6276e7a16.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/453/format/webp" alt="img"></p>
 <h3 id="版本声明"><a href="#版本声明" class="headerlink" title="$ 版本声明"></a>$ 版本声明</h3><p>  本文使用版本 <strong>React  v16.2.0</strong></p>
 <h3 id="什么是-React"><a href="#什么是-React" class="headerlink" title="$ 什么是 React ?"></a>$ 什么是 React ?</h3><p>  React是一个声明式的，高效的，并且灵活的<strong>用于构建用户界面的 JavaScript 库</strong></p>
@@ -2666,7 +2687,8 @@
   <entry>
     <title>Ts</title>
     <url>/2021/03/18/typeScript/</url>
-    <content><![CDATA[<h3 id="TypeScript开发"><a href="#TypeScript开发" class="headerlink" title="TypeScript开发"></a>TypeScript开发</h3><p>全局安装typescript，使用安装命令可以使用<code>npm</code>也可以使用<code>yarn</code>： </p>
+    <content><![CDATA[<p><img src="https://images.unsplash.com/photo-1631360934174-f62d399183cd?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyM3x8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="img"></p>
+<h3 id="TypeScript开发"><a href="#TypeScript开发" class="headerlink" title="TypeScript开发"></a>TypeScript开发</h3><p>全局安装typescript，使用安装命令可以使用<code>npm</code>也可以使用<code>yarn</code>： </p>
 <p>命令：</p>
 <p>npm install typescript -g</p>
 <p>yarn global add typescript</p>
@@ -3111,7 +3133,8 @@
   <entry>
     <title>vue源码理解——模板编译篇</title>
     <url>/2021/03/18/vue%E6%BA%90%E7%A0%81%E7%90%86%E8%A7%A33/</url>
-    <content><![CDATA[<h4 id="模板编译："><a href="#模板编译：" class="headerlink" title="模板编译："></a>模板编译：</h4><p>在前几篇文章中，我们介绍了<code>Vue</code>中的虚拟<code>DOM</code>以及虚拟<code>DOM</code>的<code>patch</code>(DOM-Diff)过程，而虚拟<code>DOM</code>存在的必要条件是得先有<code>VNode</code>，那么<code>VNode</code>又是从哪儿来的呢？这就是接下来几篇文章要说的模板编译。你可以这么理解：把用户写的模板进行编译，就会产生<code>VNode</code>。</p>
+    <content><![CDATA[<p><img src="https://images.unsplash.com/photo-1631476767348-5c7b63a29993?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw4NHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="img"></p>
+<h4 id="模板编译："><a href="#模板编译：" class="headerlink" title="模板编译："></a>模板编译：</h4><p>在前几篇文章中，我们介绍了<code>Vue</code>中的虚拟<code>DOM</code>以及虚拟<code>DOM</code>的<code>patch</code>(DOM-Diff)过程，而虚拟<code>DOM</code>存在的必要条件是得先有<code>VNode</code>，那么<code>VNode</code>又是从哪儿来的呢？这就是接下来几篇文章要说的模板编译。你可以这么理解：把用户写的模板进行编译，就会产生<code>VNode</code>。</p>
 <h5 id="什么是模板编译"><a href="#什么是模板编译" class="headerlink" title="什么是模板编译"></a>什么是模板编译</h5><p>我们知道，在日常开发中，我们把写在<code>&lt;template&gt;&lt;/template&gt;</code>标签中的类似于原生<code>HTML</code>的内容称之为模板。这时你可能会问了，为什么说是“类似于原生<code>HTML</code>的内容”而不是“就是<code>HTML</code>的内容”？因为我们在开发中，在<code>&lt;template&gt;&lt;/template&gt;</code>标签中除了写一些原生<code>HTML</code>的标签，我们还会写一些变量插值，如，或者写一些<code>Vue</code>指令，如<code>v-on</code>、<code>v-if</code>等。而这些东西都是在原生<code>HTML</code>语法中不存在的，不被接受的。但是事实上我们确实这么写了，也被正确识别了，页面也正常显示了，这又是为什么呢？</p>
 <p>这就归功于<code>Vue</code>的模板编译了，<code>Vue</code>会把用户在<code>&lt;template&gt;&lt;/template&gt;</code>标签中写的类似于原生<code>HTML</code>的内容进行编译，把原生<code>HTML</code>的内容找出来，再把非原生<code>HTML</code>找出来，经过一系列的逻辑处理生成渲染函数，也就是<code>render</code>函数，而<code>render</code>函数会将模板内容生成对应的<code>VNode</code>，而<code>VNode</code>再经过前几篇文章介绍的<code>patch</code>过程从而得到将要渲染的视图中的<code>VNode</code>，最后根据<code>VNode</code>创建真实的<code>DOM</code>节点并插入到视图中， 最终完成视图的渲染更新。</p>
 <p>而把用户在<code>&lt;template&gt;&lt;/template&gt;</code>标签中写的类似于原生<code>HTML</code>的内容进行编译，把原生<code>HTML</code>的内容找出来，再把非原生<code>HTML</code>找出来，经过一系列的逻辑处理生成渲染函数，也就是<code>render</code>函数的这一段过程称之为模板编译过程。</p>
@@ -3347,7 +3370,8 @@
   <entry>
     <title>vue源码理解——虚拟DOM篇</title>
     <url>/2021/03/18/vue%E6%BA%90%E7%A0%81%E7%90%86%E8%A7%A32/</url>
-    <content><![CDATA[<p>虚拟DOM，这个名词作为当下的前端开发人员你一定不会陌生，至少会略有耳闻，但不会闻所未闻吧。这也是现在求职面试考察中非常高频的一个考点了。因为在当下的前端三大框架中关于虚拟DOM或多或少都有所涉及，那么接下来，我们就从源码角度出发，看看<code>Vue</code>中的虚拟DOM时怎样的。</p>
+    <content><![CDATA[<p><img src="https://images.unsplash.com/photo-1631341139177-7d0f78827ad4?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw3N3x8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="img"></p>
+<p>虚拟DOM，这个名词作为当下的前端开发人员你一定不会陌生，至少会略有耳闻，但不会闻所未闻吧。这也是现在求职面试考察中非常高频的一个考点了。因为在当下的前端三大框架中关于虚拟DOM或多或少都有所涉及，那么接下来，我们就从源码角度出发，看看<code>Vue</code>中的虚拟DOM时怎样的。</p>
 <h4 id="虚拟DOM简介"><a href="#虚拟DOM简介" class="headerlink" title="虚拟DOM简介"></a>虚拟DOM简介</h4><p>由于本系列文章是针对<code>Vue</code>源码深入学习的，所以着重分析在<code>Vue</code>中对虚拟DOM是如何实现的，而对于虚拟DOM本身这个概念不做大篇幅的展开讨论，仅从以下几个问题简单介绍：</p>
 <p>1.什么是虚拟DOM？</p>
 <p>所谓虚拟DOM，就是用一个<code>JS</code>对象来描述一个<code>DOM</code>节点，像如下示例：</p>

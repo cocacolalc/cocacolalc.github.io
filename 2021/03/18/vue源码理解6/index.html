@@ -14,7 +14,8 @@
 
   
   
-  <meta name="description" content="全局API与实例方法不同，实例方法是将方法挂载到Vue..."> 
+  <meta name="description" content="
+全局API与实例方法不同，实例方法是将方法挂载到Vu..."> 
   
   <meta name="author" content="lc"> 
 
@@ -67,7 +68,7 @@
       fancybox: true,
       pjax: false,
       lazyload: {
-        enable: true,
+        enable: false,
         loadingImage: '',
       },
       donate: {
@@ -158,20 +159,21 @@
     <article class="article">
   <div class="wrap">
     <section class="head">
-  <img   class="lazyload" data-original="https://gitee.com/cocacolalc/imgs-hexo/raw/master/img/photo-1624941806657-981cf1ea3154.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
+  <img src="https://gitee.com/cocacolalc/imgs-hexo/raw/master/img/photo-1452933006409-19b87dc327b7.jpg" draggable="false">
   <div class="head-mask">
     <h1 class="head-title">vue源码理解——全局API篇</h1>
     <div class="head-info">
       <span class="post-info-item"><i class="iconfont iconcalendar"></i>March 18, 2021</span
         class="post-info-item">
       
-      <span class="post-info-item"><i class="iconfont iconfont-size"></i>5788</span>
+      <span class="post-info-item"><i class="iconfont iconfont-size"></i>5789</span>
     </div>
   </div>
 </section>
     <section class="main">
       <section class="content">
-        <h4 id="全局API"><a href="#全局API" class="headerlink" title="全局API"></a>全局API</h4><p>与实例方法不同，实例方法是将方法挂载到<code>Vue</code>的原型上，而全局API是直接在<code>Vue</code>上挂载方法。在<code>Vue</code>中，全局API一共有12个，分别是<code>Vue.extend</code>、<code>Vue.nextTick</code>、<code>Vue.set</code>、<code>Vue.delete</code>、<code>Vue.directive</code>、<code>Vue.filter</code>、<code>Vue.component</code>、<code>Vue.use</code>、<code>Vue.mixin</code>、<code>Vue.observable</code>、<code>Vue.version</code>。这12个API中有的是我们在日常业务开发中经常会用到的，有的是对<code>Vue</code>内部或外部插件提供的，我们在日常业务开发中几乎用不到。接下来我们就对这12个API逐个进行分析，看看其内部原理都是怎样的。</p>
+        <p><img src="https://images.unsplash.com/photo-1631453577393-461cff89e0f7?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyMTl8fHxlbnwwfHx8fA==&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="img"></p>
+<h4 id="全局API"><a href="#全局API" class="headerlink" title="全局API"></a>全局API</h4><p>与实例方法不同，实例方法是将方法挂载到<code>Vue</code>的原型上，而全局API是直接在<code>Vue</code>上挂载方法。在<code>Vue</code>中，全局API一共有12个，分别是<code>Vue.extend</code>、<code>Vue.nextTick</code>、<code>Vue.set</code>、<code>Vue.delete</code>、<code>Vue.directive</code>、<code>Vue.filter</code>、<code>Vue.component</code>、<code>Vue.use</code>、<code>Vue.mixin</code>、<code>Vue.observable</code>、<code>Vue.version</code>。这12个API中有的是我们在日常业务开发中经常会用到的，有的是对<code>Vue</code>内部或外部插件提供的，我们在日常业务开发中几乎用不到。接下来我们就对这12个API逐个进行分析，看看其内部原理都是怎样的。</p>
 <h5 id="Vue-extend"><a href="#Vue-extend" class="headerlink" title="Vue.extend"></a>Vue.extend</h5><h6 id="用法回顾"><a href="#用法回顾" class="headerlink" title="用法回顾"></a>用法回顾</h6><p>其用法如下：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs javascript">Vue.extend( options )<br></code></pre></td></tr></table></figure>
 
@@ -262,7 +264,7 @@
         
         <section class="donate">
   <div class="qrcode">
-    <img   class="lazyload" data-original="https://pic.izhaoo.com/alipay.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" >
+    <img src="https://pic.izhaoo.com/alipay.jpg">
   </div>
   <div class="icon">
     <a href="javascript:;" id="alipay"><i class="iconfont iconalipay"></i></a>

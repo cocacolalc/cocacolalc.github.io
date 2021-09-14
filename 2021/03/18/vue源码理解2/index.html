@@ -14,7 +14,8 @@
 
   
   
-  <meta name="description" content="虚拟DOM，这个名词作为当下的前端开发人员你一定不会陌..."> 
+  <meta name="description" content="
+虚拟DOM，这个名词作为当下的前端开发人员你一定不会..."> 
   
   <meta name="author" content="lc"> 
 
@@ -67,7 +68,7 @@
       fancybox: true,
       pjax: false,
       lazyload: {
-        enable: true,
+        enable: false,
         loadingImage: '',
       },
       donate: {
@@ -158,20 +159,21 @@
     <article class="article">
   <div class="wrap">
     <section class="head">
-  <img   class="lazyload" data-original="https://gitee.com/cocacolalc/imgs-hexo/raw/master/img/photo-1623607037050-ac8e7cce86c6.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
+  <img src="https://gitee.com/cocacolalc/imgs-hexo/raw/master/img/photo-1623944887316-a475472013c2.jpg" draggable="false">
   <div class="head-mask">
     <h1 class="head-title">vue源码理解——虚拟DOM篇</h1>
     <div class="head-info">
       <span class="post-info-item"><i class="iconfont iconcalendar"></i>March 18, 2021</span
         class="post-info-item">
       
-      <span class="post-info-item"><i class="iconfont iconfont-size"></i>27857</span>
+      <span class="post-info-item"><i class="iconfont iconfont-size"></i>27858</span>
     </div>
   </div>
 </section>
     <section class="main">
       <section class="content">
-        <p>虚拟DOM，这个名词作为当下的前端开发人员你一定不会陌生，至少会略有耳闻，但不会闻所未闻吧。这也是现在求职面试考察中非常高频的一个考点了。因为在当下的前端三大框架中关于虚拟DOM或多或少都有所涉及，那么接下来，我们就从源码角度出发，看看<code>Vue</code>中的虚拟DOM时怎样的。</p>
+        <p><img src="https://images.unsplash.com/photo-1631341139177-7d0f78827ad4?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw3N3x8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="img"></p>
+<p>虚拟DOM，这个名词作为当下的前端开发人员你一定不会陌生，至少会略有耳闻，但不会闻所未闻吧。这也是现在求职面试考察中非常高频的一个考点了。因为在当下的前端三大框架中关于虚拟DOM或多或少都有所涉及，那么接下来，我们就从源码角度出发，看看<code>Vue</code>中的虚拟DOM时怎样的。</p>
 <h4 id="虚拟DOM简介"><a href="#虚拟DOM简介" class="headerlink" title="虚拟DOM简介"></a>虚拟DOM简介</h4><p>由于本系列文章是针对<code>Vue</code>源码深入学习的，所以着重分析在<code>Vue</code>中对虚拟DOM是如何实现的，而对于虚拟DOM本身这个概念不做大篇幅的展开讨论，仅从以下几个问题简单介绍：</p>
 <p>1.什么是虚拟DOM？</p>
 <p>所谓虚拟DOM，就是用一个<code>JS</code>对象来描述一个<code>DOM</code>节点，像如下示例：</p>
@@ -182,7 +184,7 @@
 <p>我们知道，<code>Vue</code>是数据驱动视图的，数据发生变化视图就要随之更新，在更新视图的时候难免要操作<code>DOM</code>,而操作真实<code>DOM</code>又是非常耗费性能的，这是因为浏览器的标准就把 <code>DOM</code> 设计的非常复杂，所以一个真正的 <code>DOM</code> 元素是非常庞大的，如下所示：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">let</span> div = <span class="hljs-built_in">document</span>.createElement(<span class="hljs-string">&#x27;div&#x27;</span>)<br><span class="hljs-keyword">let</span> str = <span class="hljs-string">&#x27;&#x27;</span><br><span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> key <span class="hljs-keyword">in</span> div) &#123;<br>  str += key + <span class="hljs-string">&#x27;&#x27;</span><br>&#125;<br><span class="hljs-built_in">console</span>.log(str)<br></code></pre></td></tr></table></figure>
 
-<p><img   class="lazyload" data-original="C:\Users\梁超\AppData\Roaming\Typora\typora-user-images\image-20210422112653087.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20210422112653087"></p>
+<p><img src="C:\Users\梁超\AppData\Roaming\Typora\typora-user-images\image-20210422112653087.png" alt="image-20210422112653087"></p>
 <p>上图中我们打印一个简单的空<code>div</code>标签，就打印出这么多东西，更不用说复杂的、深嵌套的<code>DOM</code>节点了。由此可见，直接操作真实<code>DOM</code>是非常消耗性能的。</p>
 <p>那么有没有什么解决方案呢？当然是有的。我们可以用<code>JS</code>的计算性能来换取操作<code>DOM</code>所消耗的性能。</p>
 <p>既然我们逃不掉操作<code>DOM</code>这道坎,但是我们可以尽可能少的操作<code>DOM</code>。那如何在更新视图的时候尽可能少的操作<code>DOM</code>呢？最直观的思路就是我们不要盲目的去更新视图，而是通过对比数据变化前后的状态，计算出视图中哪些地方需要更新，只更新需要更新的地方，而不需要更新的地方则不需关心，这样我们就可以尽可能少的操作<code>DOM</code>了。这也就是上面所说的用<code>JS</code>的计算性能来换取操作<code>DOM</code>的性能。</p>
@@ -261,7 +263,7 @@
 <p>代码中的<code>nodeOps</code>是<code>Vue</code>为了跨平台兼容性，对所有节点操作进行了封装，例如<code>nodeOps.createTextNode()</code>在浏览器端等同于<code>document.createTextNode()</code></p>
 </blockquote>
 <p>以上就完成了创建节点的操作，其完整流程图如下：</p>
-<p><img   class="lazyload" data-original="C:\Users\梁超\AppData\Roaming\Typora\typora-user-images\image-20210425121000760.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20210425121000760"></p>
+<p><img src="C:\Users\梁超\AppData\Roaming\Typora\typora-user-images\image-20210425121000760.png" alt="image-20210425121000760"></p>
 <h6 id="删除节点"><a href="#删除节点" class="headerlink" title="删除节点"></a>删除节点</h6><p>如果某些节点再新的<code>VNode</code>中没有而在旧的<code>oldVNode</code>中有，那么就需要把这些节点从旧的<code>oldVNode</code>中删除。删除节点非常简单，只需在要删除节点的父元素上调用<code>removeChild</code>方法即可。源码如下：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">removeNode</span> (<span class="hljs-params">el</span>) </span>&#123;<br>    <span class="hljs-keyword">const</span> parent = nodeOps.parentNode(el)  <span class="hljs-comment">// 获取父节点</span><br>    <span class="hljs-keyword">if</span> (isDef(parent)) &#123;<br>      nodeOps.removeChild(parent, el)  <span class="hljs-comment">// 调用父节点的removeChild方法</span><br>    &#125;<br>  &#125;<br></code></pre></td></tr></table></figure>
 
@@ -295,7 +297,7 @@
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">// 更新节点</span><br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">patchVnode</span> (<span class="hljs-params">oldVnode, vnode, insertedVnodeQueue, removeOnly</span>) </span>&#123;<br>  <span class="hljs-comment">// vnode与oldVnode是否完全一样？若是，退出程序</span><br>  <span class="hljs-keyword">if</span> (oldVnode === vnode) &#123;<br>    <span class="hljs-keyword">return</span><br>  &#125;<br>  <span class="hljs-keyword">const</span> elm = vnode.elm = oldVnode.elm<br><br>  <span class="hljs-comment">// vnode与oldVnode是否都是静态节点？若是，退出程序</span><br>  <span class="hljs-keyword">if</span> (isTrue(vnode.isStatic) &amp;&amp;<br>    isTrue(oldVnode.isStatic) &amp;&amp;<br>    vnode.key === oldVnode.key &amp;&amp;<br>    (isTrue(vnode.isCloned) || isTrue(vnode.isOnce))<br>  ) &#123;<br>    <span class="hljs-keyword">return</span><br>  &#125;<br><br>  <span class="hljs-keyword">const</span> oldCh = oldVnode.children<br>  <span class="hljs-keyword">const</span> ch = vnode.children<br>  <span class="hljs-comment">// vnode有text属性？若没有：</span><br>  <span class="hljs-keyword">if</span> (isUndef(vnode.text)) &#123;<br>    <span class="hljs-comment">// vnode的子节点与oldVnode的子节点是否都存在？</span><br>    <span class="hljs-keyword">if</span> (isDef(oldCh) &amp;&amp; isDef(ch)) &#123;<br>      <span class="hljs-comment">// 若都存在，判断子节点是否相同，不同则更新子节点</span><br>      <span class="hljs-keyword">if</span> (oldCh !== ch) updateChildren(elm, oldCh, ch, insertedVnodeQueue, removeOnly)<br>    &#125;<br>    <span class="hljs-comment">// 若只有vnode的子节点存在</span><br>    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (isDef(ch)) &#123;<br>      <span class="hljs-comment">/**</span><br><span class="hljs-comment">       * 判断oldVnode是否有文本？</span><br><span class="hljs-comment">       * 若没有，则把vnode的子节点添加到真实DOM中</span><br><span class="hljs-comment">       * 若有，则清空Dom中的文本，再把vnode的子节点添加到真实DOM中</span><br><span class="hljs-comment">       */</span><br>      <span class="hljs-keyword">if</span> (isDef(oldVnode.text)) nodeOps.setTextContent(elm, <span class="hljs-string">&#x27;&#x27;</span>)<br>      addVnodes(elm, <span class="hljs-literal">null</span>, ch, <span class="hljs-number">0</span>, ch.length - <span class="hljs-number">1</span>, insertedVnodeQueue)<br>    &#125;<br>    <span class="hljs-comment">// 若只有oldnode的子节点存在</span><br>    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (isDef(oldCh)) &#123;<br>      <span class="hljs-comment">// 清空DOM中的子节点</span><br>      removeVnodes(elm, oldCh, <span class="hljs-number">0</span>, oldCh.length - <span class="hljs-number">1</span>)<br>    &#125;<br>    <span class="hljs-comment">// 若vnode和oldnode都没有子节点，但是oldnode中有文本</span><br>    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (isDef(oldVnode.text)) &#123;<br>      <span class="hljs-comment">// 清空oldnode文本</span><br>      nodeOps.setTextContent(elm, <span class="hljs-string">&#x27;&#x27;</span>)<br>    &#125;<br>    <span class="hljs-comment">// 上面两个判断一句话概括就是，如果vnode中既没有text，也没有子节点，那么对应的oldnode中有什么就清空什么</span><br>  &#125;<br>  <span class="hljs-comment">// 若有，vnode的text属性与oldVnode的text属性是否相同？</span><br>  <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (oldVnode.text !== vnode.text) &#123;<br>    <span class="hljs-comment">// 若不相同：则用vnode的text替换真实DOM的文本</span><br>    nodeOps.setTextContent(elm, vnode.text)<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <p>上面代码里注释已经写得很清晰了，接下来我们画流程图来梳理一下整个过程，流程图如下：</p>
-<p><img   class="lazyload" data-original="C:\Users\梁超\AppData\Roaming\Typora\typora-user-images\image-20210425121148769.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20210425121148769"></p>
+<p><img src="C:\Users\梁超\AppData\Roaming\Typora\typora-user-images\image-20210425121148769.png" alt="image-20210425121148769"></p>
 <p>通过对照着流程图以及代码，相信更新节点这部分逻辑你很容易就能理解了。s</p>
 <p>另外，你可能注意到了，如果新旧<code>VNode</code>里都包含了子节点，那么对于子节点的更新在代码里调用了<code>updateChildren</code>方法，而这个方法的逻辑到底是怎样的我们放在下一篇文章中展开学习。</p>
 <h6 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h6><p>在本篇文章中我们介绍了<code>Vue</code>中的<code>DOM-Diff</code>算法：patch过程。我们先介绍了算法的整个思想流程，然后通过梳理算法思想，了解了整个<code>patch</code>过程干了三件事，分别是：创建节点，删除节点，更新节点。并且对每件事情都对照源码展开了细致的学习，画出了其逻辑流程图。另外对于更新节点中，如果新旧<code>VNode</code>里都包含了子节点，我们就需要细致的去更新子节点，关于更新子节点的过程我们在下一篇文章中展开学习。</p>
@@ -322,9 +324,9 @@
 <h6 id="创建子节点"><a href="#创建子节点" class="headerlink" title="创建子节点"></a>创建子节点</h6><p>如果<code>newChildren</code>里面的某个子节点在<code>oldChildren</code>里找不到与之相同的子节点，那么说明<code>newChildren</code>里面的这个子节点是之前没有的，是需要此次新增的节点，那么我们就创建这个节点，创建好之后再把它插入到<code>DOM</code>中合适的位置。</p>
 <p>创建节点这个很容易，我们在上一篇文章的第三章已经介绍过了，这里就不再赘述了。</p>
 <p>那么创建好之后如何插入到<code>DOM</code>中的合适的位置呢？显然，把节点插入到<code>DOM</code>中是很容易的，找到合适的位置是关键。接下来我们分析一下如何找这个合适的位置。我们看下面这个图：</p>
-<p><img   class="lazyload" data-original="C:\Users\梁超\AppData\Roaming\Typora\typora-user-images\image-20210425133824295.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20210425133824295"></p>
+<p><img src="C:\Users\梁超\AppData\Roaming\Typora\typora-user-images\image-20210425133824295.png" alt="image-20210425133824295"></p>
 <p>上图中左边是新的<code>VNode</code>，右边是旧的<code>oldVNode</code>，同时也是真实的<code>DOM</code>。这个图意思是当我们循环<code>newChildren</code>数组里面的子节点，前两个子节点都在<code>oldChildren</code>里找到了与之对应的子节点，那么我们将其处理，处理过后把它们标志为已处理，当循环到<code>newChildren</code>数组里第三个子节点时，发现在<code>oldChildren</code>里找不到与之对应的子节点，那么我们就需要创建这个节点，创建好之后我们发现这个节点本是<code>newChildren</code>数组里左起第三个子节点，那么我们就把创建好的节点插入到真实<code>DOM</code>里的第三个节点位置，也就是所有已处理节点之后，OK，此时我们拍手称快，所有已处理节点之后就是我们要找的合适的位置，但是真的是这样吗？我们再来看下面这个图：</p>
-<p><img   class="lazyload" data-original="C:\Users\梁超\AppData\Roaming\Typora\typora-user-images\image-20210425134249593.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20210425134249593"></p>
+<p><img src="C:\Users\梁超\AppData\Roaming\Typora\typora-user-images\image-20210425134249593.png" alt="image-20210425134249593"></p>
 <p>假如我们按照上面的方法把第三个节点插入到所有已处理节点之后，此时如果第四个节点也在<code>oldChildren</code>里找不到与之对应的节点，也是需要创建的节点，那么当我们把第四个节点也按照上面的说的插入到已处理节点之后，发现怎么插入到第三个位置了，可明明这个节点在<code>newChildren</code>数组里是第四个啊！</p>
 <p>这就是问题所在，其实，我们应该把新创建的节点插入到所有未处理节点之前，这样以来逻辑才正确。后面不管有多少个新增的节点，每一个都插入到所有未处理节点之前，位置才不会错。</p>
 <p>所以，<strong>合适的位置是所有未处理节点之前，而并非所有已处理节点之后</strong>。</p>
@@ -334,7 +336,7 @@
 <p>关于更新节点，我们在上一篇文章的第五章已经介绍过了，这里就不再赘述了。</p>
 <h6 id="移动子节点"><a href="#移动子节点" class="headerlink" title="移动子节点"></a>移动子节点</h6><p>如果<code>newChildren</code>里面的某个子节点在<code>oldChildren</code>里找到了与之相同的子节点，但是所处的位置不同，这说明此次变化需要调整该子节点的位置，那就以<code>newChildren</code>里子节点的位置为基准，调整<code>oldChildren</code>里该节点的位置，使之与在<code>newChildren</code>里的位置相同。</p>
 <p>同样，移动一个节点不难，关键在于该移动到哪，或者说关键在于移动到哪个位置，这个位置才是关键。我们看下图：</p>
-<p><img   class="lazyload" data-original="C:\Users\梁超\AppData\Roaming\Typora\typora-user-images\image-20210425134557748.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20210425134557748"></p>
+<p><img src="C:\Users\梁超\AppData\Roaming\Typora\typora-user-images\image-20210425134557748.png" alt="image-20210425134557748"></p>
 <p>在上图中，绿色的两个节点是相同节点但是所处位置不同，即<code>newChildren</code>里面的第三个子节点与真实<code>DOM</code>即<code>oldChildren</code>里面的第四个子节点相同但是所处位置不同，按照上面所说的，我们应该以<code>newChildren</code>里子节点的位置为基准，调整<code>oldChildren</code>里该节点的位置，所以我们应该把真实<code>DOM</code>即<code>oldChildren</code>里面的第四个节点移动到第三个节点的位置，通过上图中的标注我们不难发现，<strong>所有未处理节点之前就是我们要移动的目的位置</strong>。如果此时你说那可不可以移动到所有已处理节点之后呢？那就又回到了更新节点时所遇到的那个问题了：如果前面有新增的节点呢？</p>
 <h6 id="回到源码"><a href="#回到源码" class="headerlink" title="回到源码"></a>回到源码</h6><p>OK，以上就是更新子节点时所要考虑的所有情况了，分析完以后，我们回到源码里看看实际情况是不是我们分析的这样子的，源码如下：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">// 源码位置： /src/core/vdom/patch.js</span><br><br><span class="hljs-keyword">if</span> (isUndef(idxInOld)) &#123;    <span class="hljs-comment">// 如果在oldChildren里找不到当前循环的newChildren里的子节点</span><br>    <span class="hljs-comment">// 新增节点并插入到合适位置</span><br>    createElm(newStartVnode, insertedVnodeQueue, parentElm, oldStartVnode.elm, <span class="hljs-literal">false</span>, newCh, newStartIdx)<br>&#125; <span class="hljs-keyword">else</span> &#123;<br>    <span class="hljs-comment">// 如果在oldChildren里找到了当前循环的newChildren里的子节点</span><br>    vnodeToMove = oldCh[idxInOld]<br>    <span class="hljs-comment">// 如果两个节点相同</span><br>    <span class="hljs-keyword">if</span> (sameVnode(vnodeToMove, newStartVnode)) &#123;<br>        <span class="hljs-comment">// 调用patchVnode更新节点</span><br>        patchVnode(vnodeToMove, newStartVnode, insertedVnodeQueue)<br>        oldCh[idxInOld] = <span class="hljs-literal">undefined</span><br>        <span class="hljs-comment">// canmove表示是否需要移动节点，如果为true表示需要移动，则移动节点，如果为false则不用移动</span><br>        canMove &amp;&amp; nodeOps.insertBefore(parentElm, vnodeToMove.elm, oldStartVnode.elm)<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
@@ -352,7 +354,7 @@
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs javascript">newChildren = [<span class="hljs-string">&#x27;新子节点1&#x27;</span>,<span class="hljs-string">&#x27;新子节点2&#x27;</span>,<span class="hljs-string">&#x27;新子节点3&#x27;</span>,<span class="hljs-string">&#x27;新子节点4&#x27;</span>]<br>oldChildren = [<span class="hljs-string">&#x27;旧子节点1&#x27;</span>,<span class="hljs-string">&#x27;旧子节点2&#x27;</span>,<span class="hljs-string">&#x27;旧子节点3&#x27;</span>,<span class="hljs-string">&#x27;旧子节点4&#x27;</span>]<br></code></pre></td></tr></table></figure>
 
 <p>如果按照优化之前的解决方案，那么我们接下来的操作应该是这样的：先循环<code>newChildren</code>数组，拿到第一个新子节点1，然后用第一个新子节点1去跟<code>oldChildren</code>数组里的旧子节点逐一对比，如果运气好一点，刚好<code>oldChildren</code>数组里的第一个旧子节点1与第一个新子节点1相同，那就皆大欢喜，直接处理，不用再往下循环了。那如果运气坏一点，直到循环到<code>oldChildren</code>数组里的第四个旧子节点4才与第一个新子节点1相同，那此时就会多循环了4次。我们不妨把情况再设想的极端一点，如果<code>newChildren</code>数组和<code>oldChildren</code>数组里前三个节点都没有变化，只是第四个节点发生了变化，那么我们就会循环16次，只有在第16次循环的时候才发现新节点4与旧节点4相同，进行更新，如下图所示：</p>
-<p><img   class="lazyload" data-original="C:\Users\梁超\AppData\Roaming\Typora\typora-user-images\image-20210425135252298.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20210425135252298">    </p>
+<p><img src="C:\Users\梁超\AppData\Roaming\Typora\typora-user-images\image-20210425135252298.png" alt="image-20210425135252298">    </p>
 <p>上面例子中只有四个子节点，好像还看不出来有什么缺陷，但是当子节点数量很多的时候，算法的时间复杂度就会非常高，很不利于性能提升。</p>
 <p>那么我们该怎么优化呢？其实我们可以这样想，我们不要按顺序去循环<code>newChildren</code>和<code>oldChildren</code>这两个数组，可以先比较这两个数组里特殊位置的子节点，比如：</p>
 <ul>
@@ -376,7 +378,7 @@
 </li>
 </ul>
 <p>其过程如下图所示：</p>
-<p><img   class="lazyload" data-original="C:\Users\梁超\AppData\Roaming\Typora\typora-user-images\image-20210425135454618.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20210425135454618"></p>
+<p><img src="C:\Users\梁超\AppData\Roaming\Typora\typora-user-images\image-20210425135454618.png" alt="image-20210425135454618"></p>
 <p>在上图中，我们把：</p>
 <ul>
 <li><code>newChildren</code>数组里的所有未处理子节点的第一个子节点称为：新前；</li>
@@ -386,19 +388,19 @@
 </ul>
 <p>OK，有了以上概念以后，下面我们就来看看其具体是如何实施的。</p>
 <h6 id="新前与旧前"><a href="#新前与旧前" class="headerlink" title="新前与旧前"></a>新前与旧前</h6><p>把<code>newChildren</code>数组里的所有未处理子节点的第一个子节点和<code>oldChildren</code>数组里所有未处理子节点的第一个子节点做比对，如果相同，那好极了，直接进入之前文章中说的更新节点的操作并且由于新前与旧前两个节点的位置也相同，无需进行节点移动操作；如果不同，没关系，再尝试后面三种情况。</p>
-<p><img   class="lazyload" data-original="C:\Users\梁超\AppData\Roaming\Typora\typora-user-images\image-20210425135923348.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20210425135923348"></p>
+<p><img src="C:\Users\梁超\AppData\Roaming\Typora\typora-user-images\image-20210425135923348.png" alt="image-20210425135923348"></p>
 <h6 id="新后与旧后"><a href="#新后与旧后" class="headerlink" title="新后与旧后"></a>新后与旧后</h6><p>把<code>newChildren</code>数组里所有未处理子节点的最后一个子节点和<code>oldChildren</code>数组里所有未处理子节点的最后一个子节点做比对，如果相同，那就直接进入更新节点的操作并且由于新后与旧后两个节点的位置也相同，无需进行节点移动操作；如果不同，继续往后尝试。</p>
-<p><img   class="lazyload" data-original="C:\Users\梁超\AppData\Roaming\Typora\typora-user-images\image-20210425140013890.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20210425140013890"></p>
+<p><img src="C:\Users\梁超\AppData\Roaming\Typora\typora-user-images\image-20210425140013890.png" alt="image-20210425140013890"></p>
 <h5 id="新后与旧前"><a href="#新后与旧前" class="headerlink" title="新后与旧前"></a>新后与旧前</h5><p>把<code>newChildren</code>数组里所有未处理子节点的最后一个子节点和<code>oldChildren</code>数组里所有未处理子节点的第一个子节点做比对，如果相同，那就直接进入更新节点的操作，更新完后再将<code>oldChildren</code>数组里的该节点移动到与<code>newChildren</code>数组里节点相同的位置；</p>
-<p><img   class="lazyload" data-original="C:\Users\梁超\AppData\Roaming\Typora\typora-user-images\image-20210425140051237.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20210425140051237"></p>
+<p><img src="C:\Users\梁超\AppData\Roaming\Typora\typora-user-images\image-20210425140051237.png" alt="image-20210425140051237"></p>
 <p>此时，出现了移动节点的操作，移动节点最关键的地方在于找准要移动的位置。我们一再强调，<strong>更新节点要以新<code>VNode</code>为基准，然后操作旧的<code>oldVNode</code>，使之最后旧的<code>oldVNode</code>与新的<code>VNode</code>相同</strong>。那么现在的情况是：<code>newChildren</code>数组里的最后一个子节点与<code>oldChildren</code>数组里的第一个子节点相同，那么我们就应该在<code>oldChildren</code>数组里把第一个子节点移动到最后一个子节点的位置，如下图：</p>
-<p><img   class="lazyload" data-original="C:\Users\梁超\AppData\Roaming\Typora\typora-user-images\image-20210425140208880.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20210425140208880"></p>
+<p><img src="C:\Users\梁超\AppData\Roaming\Typora\typora-user-images\image-20210425140208880.png" alt="image-20210425140208880"></p>
 <p>从图中不难看出，我们要把<code>oldChildren</code>数组里把第一个子节点移动到数组中<strong>所有未处理节点之后</strong>。</p>
 <p>如果对比之后发现这两个节点仍不是同一个节点，那就继续尝试最后一种情况。</p>
 <h6 id="新前与旧后"><a href="#新前与旧后" class="headerlink" title="新前与旧后"></a>新前与旧后</h6><p>把<code>newChildren</code>数组里所有未处理子节点的第一个子节点和<code>oldChildren</code>数组里所有未处理子节点的最后一个子节点做比对，如果相同，那就直接进入更新节点的操作，更新完后再将<code>oldChildren</code>数组里的该节点移动到与<code>newChildren</code>数组里节点相同的位置；</p>
-<p><img   class="lazyload" data-original="C:\Users\梁超\AppData\Roaming\Typora\typora-user-images\image-20210425140311007.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20210425140311007"></p>
+<p><img src="C:\Users\梁超\AppData\Roaming\Typora\typora-user-images\image-20210425140311007.png" alt="image-20210425140311007"></p>
 <p>同样，这种情况的节点移动位置逻辑与“新后与旧前”的逻辑类似，那就是<code>newChildren</code>数组里的第一个子节点与<code>oldChildren</code>数组里的最后一个子节点相同，那么我们就应该在<code>oldChildren</code>数组里把最后一个子节点移动到第一个子节点的位置，如下图：</p>
-<p><img   class="lazyload" data-original="C:\Users\梁超\AppData\Roaming\Typora\typora-user-images\image-20210425140415224.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20210425140415224"></p>
+<p><img src="C:\Users\梁超\AppData\Roaming\Typora\typora-user-images\image-20210425140415224.png" alt="image-20210425140415224"></p>
 <p>从图中不难看出，我们要把<code>oldChildren</code>数组里把最后一个子节点移动到数组中<strong>所有未处理节点之前</strong>。</p>
 <p>OK，以上就是子节点对比更新优化策略种的4种情况，如果以上4种情况逐个试遍之后要是还没找到相同的节点，那就再通过之前的循环方式查找。</p>
 <h6 id="回到源码：："><a href="#回到源码：：" class="headerlink" title="回到源码：："></a>回到源码：：</h6><p>思路分析完，逻辑理清之后，我们再回到源码里看看，验证一下源码实现的逻辑是否跟我们分析的一样。源码如下：</p>
@@ -406,7 +408,7 @@
 
 <p>读源码之前，我们先有这样一个概念：那就是在我们前面所说的优化策略中，节点有可能是从前面对比，也有可能是从后面对比，对比成功就会进行更新处理，也就是说我们有可能处理第一个，也有可能处理最后一个，那么我们在循环的时候就不能简单从前往后或从后往前循环，而是要从两边向中间循环。</p>
 <p>那么该如何从两边向中间循环呢？请看下图：</p>
-<p><img   class="lazyload" data-original="C:\Users\梁超\AppData\Roaming\Typora\typora-user-images\image-20210425140631885.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20210425140631885"></p>
+<p><img src="C:\Users\梁超\AppData\Roaming\Typora\typora-user-images\image-20210425140631885.png" alt="image-20210425140631885"></p>
 <p>首先，我们先准备4个变量：</p>
 <ul>
 <li><strong>newStartIdx:</strong><code>newChildren</code>数组里开始位置的下标；</li>
@@ -463,7 +465,7 @@
         
         <section class="donate">
   <div class="qrcode">
-    <img   class="lazyload" data-original="https://pic.izhaoo.com/alipay.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" >
+    <img src="https://pic.izhaoo.com/alipay.jpg">
   </div>
   <div class="icon">
     <a href="javascript:;" id="alipay"><i class="iconfont iconalipay"></i></a>

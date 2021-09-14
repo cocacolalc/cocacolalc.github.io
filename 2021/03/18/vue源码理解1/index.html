@@ -14,7 +14,8 @@
 
   
   
-  <meta name="description" content="1.变化侦测篇Vue中如何实现数据的响应式系统，从而达..."> 
+  <meta name="description" content="
+1.变化侦测篇Vue中如何实现数据的响应式系统，从而..."> 
   
   <meta name="author" content="lc"> 
 
@@ -67,7 +68,7 @@
       fancybox: true,
       pjax: false,
       lazyload: {
-        enable: true,
+        enable: false,
         loadingImage: '',
       },
       donate: {
@@ -158,27 +159,28 @@
     <article class="article">
   <div class="wrap">
     <section class="head">
-  <img   class="lazyload" data-original="https://gitee.com/cocacolalc/imgs-hexo/raw/master/img/photo-1622495506073-56b1152a010c.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
+  <img src="https://gitee.com/cocacolalc/imgs-hexo/raw/master/img/photo-1618335829737-2228915674e0.jpg" draggable="false">
   <div class="head-mask">
     <h1 class="head-title">vue源码理解——变化侦测篇</h1>
     <div class="head-info">
       <span class="post-info-item"><i class="iconfont iconcalendar"></i>March 18, 2021</span
         class="post-info-item">
       
-      <span class="post-info-item"><i class="iconfont iconfont-size"></i>18456</span>
+      <span class="post-info-item"><i class="iconfont iconfont-size"></i>18457</span>
     </div>
   </div>
 </section>
     <section class="main">
       <section class="content">
-        <h3 id="1-变化侦测篇"><a href="#1-变化侦测篇" class="headerlink" title="1.变化侦测篇"></a>1.变化侦测篇</h3><p><code>Vue</code>中如何实现数据的响应式系统，从而达到数据驱动视图。</p>
+        <p><img src="https://images.unsplash.com/photo-1631521316445-f044306e6d1a?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw2MHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="img"></p>
+<h3 id="1-变化侦测篇"><a href="#1-变化侦测篇" class="headerlink" title="1.变化侦测篇"></a>1.变化侦测篇</h3><p><code>Vue</code>中如何实现数据的响应式系统，从而达到数据驱动视图。</p>
 <h5 id="变化侦测"><a href="#变化侦测" class="headerlink" title="变化侦测"></a>变化侦测</h5><p>vue最大的特点之一就是数据驱动视图</p>
 <p>什么是数据驱动视图？我们可以把数据理解成状态，而视图就是用户可以直观看到的，页面不是一层不变的，它是动态变化的，它可能是用户操作引起变化，也可能因为后台数据引起变化的，不管它尤什么引起的，我们统称状态变了由前一个状态变到了后一个状态，页面也就应该随之而变化，所以我们就可以得到如下一个公式：**<em>UI = render(state)**</em></p>
 <p>公式中：状态<code>state</code>是输入，页面<code>UI</code>输出，状态输入一旦变化了，页面输出也随之而变化。我们把这种特性称之为数据驱动视图。</p>
 <p>OK，有了基本概念以后，我们再把上述公式拆成三部分：<code>state</code>、<code>render()</code>以及<code>UI</code>。我们知道<code>state</code>和<code>UI</code>都是用户定的，而不变的是这个<code>render()</code>。所以<code>Vue</code>就扮演了<code>render()</code>这个角色，当<code>Vue</code>发现<code>state</code>变化之后，经过一系列加工，最终将变化反应在<code>UI</code>上。</p>
 <h5 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h5><h5 id="Object的变化侦测"><a href="#Object的变化侦测" class="headerlink" title="Object的变化侦测"></a>Object的变化侦测</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">let</span> car = &#123;&#125;<br>        <span class="hljs-keyword">let</span> val = <span class="hljs-number">3000</span><br>        <span class="hljs-built_in">Object</span>.defineProperty(car, <span class="hljs-string">&#x27;price&#x27;</span>, &#123;<br>            enumerable: <span class="hljs-literal">true</span>,<br>            configurable: <span class="hljs-literal">true</span>,<br>            get() &#123;<br>                <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&#x27;price 的属性被读取了&#x27;</span>)<br>                <span class="hljs-keyword">return</span> val<br>            &#125;,<br>            set(newval) &#123;<br>                <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&#x27;price的属性被修改了&#x27;</span>)<br>                val = newval<br>            &#125;<br>        &#125;)<br><span class="hljs-comment">//通过Object.defineProperty()方法给car定义了一个price属性，并把这个属性的读和写分别使用get()和set()进行拦截，每当该属性进行读或写操作的时候就会触发get()和set()  如下图</span><br></code></pre></td></tr></table></figure>
 
-<p><img   class="lazyload" data-original="C:\Users\梁超\AppData\Roaming\Typora\typora-user-images\image-20210421145548907.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20210421145548907"></p>
+<p><img src="C:\Users\梁超\AppData\Roaming\Typora\typora-user-images\image-20210421145548907.png" alt="image-20210421145548907"></p>
 <p>注：enumerable控制是否可以删除</p>
 <p>​         configurable控制是否可以枚举（循环遍历）</p>
 <p>怎么把<code>car</code>的所有属性都变得可观测？</p>
@@ -244,7 +246,7 @@
 <p>我们试想一下，要想让<code>Array</code>型数据发生变化，那必然是操作了<code>Array</code>，而<code>JS</code>中提供的操作数组的方法就那么几种，我们可以把这些方法都重写一遍，在不改变原有功能的前提下，我们为其新增一些其他功能，例如下面这个例子：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">let</span> arr=[<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>]<br>        arr.push(<span class="hljs-number">4</span>)<br>        <span class="hljs-built_in">Array</span>.prototype.newPush=<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">val</span>)</span>&#123;<br>            <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&#x27;arr 被修改了&#x27;</span>)<br>            <span class="hljs-built_in">this</span>.push(val)<br>        &#125;<br>        arr.newPush(<span class="hljs-number">4</span>)<br></code></pre></td></tr></table></figure>
 
-<p><img   class="lazyload" data-original="C:\Users\梁超\AppData\Roaming\Typora\typora-user-images\image-20210422103153864.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="image-20210422103153864"></p>
+<p><img src="C:\Users\梁超\AppData\Roaming\Typora\typora-user-images\image-20210422103153864.png" alt="image-20210422103153864"></p>
 <p>在上面这个例子中，我们针对数组的原生<code>push</code>方法定义个一个新的<code>newPush</code>方法，这个<code>newPush</code>方法内部调用了原生<code>push</code>方法，这样就保证了新的<code>newPush</code>方法跟原生<code>push</code>方法具有相同的功能，而且我们还可以在新的<code>newPush</code>方法内部干一些别的事情，比如通知变化。</p>
 <p>是不是很巧妙？<code>Vue</code>内部就是这么干的。</p>
 <p>数组方法拦截器：</p>
@@ -315,7 +317,7 @@
         
         <section class="donate">
   <div class="qrcode">
-    <img   class="lazyload" data-original="https://pic.izhaoo.com/alipay.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" >
+    <img src="https://pic.izhaoo.com/alipay.jpg">
   </div>
   <div class="icon">
     <a href="javascript:;" id="alipay"><i class="iconfont iconalipay"></i></a>
@@ -329,7 +331,7 @@
         
 <nav class="nav">
   
-    <a href="/2021/03/18/vue%E6%BA%90%E7%A0%81%E7%90%86%E8%A7%A39/"><i class="iconfont iconleft"></i>vue源码理解——内置组件篇</a>
+    <a href="/2021/03/18/vue%E6%BA%90%E7%A0%81%E7%90%86%E8%A7%A38/"><i class="iconfont iconleft"></i>vue源码理解——指令篇</a>
   
   
     <a href="/2021/03/18/%E6%B5%85%E6%9E%90webpack%E5%8E%9F%E7%90%86/">浅析webpack原理<i class="iconfont iconright"></i></a>
